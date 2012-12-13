@@ -267,7 +267,7 @@ def update_backchannel():
     """
     from tumblr import Api
 
-    TUMBLR_FILENAME = 'www/live_data/backchannel.json'
+    TUMBLR_FILENAME = 'www/live-data/backchannel.json'
     TUMBLR_BLOG_ID = 'nprbackchannel'
     TUMBLR_MAX_POSTS = 10
 
