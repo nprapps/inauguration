@@ -32,10 +32,17 @@ A site can have any number of rendered templates (i.e. pages). Each will need a 
 Run the project locally
 -----------------------
 
-A flask app is used to run the project locally. It will automatically recompile templates and assets on demand.
+First setup your local live-data files:
 
 ```
 workon $NEW_PROJECT_NAME
+cp data/radio-off.json www/live-data/radio.json
+fab update_backchannel
+```
+
+A flask app is used to run the project locally. It will automatically compile templates and assets on demand.
+
+```
 python app.py
 ```
 

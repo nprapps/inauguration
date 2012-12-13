@@ -215,7 +215,7 @@ def _deploy_to_s3():
     """
     render()
 
-    s3cmd = 's3cmd -P --add-header=Cache-Control:max-age=5 --add-header=Content-encoding:gzip --guess-mime-type --recursive sync gzip/ %s'
+    s3cmd = 's3cmd -P --add-header=Cache-Control:max-age=5 --add-header=Content-encoding:gzip --guess-mime-type --recursive --exclude live-data/* sync gzip/ %s'
 
     for bucket in env.s3_buckets:
         env.s3_bucket = bucket
@@ -301,3 +301,31 @@ def update_backchannel():
                 headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
             )
 
+def deploy_radio(path):
+    """
+    Deploys an radio status file to radio.json
+    """
+    require('settings', provided_by=[production, staging])
+
+    local('s3cmd -P --add-header=Cache-control:max-age=5 put ' + path + ' s3://%(s3_bucket)s/live-data/radio.json' % env)
+
+    if env.alt_s3_bucket:
+        local('s3cmd -P --add-header=Cache-control:max-age=5 put ' + path + ' s3://%(alt_s3_bucket)s/live-data/radio.json' % env)
+
+def radio_off():
+    """
+    Shortcut to deploy_radio:data/radio-off.json
+    """
+    deploy_radio('data/radio-off.json')
+
+def radio_pregame():
+    """
+    Shortcut to deploy_radio:data/radio-pregame.json
+    """
+    deploy_radio('data/radio-pregame.json')
+
+def radio_live():
+    """
+    Shortcut to deploy_radio:data/radio-live.json
+    """
+    deploy_radio('data/radio-live.json')
