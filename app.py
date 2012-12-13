@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import csv
 from mimetypes import guess_type
 
 import envoy
@@ -12,33 +11,12 @@ app = Flask(app_config.PROJECT_NAME)
 
 # Example application views 
 @app.route('/')
-@app.route('/simple.html')
+@app.route('/index.html')
 def simple():
     """
     Example view demonstrating rendering a simple HTML page.
     """
-    return render_template('simple.html', **make_context())
-
-@app.route('/table.html')
-def table():
-    """
-    Example view demonstrating rendering a table page.
-    """
-    context = make_context() 
-
-    with open('data/example.csv') as f:
-        reader = csv.reader(f)
-        context['columns'] = reader.next()
-        context['rows'] = list(reader)
-
-    return render_template('table.html', **context)
-
-@app.route('/map.html')
-def map():
-    """
-    TODO: Example view demonstrating rendering a map page.
-    """
-    return render_template('map.html', **make_context())
+    return render_template('index.html', **make_context())
 
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
