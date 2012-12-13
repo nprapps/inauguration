@@ -13,10 +13,12 @@
     <h1>Inauguration 2013</h1>
 
     {% include '_radio.html' %}
+    {% include '_live_blog.html' %}
     {% include '_backchannel.html' %}
 {% endblock %}
 
 {% block extra_foot_js %}
     {{ JS.push('js/app-radio.js') }}
+    {{ JS.push('js/app-live-blog.js') }}
     {{ JS.push('js/app-backchannel.js') }}
 {% endblock %}
