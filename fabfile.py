@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from glob import glob
+import json
 import os
 
 from fabric.api import *
@@ -256,3 +257,47 @@ def shiva_the_destroyer():
 
         if env.get('deploy_to_servers', False):
             run('rm -rf %(path)s' % env)
+
+"""
+App-specific functions
+"""
+def update_backchannel():
+    """
+    Update data for the backchannel from Tumblr
+    """
+    from tumblr import Api
+
+    TUMBLR_FILENAME = 'www/live_data/backchannel.json'
+    TUMBLR_BLOG_ID = 'nprbackchannel'
+    TUMBLR_MAX_POSTS = 10
+
+    api = Api(TUMBLR_BLOG_ID)
+
+    posts = list(api.read(max=TUMBLR_MAX_POSTS))
+
+    posts.reverse()
+
+    with open(TUMBLR_FILENAME, 'w') as f:
+        f.write(json.dumps(posts))
+
+    if 'settings' in env:
+        conn = boto.connect_s3()
+        bucket = conn.get_bucket(env.s3_bucket)
+        key = Key(bucket)
+        key.key = TUMBLR_FILENAME
+        key.set_contents_from_filename(
+            TUMBLR_FILENAME,
+            policy='public-read',
+            headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
+        )
+        if env.alt_s3_bucket:
+            conn = boto.connect_s3()
+            bucket = conn.get_bucket(env.alt_s3_bucket)
+            key = Key(bucket)
+            key.key = TUMBLR_FILENAME
+            key.set_contents_from_filename(
+                TUMBLR_FILENAME,
+                policy='public-read',
+                headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
+            )
+

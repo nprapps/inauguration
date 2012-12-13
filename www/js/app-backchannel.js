@@ -16,7 +16,7 @@ $(document).ready(function() {
         /*
          * Update the backchannel from our tumblr feed.
          */
-        $.getJSON('backchannel.json?t=' + (new Date()).getTime(), {}, function(posts) {
+        $.getJSON('live_data/backchannel.json?t=' + (new Date()).getTime(), {}, function(posts) {
             var posts_length = posts.length;
             var has_tweets = false;
 

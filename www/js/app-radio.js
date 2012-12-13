@@ -96,7 +96,7 @@ $(function(){
     var oldStatus = {};
     
     function update_radio(){
-        $.getJSON('radio.json?t=' + (new Date()).getTime(), function(status) {
+        $.getJSON('live_data/radio.json?t=' + (new Date()).getTime(), function(status) {
             //check if the status has changed
             if(!_.isEqual(oldStatus, status)) {
                 oldStatus = status;
