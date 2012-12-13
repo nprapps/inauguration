@@ -2,21 +2,21 @@ $(document).ready(function() {
     var POLLING_INTERVAL = 60000;
 	var PAGE_SIZE = 25;
 
-    $live_blog = $("#live-blog");
+    $river = $("#river");
 
     var polling_timer = null;
-	var live_blog_data = []
+	var river_data = []
 
-    function render_live_blog() {
+    function render_river() {
         /*
          * Update the river of news feed.
          */
-        var data = live_blog_data;
+        var data = river_data;
 		var new_news = [];
 
 		$.each(data.news.sticky, function(j, k) {
 			if (k.News.status) {
-				new_news.push(JST.live_blog_post({
+				new_news.push(JST.river_post({
                     post: k.News,
                     sticky: "sticky"
                 }));
@@ -25,20 +25,20 @@ $(document).ready(function() {
 
 		$.each(data.news.regular.slice(0, PAGE_SIZE), function(j, k) {
 			if (k.News.status) {
-				new_news.push(JST.live_blog_post({
+				new_news.push(JST.river_post({
                     post: k.News,
                     sticky: ''
                 }));
 			}
 		});
 
-		$live_blog.empty().append(new_news);
-        $live_blog.find("p.timeago").timeago();
+		$river.empty().append(new_news);
+        $river.find("p.timeago").timeago();
 
         new_news = null;
 	}
 
-	function update_live_blog() {
+	function update_river() {
         /*
          * Fetch the latest river of news.
          */
@@ -47,13 +47,13 @@ $(document).ready(function() {
 		    dataType: 'jsonp',
 		    jsonpCallback: 'nprriverofnews',
 		    success: function(data){
-				live_blog_data = data;
-				render_live_blog();
+				river_data = data;
+				render_river();
 		    }
 		})
 	}
 
-    update_live_blog();
-    setInterval(update_live_blog, POLLING_INTERVAL);
+    update_river();
+    setInterval(update_river, POLLING_INTERVAL);
 });
 
