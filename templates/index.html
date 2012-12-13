@@ -1,8 +1,15 @@
 {% extends '_base.html' %}
 
+{% block extra_head %}
+    <script charset="utf-8" src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+{% endblock %}
+
 {% block content %}
-<h1>{{ PROJECT_NAME }}</h1>
+    <h1>Inauguration 2013</h1>
 
-<p>Project stuff goes here.</p>
+    {% include '_backchannel.html' %}
+{% endblock %}
 
+{% block extra_foot_js %}
+    {{ JS.push('js/app-backchannel.js') }}
 {% endblock %}
