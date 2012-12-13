@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    var BACKCHANNEL_INTERVAL = 120000;
-    var BACKCHANNEL_POSTS_TO_SHOW = 5;
+    var POLLING_INTERVAL = 120000;
 
     var posts_el = $("#backchannel .posts");
     var posts_html = {};
@@ -98,5 +97,5 @@ $(document).ready(function() {
     }
 
     update_backchannel(true);
-    setInterval(update_backchannel, BACKCHANNEL_INTERVAL);
+    setInterval(update_backchannel, POLLING_INTERVAL);
 });
