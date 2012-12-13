@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var POLLING_INTERVAL = 120000;
 
-    var posts_el = $("#backchannel .posts");
+    var $posts = $("#backchannel .posts");
     var posts_html = {};
 
     function ISODateString(d) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
                     // Changed
                     if (html != posts_html[post.id]) {
                         el.show();
-                        posts_el.find("#post-" + post.id).replaceWith(el);
+                        $posts.find("#post-" + post.id).replaceWith(el);
 
                         if (post.type === "regular") {
                            has_tweets = true;
@@ -63,10 +63,10 @@ $(document).ready(function() {
                     }
                 // New
                 } else {
-                    posts_el.prepend(el);
+                    $posts.prepend(el);
 
                     el = null;
-                    el = posts_el.find("#post-" + post.id)
+                    el = $posts.find("#post-" + post.id)
 
                     if (first_run) {
                         el.show();
@@ -85,12 +85,12 @@ $(document).ready(function() {
                 posts_html[post.id] = html;
             }
 
-            posts_el.find(".post:nth-child(5)").nextAll().remove();
+            $posts.find(".post:nth-child(5)").nextAll().remove();
 
             // Render incoming tweets
             if (has_tweets && !$.browser.msie) {
                 if ('widgets' in twttr ) {
-                    twttr.widgets.load(posts_el[0]);
+                    twttr.widgets.load($posts[0]);
                 };
             }
         });
