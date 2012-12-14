@@ -1,0 +1,6 @@
+<div id="chat-post-<%= post.Id %>">
+    <p class="chat-post-author-photo"><img src="<%= post.Creator.Avatar %>" /></p>
+    <p class="chat-post-content"><%= post.Content %></p>
+    <p class="chat-post-author"><%= post.Creator.Name %></p>
+    <p class="chat-post-datetime"><%= post.Created %> <%= post.CreatedJSON %></p>
+</div>

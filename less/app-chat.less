@@ -1,0 +1,37 @@
+.live-chat-pagination {
+    span {
+        cursor:pointer;
+        display:inline-block;
+        margin:0 4px 0 0;
+        color:blue;
+        width:16px;
+        text-align:center;
+        background-color:#eee;
+    }
+    span:hover {
+        text-decoration:underline;
+    }
+    span.active {
+        background-color:red;
+        color:#fff;
+    }
+}
+#live-chat {
+    div {
+        width:100%;
+        background-color:#eee;
+        margin:4px 0;
+    }
+    div:after {
+        content:".";
+        clear:both;
+        display:block;
+        width:100%;
+        text-indent:-9999px;
+    }
+    p.chat-post-author-photo {
+        display:block;
+        float:left;
+        padding:10px;
+    }
+}

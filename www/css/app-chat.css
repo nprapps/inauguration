@@ -1,0 +1,17 @@
+#live-chat div {
+  width: 100%;
+  background-color: #eee;
+  margin: 4px 0;
+}
+#live-chat div:after {
+  content: ".";
+  clear: both;
+  display: block;
+  width: 100%;
+  text-indent: -9999px;
+}
+#live-chat p.chat-post-author-photo {
+  display: block;
+  float: left;
+  padding: 10px;
+}

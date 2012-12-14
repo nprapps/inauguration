@@ -3,6 +3,7 @@
 {% block extra_css %}
     {{ CSS.push('less/app-radio.less') }}
     {{ CSS.push('less/app-backchannel.less') }}
+    {{ CSS.push('less/app-chat.less') }}
 {% endblock %}
 
 {% block extra_head %}
@@ -11,9 +12,9 @@
 
 {% block content %}
     <h1>Inauguration 2013</h1>
-
     {% include '_radio.html' %}
     {% include '_river.html' %}
+    {% include '_chat.html' %}
     {% include '_backchannel.html' %}
 {% endblock %}
 
@@ -21,4 +22,5 @@
     {{ JS.push('js/app-radio.js') }}
     {{ JS.push('js/app-river.js') }}
     {{ JS.push('js/app-backchannel.js') }}
+    {{ JS.push('js/app-chat.js') }}
 {% endblock %}
