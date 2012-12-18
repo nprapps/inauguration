@@ -1,7 +1,25 @@
-<div id="chat-head">
-    <h2 id="live-chat-title"></h2>
-    <h3 id="live-chat-blurb"></h3>
+<div id="chat-wrap">
+    <div id="chat-head">
+        <h2 id="live-chat-title"></h2>
+        <h4 id="live-chat-blurb"></h4>
+    </div>
+    <div id="live-chat" data-scribblelive-chat-id="74796" data-scribblelive-chat-token="FtP7wRfX"></div>
+    <div id="live-chat-form">
+        <h4>Have your say<span>.</span></h4>
+        <div id="live-chat-form" class="form-inline login" style="display:none;">
+            <label>Name
+                <input type="text" id="live-chat-username"></input>
+            </label>
+            <!--<label>
+                <input type="checkbox" id="live-chat-anonymous"></input> Anonymous
+            </label>-->
+            <button id="live-chat-login" class="btn btn-mini btn-info login" style="display:none;">Login</button>
+        </div>
+        <div id="live-chat-alerts"></div>
+        <textarea id="live-chat-content" class="logout" style="display:none;"></textarea>
+        <br/>
+        <button id="live-chat-button" class="btn btn-mini btn-success logout" style="display:none;">Post comment</button>
+        <button id="live-chat-logout" class="btn btn-mini btn-warning logout" style="display:none;">Logout</button>
+        <button id="live-chat-clear" class="btn btn-mini btn-danger logout" style="display:none;">Clear text</button>
+    </div>
 </div>
-<div class="live-chat-pagination"></div>
-<div id="live-chat" data-scribblelive-chat-id="74796"></div>
-<div class="live-chat-pagination"></div>

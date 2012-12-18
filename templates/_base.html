@@ -3,14 +3,14 @@
 
 <head>
     <title>Inauguration 2013</title>
-	
+
 	<meta http-equiv="X-UA-Compatible" content="IE=8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 	<!-- CHARTBEAT -->
     <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
-    
+
     <!-- CSS -->
     {{ CSS.push('css/bootstrap.css') }}
     {{ CSS.push('css/bootstrap-responsive.css') }}
@@ -65,7 +65,7 @@
 </head>
 <body>
 	{% block outer_content %}
-    
+
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -102,15 +102,15 @@
 						NPR.messaging.warning('Problem fetching/rendering ad server code.', 'DFP.renderlocation', NPR.messaging.constants.SPONSORSHIP_ERROR);
 					}
 				// -->
-				</script>                  
+				</script>
 				<!-- END UNDERWRITING -->
 				<p class="left">NPR thanks our sponsors</p>
 				<p class="right"><a href="http://www.npr.org/about/place/corpsupport/">Become an NPR Sponsor </a></p>
 				</div></div>
-				<!-- END 300X250 AD --> 
+				<!-- END 300X250 AD -->
             </div>
         </div>
-        
+
         <div id="footer" class="row">
             <div class="span12">
             	<ul class="bottomlist">
@@ -126,16 +126,18 @@
             	</ul>
             </div>
         </div>
-        
+
     </div>
 
 	{% endblock outer_content %}
-    
+
 	{{ JS.push('js/lib/html5.js') }}
 	{{ JS.push('js/lib/underscore.js') }}
     {{ JS.push('js/lib/moment.js') }}
     {{ JS.push('js/lib/bootstrap.js') }}
     {{ JS.push('js/lib/jquery.timeago.js') }}
+    {{ JS.push('js/lib/jquery.cookie.js') }}
+    {{ JS.push('js/lib/jquery.total-storage.min.js') }}
     {% block extra_foot_js %}{% endblock extra_foot_js %}
     {{ JS.push('js/templates.js') }}
     {{ JS.push('js/app.js') }}
