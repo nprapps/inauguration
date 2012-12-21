@@ -27,7 +27,7 @@ A site can have any number of rendered templates (i.e. pages). Each will need a 
 
 * Add a template to the ``templates`` directory. Ensure it extends ``_base.html``.
 * Add a corresponding view function to ``app.py``. Decorate it with a route to the page name, i.e. ``@app.route('/filename.html')``
-* By convention only views that end with ``.html`` and do not start with ``_``  will automatically be rendered when you call ``fab render``. 
+* By convention only views that end with ``.html`` and do not start with ``_``  will automatically be rendered when you call ``fab render``.
 
 Run the project locally
 -----------------------
@@ -40,13 +40,16 @@ cp data/radio-off.json www/live-data/radio.json
 fab update_backchannel
 ```
 
+Update your hosts file to assign localhost to the domain ``fake.npr.org`` so that authentication will work. Do something like ``sudo nano -w /etc/hosts`` and add a line at the bottom like ``127.0.0.1    fake.npr.org``.
+
+
 A flask app is used to run the project locally. It will automatically compile templates and assets on demand.
 
 ```
 python app.py
 ```
 
-Visit ``localhost:8000`` in your browser.
+Visit ``http://fake.npr.org:8000`` in your browser.
 
 Compile with static assets
 --------------------------
@@ -55,7 +58,7 @@ Compile LESS to CSS, compile javascript templates to Javascript and minify all a
 
 ```
 workon $NEW_PROJECT_NAME
-fab render 
+fab render
 ```
 
 (This is done automatically whenever you deploy to S3.)
@@ -84,4 +87,4 @@ The current configuration is for running cron jobs only. Web server configuratio
 
 * In ``fabfile.py`` set ``env.deploy_to_servers`` to ``True``.
 * Run ``fab staging master setup`` to configure the server.
-* Run ``fab staging master deploy`` to deploy the app. 
+* Run ``fab staging master deploy`` to deploy the app.

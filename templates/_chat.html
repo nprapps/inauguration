@@ -7,13 +7,16 @@
     <div id="live-chat-form">
         <h4>Have your say<span>.</span></h4>
         <div id="live-chat-form" class="form-inline login" style="display:none;">
-            <label>Name
+            <div class="social btn-group">
+                <button class="btn btn-mini npr">NPR</button>
+                <button class="btn btn-mini oauth" data-service="facebook">Facebook</button>
+                <button class="btn btn-mini oauth" data-service="google">Google</button>
+                <button class="btn btn-mini anon">Anonymous</button>
+            </div>
+            <label style="display:none;" class="anon">Chat name
                 <input type="text" id="live-chat-username"></input>
             </label>
-            <!--<label>
-                <input type="checkbox" id="live-chat-anonymous"></input> Anonymous
-            </label>-->
-            <button id="live-chat-login" class="btn btn-mini btn-info login" style="display:none;">Login</button>
+            <button id="live-chat-login" class="btn btn-mini btn-info" style="display:none;">Login</button>
         </div>
         <div id="live-chat-alerts"></div>
         <textarea id="live-chat-content" class="logout" style="display:none;"></textarea>
