@@ -36,13 +36,17 @@ $(document).ready(function(){
     var $anon = $('#live-chat-anonymous');
     var $commentBtn = $('#live-chat-button');
     var $comment = $('#live-chat-content');
-    var $username = $('#live-chat-username');
     var $alert = $('#live-chat-alerts');
     var $logout = $('#live-chat-logout');
-    var $login = $('#live-chat-login');
     var $clear = $('#live-chat-clear');
     var $anonymous = $('button.anon');
-    var $oauth = $('.oauth');
+    var $anonymous_login = $('#live-chat-anonymous-login');
+    var $anonymous_username = $('#live-chat-anonymous-username');
+    var $oauth = $('button.oauth');
+    var $npr = $('button.npr');
+    var $npr_login = $('#live-chat-npr-login');
+    var $npr_username = $('#live-chat-npr-username');
+    var $npr_password = $('#live-chat-npr-password');
 
     // Get some stuff into the global context.
     if (typeof window.SCRIBBLE !== "object") window.SCRIBBLE = {};
@@ -61,7 +65,7 @@ $(document).ready(function(){
     var POLLING_INTERVAL = 10000;
 
     function clear_html() {
-        $username.val('');
+        $anonymous_username.val('');
         $comment.val('');
         $anon.prop('checked', false);
     }
@@ -163,7 +167,7 @@ $(document).ready(function(){
                 var posts = _.difference(new_posts, old_posts);
 
                 if (posts.length > 0) {
-                    posts.sort();
+                    posts.sort().reverse();
                     $liveChat.append(posts);
                     old_posts = old_posts.concat(posts);
                     old_posts.sort();
@@ -172,32 +176,53 @@ $(document).ready(function(){
         });
     }
 
-    function anonymous_path(direction, button) {
+    function npr_path(direction) {
+        if (direction === 'on') {
+            $('label.npr').show();
+            $npr_login.show();
+            $npr.addClass('disabled');
+        }
+        if (direction === 'off') {
+            $('label.npr').hide();
+            $npr_login.hide();
+            $npr.removeClass('disabled');
+        }
+    }
+
+    function anonymous_path(direction) {
         if (direction === 'on') {
             $('label.anon').show();
-            $login.show();
+            $anonymous_login.show();
             $anonymous.addClass('disabled');
         }
         if (direction === 'off') {
             $('label.anon').hide();
-            $login.hide();
+            $anonymous_login.hide();
             $anonymous.removeClass('disabled');
         }
     }
 
     // EVENT HANDLERS ON THE PAGE.
-    $anonymous.on('click', function(){
-        anonymous_path('on');
-    });
     $oauth.on('click',function() {
         janrain.engage.signin.triggerFlow($(this).attr('data-service'));
+        anonymous_path('off');
+        npr_path('off');
+    });
+    $anonymous.on('click', function(){
+        anonymous_path('on');
+        npr_path('off');
+    });
+    $npr.on('click', function(){
+        anonymous_path('off');
+        npr_path('on');
     });
     $logout.on('click', function() {
         logout_user();
         anonymous_path('off');
+        npr_path('off');
     });
-    $login.on('click', function(){
-        livechatAuthUser({ auth_route: 'anonymous', username: $username.val() });
+    $anonymous_login.on('click', function(){
+        livechatAuthUser({ auth_route: 'anonymous', username: $anonymous_username.val() });
     });
     $clear.on('click', function() {
         clear_html();
