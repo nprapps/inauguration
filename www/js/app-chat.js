@@ -1,33 +1,35 @@
-$(document).ready(function(){
+$(document).ready(function() {
+    // Global configuration
+    var CHAT_ID = '74796';
+    var CHAT_TOKEN = 'FtP7wRfX';
+    var CHAT_URL = 'http://apiv1.scribblelive.com/event/'+ CHAT_ID +'/all/?Token='+ CHAT_TOKEN +'&format=json';
+    var USER_URL = 'apiv1.scribblelive.com/user';
+    var SCRIBBLE_AUTH_KEY = 'testAuth4';
+    var OAUTH_KEY = 'oauthKey0';
     var UPDATE_POLLING_INTERVAL = 10000;
     var ALERT_POLLING_INTERVAL = 500;
   
+    // Element references
     var $live_chat = $('#live-chat');
-    var $chat_title = $('#live-chat-title');
-    var $chat_blurb = $('#live-chat-blurb');
-    var $anon = $('#live-chat-anonymous');
-    var $comment_button = $('#live-chat-button');
-    var $comment = $('#live-chat-content');
-    var $alerts = $('#live-chat-alerts');
-    var $logout = $('#live-chat-logout');
-    var $clear = $('#live-chat-clear');
-    var $anonymous = $('button.anon');
-    var $anonymous_login = $('#live-chat-anonymous-login');
-    var $anonymous_username = $('#live-chat-anonymous-username');
-    var $oauth = $('button.oauth');
-    var $npr = $('button.npr');
-    var $npr_login = $('#live-chat-npr-login');
-    var $npr_username = $('#live-chat-npr-username');
-    var $npr_password = $('#live-chat-npr-password');
+    var $chat_title = $live_chat.find('#live-chat-title');
+    var $chat_blurb = $live_chat.find('#live-chat-blurb');
+    var $chat_body = $live_chat.find('#live-chat-body');
+    var $anon = $live_chat.find('#live-chat-anonymous');
+    var $comment_button = $live_chat.find('#live-chat-button');
+    var $comment = $live_chat.find('#live-chat-content');
+    var $alerts = $live_chat.find('#live-chat-alerts');
+    var $logout = $live_chat.find('#live-chat-logout');
+    var $clear = $live_chat.find('#live-chat-clear');
+    var $anonymous = $live_chat.find('button.anon');
+    var $anonymous_login = $live_chat.find('#live-chat-anonymous-login');
+    var $anonymous_username = $live_chat.find('#live-chat-anonymous-username');
+    var $oauth = $live_chat.find('button.oauth');
+    var $npr = $live_chat.find('button.npr');
+    var $npr_login = $live_chat.find('#live-chat-npr-login');
+    var $npr_username = $live_chat.find('#live-chat-npr-username');
+    var $npr_password = $live_chat.find('#live-chat-npr-password');
 
-    var chat_id = $live_chat.attr('data-scribblelive-chat-id');
-    var chat_token = $live_chat.attr('data-scribblelive-chat-token');
-    var base_url = 'http://apiv1.scribblelive.com/event/'+ chat_id +'/all/?Token='+ chat_token +'&format=json';
-    var user_url = 'apiv1.scribblelive.com/user';
-    var scribble_auth_key = 'testAuth4';
-    var oauth_key = 'oauthKey0';
-
-    // Arrays.
+    // State
     var old_posts = [];
     var alerts = [];
 
@@ -38,18 +40,18 @@ $(document).ready(function(){
     }
 
     function logout_user() {
-        $.totalStorage(scribble_auth_key, null);
+        $.totalStorage(SCRIBBLE_AUTH_KEY, null);
         clear_html();
         toggle_user_context();
     }
 
     function post_comment(data) {
-        var auth = $.totalStorage(scribble_auth_key);
+        var auth = $.totalStorage(SCRIBBLE_AUTH_KEY);
         var content_param = '&Content=' + data.content;
         var auth_param = '&Auth=' + auth.Auth;
 
         $.ajax({
-            url: base_url + content_param + auth_param,
+            url: CHAT_URL + content_param + auth_param,
             dataType: 'jsonp',
             cache: false,
             success: function(response) {
@@ -75,7 +77,7 @@ $(document).ready(function(){
 
     function update_live_chat() {
         $.ajax({
-            url: base_url + '&Max=10000&Order=desc',
+            url: CHAT_URL + '&Max=10000&Order=desc',
             dataType: 'jsonp',
             cache: false,
             success: function(data) {
@@ -136,7 +138,7 @@ $(document).ready(function(){
 
                 if (posts.length > 0) {
                     posts.sort().reverse();
-                    $live_chat.append(posts);
+                    $chat_body.append(posts);
                     old_posts = old_posts.concat(posts);
                     old_posts.sort();
                 }
@@ -169,12 +171,12 @@ $(document).ready(function(){
         if (auth === null) {
             $('.login').show();
             $('.logout').hide();
-            $('#live-chat-form h4 span').empty().text('!');
+            $('.chat-form h4 span').empty().text('!');
         }
         else {
             $('.logout').show();
             $('.login').hide();
-            $('#live-chat-form h4 span').empty().text(', ' + auth.Name + '.');
+            $('.chat-form h4 span').empty().text(', ' + auth.Name + '.');
         }
     }
 
@@ -182,7 +184,7 @@ $(document).ready(function(){
         /*
          * Login to Scribble live with username we got from [Facebook|Google|NPR|etc].
          */
-        var auth_url = 'http://'+ user_url +'/create?Token='+ chat_token;
+        var auth_url = 'http://'+ USER_URL +'/create?Token='+ CHAT_TOKEN;
 
         if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
             $.ajax({
@@ -190,8 +192,8 @@ $(document).ready(function(){
                 dataType: 'jsonp',
                 cache: false,
                 success: function(auth) {
-                    $.totalStorage(scribble_auth_key, auth);
-                    toggle_user_context($.totalStorage(scribble_auth_key));
+                    $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
+                    toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
                 }
             });
         }
@@ -206,9 +208,9 @@ $(document).ready(function(){
          */
         if (response.status === 'success') {
             response.user_data.Name = response.user_data.nick_name;
-            $.totalStorage(oauth_key, response.user_data);
+            $.totalStorage(OAUTH_KEY, response.user_data);
             scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
-            toggle_user_context(oauth_key);
+            toggle_user_context(OAUTH_KEY);
         }
  
     }
@@ -249,7 +251,7 @@ $(document).ready(function(){
     });
 
     // Initialize the user and the chat data.
-    toggle_user_context($.totalStorage(scribble_auth_key));
+    toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
     update_live_chat();
     setInterval(update_live_chat, UPDATE_POLLING_INTERVAL);
     setInterval(update_alerts, ALERT_POLLING_INTERVAL);
