@@ -14,34 +14,45 @@ $(document).ready(function() {
     var $chat_title = $live_chat.find('#live-chat-title');
     var $chat_blurb = $live_chat.find('#live-chat-blurb');
     var $chat_body = $live_chat.find('#live-chat-body');
-    var $anon = $live_chat.find('#live-chat-anonymous');
-    var $comment_button = $live_chat.find('#live-chat-button');
-    var $comment = $live_chat.find('#live-chat-content');
     var $alerts = $live_chat.find('#live-chat-alerts');
+    
+    var $editor = $live_chat.find('#live-chat-editor');
+    var $comment = $live_chat.find('#live-chat-content');
+    var $comment_button = $live_chat.find('#live-chat-button');
     var $logout = $live_chat.find('#live-chat-logout');
     var $clear = $live_chat.find('#live-chat-clear');
+
+    var $login = $live_chat.find('#live-chat-login');
     var $anonymous = $live_chat.find('button.anon');
-    var $anonymous_login = $live_chat.find('#live-chat-anonymous-login');
-    var $anonymous_username = $live_chat.find('#live-chat-anonymous-username');
     var $oauth = $live_chat.find('button.oauth');
     var $npr = $live_chat.find('button.npr');
-    var $npr_login = $live_chat.find('#live-chat-npr-login');
+
+    var $anonymous_login_form = $live_chat.find('#live-chat-anonymous-login');
+    var $anonymous_username = $live_chat.find('#live-chat-anonymous-username');
+    var $anonymous_login_button = $live_chat.find('#live-chat-anonymous-login-button');
+    
+    var $npr_login_form = $live_chat.find('#live-chat-npr-login');
     var $npr_username = $live_chat.find('#live-chat-npr-username');
     var $npr_password = $live_chat.find('#live-chat-npr-password');
+    var $npr_login_button = $live_chat.find('#live-chat-npr-login-button');
 
     // State
     var old_posts = [];
     var alerts = [];
 
-    function clear_html() {
+    function clear_fields() {
+        /*
+         * Clear text entry fields.
+         */
         $anonymous_username.val('');
+        $npr_username.val('');
+        $npr_password.val('');
         $comment.val('');
-        $anon.prop('checked', false);
     }
 
     function logout_user() {
         $.totalStorage(SCRIBBLE_AUTH_KEY, null);
-        clear_html();
+        clear_fields();
         toggle_user_context();
     }
 
@@ -150,8 +161,7 @@ $(document).ready(function() {
         /*
          * Toggle UI elements for NPR login.
          */
-        $('label.npr').toggle(visible);
-        $npr_login.toggle(visible);
+        $npr_login_form.toggle(visible);
         $npr.toggleClass('disabled', visible);
     }
 
@@ -159,8 +169,7 @@ $(document).ready(function() {
         /*
          * Toggle UI elements for anonymous login.
          */
-        $('label.anon').toggle(visible);
-        $anonymous_login.toggle(visible);
+        $anonymous_login_form.toggle(visible);
         $anonymous.toggleClass('disabled', visible);
     }
 
@@ -168,17 +177,15 @@ $(document).ready(function() {
         /*
          * Show auth if not logged in, hide auth if logged in.
          */
-        if (auth === null) {
-            $('.login').show();
-            $('.logout').hide();
-            $('.chat-form h4 span').empty().text('!');
+        var visible = (auth !== undefined && auth !== null);
+
+        if (visible) {
+            $editor.find('h4 span').text(auth.Name);
         }
-        else {
-            $('.logout').show();
-            $('.login').hide();
-            $('.chat-form h4 span').empty().text(', ' + auth.Name + '.');
-        }
-    }
+  
+        $login.toggle(!visible);
+        $editor.toggle(visible);
+   }
 
     function scribble_auth_user(data) {
         /*
@@ -193,6 +200,7 @@ $(document).ready(function() {
                 cache: false,
                 success: function(auth) {
                     $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
+                    clear_fields();
                     toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
                 }
             });
@@ -238,12 +246,12 @@ $(document).ready(function() {
         toggle_npr_login(false);
     });
 
-    $anonymous_login.on('click', function(){
+    $anonymous_login_button.on('click', function(){
         scribble_auth_user({ auth_route: 'anonymous', username: $anonymous_username.val() });
     });
 
     $clear.on('click', function() {
-        clear_html();
+        clear_fields();
     });
 
     $comment_button.on('click', function() {
