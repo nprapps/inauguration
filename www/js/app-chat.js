@@ -8,7 +8,7 @@ $(document).ready(function() {
     var OAUTH_KEY = 'oauthKey0';
     var UPDATE_POLLING_INTERVAL = 10000;
     var ALERT_POLLING_INTERVAL = 500;
-  
+
     // Element references
     var $live_chat = $('#live-chat');
     var $chat_title = $live_chat.find('#live-chat-title');
@@ -212,7 +212,7 @@ $(document).ready(function() {
             scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
             toggle_user_context(OAUTH_KEY);
         }
- 
+
     }
 
     // EVENT HANDLERS ON THE PAGE.
