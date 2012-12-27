@@ -17,7 +17,7 @@ $(document).ready(function() {
     var $chat_blurb = $live_chat.find('#live-chat-blurb');
     var $chat_body = $live_chat.find('#live-chat-body');
     var $alerts = $live_chat.find('#live-chat-alerts');
-    
+
     var $editor = $live_chat.find('#live-chat-editor');
     var $comment = $live_chat.find('#live-chat-content');
     var $comment_button = $live_chat.find('#live-chat-button');
@@ -32,7 +32,7 @@ $(document).ready(function() {
     var $anonymous_login_form = $live_chat.find('#live-chat-anonymous-login');
     var $anonymous_username = $live_chat.find('#live-chat-anonymous-username');
     var $anonymous_login_button = $live_chat.find('#live-chat-anonymous-login-button');
-    
+
     var $npr_login_form = $live_chat.find('#live-chat-npr-login');
     var $npr_username = $live_chat.find('#live-chat-npr-username');
     var $npr_password = $live_chat.find('#live-chat-npr-password');
@@ -184,7 +184,7 @@ $(document).ready(function() {
         if (visible) {
             $editor.find('h4 span').text(auth.Name);
         }
-  
+
         $login.toggle(!visible);
         $editor.toggle(visible);
    }
@@ -281,7 +281,7 @@ $(document).ready(function() {
         scribble_auth_user({ auth_route: 'anonymous', username: $anonymous_username.val() });
     });
 
-    $npr_login.on('click', function(){
+    $npr_login_button.on('click', function(){
         npr_auth_user();
     });
 
