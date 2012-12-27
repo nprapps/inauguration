@@ -1,5 +1,7 @@
 $(document).ready(function(){
-    // Things from the DOM, cached for easy access.
+    var UPDATE_POLLING_INTERVAL = 10000;
+    var ALERT_POLLING_INTERVAL = 500;
+  
     var $liveChat = $('#live-chat');
     var $chatTitle = $('#live-chat-title');
     var $chatBlurb = $('#live-chat-blurb');
@@ -18,21 +20,16 @@ $(document).ready(function(){
     var $npr_username = $('#live-chat-npr-username');
     var $npr_password = $('#live-chat-npr-password');
 
-    // Get some stuff into the global context.
-    if (typeof window.SCRIBBLE !== "object") window.SCRIBBLE = {};
-    window.SCRIBBLE.chat_id = $liveChat.attr('data-scribblelive-chat-id');
-    window.SCRIBBLE.chat_token = $liveChat.attr('data-scribblelive-chat-token');
-    window.SCRIBBLE.base_url = 'http://apiv1.scribblelive.com/event/'+ window.SCRIBBLE.chat_id +'/all/?Token='+ window.SCRIBBLE.chat_token +'&format=json';
-    window.SCRIBBLE.user_url = 'apiv1.scribblelive.com/user';
-    window.SCRIBBLE.scribble_auth_key = 'testAuth4';
-    window.SCRIBBLE.janrain_auth_key = 'janrainAuth0';
+    var chat_id = $liveChat.attr('data-scribblelive-chat-id');
+    var chat_token = $liveChat.attr('data-scribblelive-chat-token');
+    var base_url = 'http://apiv1.scribblelive.com/event/'+ chat_id +'/all/?Token='+ chat_token +'&format=json';
+    var user_url = 'apiv1.scribblelive.com/user';
+    var scribble_auth_key = 'testAuth4';
+    var oauth_key = 'oauthKey0';
 
     // Arrays.
     var old_posts = [];
     var alerts = [];
-
-    // Constants.
-    var POLLING_INTERVAL = 10000;
 
     function clear_html() {
         $anonymous_username.val('');
@@ -41,17 +38,17 @@ $(document).ready(function(){
     }
 
     function logout_user() {
-        $.totalStorage(window.SCRIBBLE.scribble_auth_key, null);
+        $.totalStorage(scribble_auth_key, null);
         clear_html();
-        livechatInitUser();
+        toggle_user_context();
     }
 
     function post_comment(data) {
-        var auth = $.totalStorage(window.SCRIBBLE.scribble_auth_key);
+        var auth = $.totalStorage(scribble_auth_key);
         var content_param = '&Content=' + data.content;
         var auth_param = '&Auth=' + auth.Auth;
         $.ajax({
-            url: window.SCRIBBLE.base_url + content_param + auth_param,
+            url: base_url + content_param + auth_param,
             dataType: 'jsonp',
             cache: false,
             success: function(response) {
@@ -77,7 +74,7 @@ $(document).ready(function(){
 
     function update_live_chat() {
         $.ajax({
-            url: window.SCRIBBLE.base_url + '&Max=10000&Order=desc',
+            url: base_url + '&Max=10000&Order=desc',
             dataType: 'jsonp',
             cache: false,
             success: function(data) {
@@ -172,7 +169,10 @@ $(document).ready(function(){
         }
     }
 
-    function livechatInitUser(auth) {
+    function toggle_user_context(auth) {
+        /*
+         * Show auth if not logged in, hide auth if logged in.
+         */
         if (auth === null) {
             $('.login').show();
             $('.logout').hide();
@@ -185,17 +185,20 @@ $(document).ready(function(){
         }
     }
 
-    function livechatAuthUser(data) {
-        var auth_url = 'http://'+ window.SCRIBBLE.user_url +'/create?Token='+ window.SCRIBBLE.chat_token;
+    function scribble_auth_user(data) {
+        /*
+         * Login to Scribble live with username we got from [Facebook|Google|NPR|etc].
+         */
+        var auth_url = 'http://'+ user_url +'/create?Token='+ chat_token;
+
         if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
             $.ajax({
                 url: auth_url +'&format=json&Name='+ data.username,
                 dataType: 'jsonp',
                 cache: false,
                 success: function(auth) {
-                    console.log(auth);
-                    $.totalStorage(window.SCRIBBLE.scribble_auth_key, auth);
-                    livechatInitUser($.totalStorage(window.SCRIBBLE.scribble_auth_key));
+                    $.totalStorage(scribble_auth_key, auth);
+                    toggle_user_context($.totalStorage(scribble_auth_key));
                 }
             });
         }
@@ -210,9 +213,9 @@ $(document).ready(function(){
          */
         if (response.status === 'success') {
             response.user_data.Name = response.user_data.nick_name;
-            $.totalStorage(window.SCRIBBLE.janrain_auth_key, response.user_data);
-            livechatAuthUser({ auth_route: 'anonymous', username: response.user_data.nick_name });
-            livechatInitUser(window.SCRIBBLE.janrain_auth_key);
+            $.totalStorage(oauth_key, response.user_data);
+            scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
+            toggle_user_context(oauth_key);
         }
  
     }
@@ -223,34 +226,40 @@ $(document).ready(function(){
         anonymous_path('off');
         npr_path('off');
     });
+
     $anonymous.on('click', function(){
         anonymous_path('on');
         npr_path('off');
     });
+
     $npr.on('click', function(){
         anonymous_path('off');
         npr_path('on');
     });
+
     $logout.on('click', function() {
         logout_user();
         anonymous_path('off');
         npr_path('off');
     });
+
     $anonymous_login.on('click', function(){
-        livechatAuthUser({ auth_route: 'anonymous', username: $anonymous_username.val() });
+        scribble_auth_user({ auth_route: 'anonymous', username: $anonymous_username.val() });
     });
+
     $clear.on('click', function() {
         clear_html();
     });
+
     $commentBtn.on('click', function() {
         post_comment({ content: $comment.val() });
     });
 
     // Initialize the user and the chat data.
-    livechatInitUser($.totalStorage(window.SCRIBBLE.scribble_auth_key));
+    toggle_user_context($.totalStorage(scribble_auth_key));
     update_live_chat();
-    setInterval(update_live_chat, POLLING_INTERVAL);
-    setInterval(update_alerts, 500);
+    setInterval(update_live_chat, UPDATE_POLLING_INTERVAL);
+    setInterval(update_alerts, ALERT_POLLING_INTERVAL);
 });
 
 
