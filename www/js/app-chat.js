@@ -140,13 +140,13 @@
                         }*/
 
                         post.poll_answers = '';
-                        
+
                         _.each(post.Entities.Answers, function(answer) {
                             post.poll_answers += '<label>'+ answer.Text +'<input name="poll-'+ post.Id +'" type="radio"></input></label>';
                         });
 
                         post.poll_question = post.Entities.Question;
-                        
+
                         post.html = JST.chat_poll(post);
                     } else if (post.Type == "IMAGE") {
                         /*{
@@ -164,7 +164,7 @@
                             post.image_urls.push(media.Url);
                         });
 
-                        post.html = JST.chat_image(post);;
+                        post.html = JST.chat_image(post);
                     }
 
                     new_posts.push(post);
