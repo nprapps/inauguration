@@ -47,6 +47,7 @@
 
     // State
     var post_ids = [];
+    var delete_ids = [];
     var alerts = [];
 
     function clear_fields() {
@@ -111,7 +112,7 @@
 
                 var new_posts = [];
 
-                _.each(data.Posts, function(post, index, list) {
+                _.each(data.Posts, function(post) {
                     // Filter posts we've seen before
                     if (_.contains(post_ids, post.Id)) {
                         return;
@@ -171,9 +172,19 @@
                 });
 
                 if (new_posts.length > 0) {
-                    new_posts = _.sortBy(new_posts, 'Id').reverse(); 
+                    new_posts = _.sortBy(new_posts, 'CreatedJSON'); 
                     $chat_body.append(_.pluck(new_posts, 'html'));
                 }
+
+                _.each(data.Deletes, function(post) {
+                    if (_.contains(delete_ids, post.Id)) {
+                        return;
+                    }
+
+                    delete_ids.push(post.Id);
+
+                    $live_chat.find('#chat-post-' + post.Id).remove();
+                });
             }
         });
     }
