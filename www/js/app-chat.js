@@ -4,6 +4,7 @@ $(document).ready(function() {
     var CHAT_TOKEN = 'FtP7wRfX';
     var CHAT_URL = 'http://apiv1.scribblelive.com/event/'+ CHAT_ID +'/all/?Token='+ CHAT_TOKEN +'&format=json';
     var USER_URL = 'apiv1.scribblelive.com/user';
+    var NPR_AUTH_URL = 'https://api.npr.org/infinite/v1.0/login/';
     var SCRIBBLE_AUTH_KEY = 'testAuth4';
     var OAUTH_KEY = 'oauthKey0';
     var UPDATE_POLLING_INTERVAL = 10000;
@@ -202,6 +203,35 @@ $(document).ready(function() {
         }
     }
 
+    function npr_auth_user() {
+        /*
+        * From email with John Nelson:
+        *   url:
+        *        api.npr.org/infinite/v1.0/login/
+        *    parameters:
+        *        auth - Base64 encoded json string {username:'',password:'',remember:'',temp_user:''}
+        *            I believe you will only need the username/password fields.
+        *            The other 2 can be passed in null.
+        *        platform - Hardcode this to CRMAPP for now.
+        */
+        var payload = { username: $npr_username.val(), password: $npr_password.val(), remember: null, temp_user: null };
+        var b64_payload = window.btoa(JSON.stringify(payload));
+
+        $.ajax({
+            url: NPR_AUTH_URL,
+            dataType: 'jsonp',
+            type: 'POST',
+            crossDomain: true,
+            cache: false,
+            data: { auth: b64_payload, platform: 'CRMAPP' },
+            success: function(response) {
+                $.totalStorage(OAUTH_KEY, response.user_data);
+                scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
+                toggle_user_context(OAUTH_KEY);
+            }
+        });
+    }
+
     function oauth_callback(response) {
         /*
          * Authenticate and intialize user.
@@ -240,6 +270,10 @@ $(document).ready(function() {
 
     $anonymous_login.on('click', function(){
         scribble_auth_user({ auth_route: 'anonymous', username: $anonymous_username.val() });
+    });
+
+    $npr_login.on('click', function(){
+        npr_auth_user();
     });
 
     $clear.on('click', function() {
