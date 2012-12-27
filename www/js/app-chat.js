@@ -117,7 +117,7 @@
                         return;
                     }
 
-                    post.CreatedJSON = parseInt(moment(post.Created).valueOf());
+                    post.CreatedJSON = parseInt(moment(post.Created).valueOf(), 10);
                     post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
 
                     if (post.Type == "TEXT") {
@@ -139,13 +139,13 @@
                         }*/
 
                         post.poll_answers = '';
-                        
+
                         _.each(post.Entities.Answers, function(answer) {
                             post.poll_answers += '<label>'+ answer.Text +'<input name="poll-'+ post.Id +'" type="radio"></input></label>';
                         });
 
                         post.poll_question = post.Entities.Question;
-                        
+
                         post.html = JST.chat_poll(post);
                     } else if (post.Type == "IMAGE") {
                         /*{
@@ -163,7 +163,7 @@
                             post.image_urls.push(media.Url);
                         });
 
-                        post.html = JST.chat_image(post);;
+                        post.html = JST.chat_image(post);
                     }
 
                     new_posts.push(post);
@@ -171,7 +171,7 @@
                 });
 
                 if (new_posts.length > 0) {
-                    new_posts = _.sortBy(new_posts, 'Id').reverse(); 
+                    new_posts = _.sortBy(new_posts, 'Id').reverse();
                     $chat_body.append(_.pluck(new_posts, 'html'));
                 }
             }
