@@ -45,7 +45,7 @@
     var $npr_login_button = null
 
     // State
-    var old_posts = [];
+    var post_ids = [];
     var alerts = [];
 
     function clear_fields() {
@@ -95,26 +95,33 @@
     }
 
     function update_live_chat() {
+        /*
+         * Fetch latest posts and render them.
+         */
         $.ajax({
             url: chat_url + '&Max=10000&Order=desc',
             dataType: 'jsonp',
             cache: false,
             success: function(data) {
-                if (old_posts.length === 0) {
+                if (post_ids.length === 0) {
                     $chat_title.text(data.Title);
                     $chat_blurb.text(data.Description);
                 }
+
                 var new_posts = [];
 
-                _.each(data.Posts, function(post, index, list){
+                _.each(data.Posts, function(post, index, list) {
+                    // Filter posts we've seen before
+                    if (_.contains(post_ids, post.Id)) {
+                        return;
+                    }
+
                     post.CreatedJSON = parseInt(moment(post.Created).valueOf(), 10);
                     post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
+
                     if (post.Type == "TEXT") {
-                        new_posts.push(JST.chat_text({
-                            post: post
-                        }));
-                    }
-                    else if (post.Type == "POLL") {
+                        post.html = JST.chat_text(post);
+                    } else if (post.Type == "POLL") {
                         /*{
                         Entities: {
                             Answers: [
@@ -129,16 +136,17 @@
                             TotalVotes: 0,
                         }
                         }*/
+
                         post.poll_answers = '';
+                        
                         _.each(post.Entities.Answers, function(answer) {
                             post.poll_answers += '<label>'+ answer.Text +'<input name="poll-'+ post.Id +'" type="radio"></input></label>';
                         });
+
                         post.poll_question = post.Entities.Question;
-                        new_posts.push(JST.chat_poll({
-                            post: post
-                        }));
-                    }
-                    else if (post.Type == "IMAGE") {
+                        
+                        post.html = JST.chat_poll(post);
+                    } else if (post.Type == "IMAGE") {
                         /*{
                         Media: [
                                 {
@@ -147,19 +155,20 @@
                                 }
                             ]
                         }*/
+
                         _.each(post.Media, function(media) {
-                            console.log('.');
                         });
+
+                        post.html = 'IMAGE POST -- TEMPLATE NEEDED!';
                     }
+
+                    new_posts.push(post);
+                    post_ids.push(post.Id);
                 });
 
-                var posts = _.difference(new_posts, old_posts);
-
-                if (posts.length > 0) {
-                    posts.sort().reverse();
-                    $chat_body.append(posts);
-                    old_posts = old_posts.concat(posts);
-                    old_posts.sort();
+                if (new_posts.length > 0) {
+                    new_posts = _.sortBy(new_posts, 'Id').reverse(); 
+                    $chat_body.append(_.pluck(new_posts, 'html'));
                 }
             }
         });
