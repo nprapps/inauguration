@@ -2,13 +2,13 @@ $(document).ready(function(){
     var UPDATE_POLLING_INTERVAL = 10000;
     var ALERT_POLLING_INTERVAL = 500;
   
-    var $liveChat = $('#live-chat');
-    var $chatTitle = $('#live-chat-title');
-    var $chatBlurb = $('#live-chat-blurb');
+    var $live_chat = $('#live-chat');
+    var $chat_title = $('#live-chat-title');
+    var $chat_blurb = $('#live-chat-blurb');
     var $anon = $('#live-chat-anonymous');
-    var $commentBtn = $('#live-chat-button');
+    var $comment_button = $('#live-chat-button');
     var $comment = $('#live-chat-content');
-    var $alert = $('#live-chat-alerts');
+    var $alerts = $('#live-chat-alerts');
     var $logout = $('#live-chat-logout');
     var $clear = $('#live-chat-clear');
     var $anonymous = $('button.anon');
@@ -20,8 +20,8 @@ $(document).ready(function(){
     var $npr_username = $('#live-chat-npr-username');
     var $npr_password = $('#live-chat-npr-password');
 
-    var chat_id = $liveChat.attr('data-scribblelive-chat-id');
-    var chat_token = $liveChat.attr('data-scribblelive-chat-token');
+    var chat_id = $live_chat.attr('data-scribblelive-chat-id');
+    var chat_token = $live_chat.attr('data-scribblelive-chat-token');
     var base_url = 'http://apiv1.scribblelive.com/event/'+ chat_id +'/all/?Token='+ chat_token +'&format=json';
     var user_url = 'apiv1.scribblelive.com/user';
     var scribble_auth_key = 'testAuth4';
@@ -47,6 +47,7 @@ $(document).ready(function(){
         var auth = $.totalStorage(scribble_auth_key);
         var content_param = '&Content=' + data.content;
         var auth_param = '&Auth=' + auth.Auth;
+
         $.ajax({
             url: base_url + content_param + auth_param,
             dataType: 'jsonp',
@@ -68,7 +69,7 @@ $(document).ready(function(){
         _.each(alerts, function(alert, index, list) {
             alerts.splice(alert);
             alert_html = JST.alert({ alert: alert });
-            $alert.append(alert_html);
+            $alerts.append(alert_html);
         });
     }
 
@@ -79,8 +80,8 @@ $(document).ready(function(){
             cache: false,
             success: function(data) {
                 if (old_posts.length === 0) {
-                    $chatTitle.text(data.Title);
-                    $chatBlurb.text(data.Description);
+                    $chat_title.text(data.Title);
+                    $chat_blurb.text(data.Description);
                 }
                 var new_posts = [];
 
@@ -135,7 +136,7 @@ $(document).ready(function(){
 
                 if (posts.length > 0) {
                     posts.sort().reverse();
-                    $liveChat.append(posts);
+                    $live_chat.append(posts);
                     old_posts = old_posts.concat(posts);
                     old_posts.sort();
                 }
@@ -143,30 +144,22 @@ $(document).ready(function(){
         });
     }
 
-    function npr_path(direction) {
-        if (direction === 'on') {
-            $('label.npr').show();
-            $npr_login.show();
-            $npr.addClass('disabled');
-        }
-        if (direction === 'off') {
-            $('label.npr').hide();
-            $npr_login.hide();
-            $npr.removeClass('disabled');
-        }
+    function toggle_npr_login(visible) {
+        /*
+         * Toggle UI elements for NPR login.
+         */
+        $('label.npr').toggle(visible);
+        $npr_login.toggle(visible);
+        $npr.toggleClass('disabled', visible);
     }
 
-    function anonymous_path(direction) {
-        if (direction === 'on') {
-            $('label.anon').show();
-            $anonymous_login.show();
-            $anonymous.addClass('disabled');
-        }
-        if (direction === 'off') {
-            $('label.anon').hide();
-            $anonymous_login.hide();
-            $anonymous.removeClass('disabled');
-        }
+    function toggle_anonymous_login(visible) {
+        /*
+         * Toggle UI elements for anonymous login.
+         */
+        $('label.anon').toggle(visible);
+        $anonymous_login.toggle(visible);
+        $anonymous.toggleClass('disabled', visible);
     }
 
     function toggle_user_context(auth) {
@@ -223,24 +216,24 @@ $(document).ready(function(){
     // EVENT HANDLERS ON THE PAGE.
     $oauth.on('click',function() {
         NPR_AUTH.login($(this).attr('data-service'), oauth_callback);
-        anonymous_path('off');
-        npr_path('off');
+        toggle_anonymous_login(false);
+        toggle_npr_login(false);
     });
 
     $anonymous.on('click', function(){
-        anonymous_path('on');
-        npr_path('off');
+        toggle_anonymous_login(true);
+        toggle_npr_login(false);
     });
 
     $npr.on('click', function(){
-        anonymous_path('off');
-        npr_path('on');
+        toggle_anonymous_login(false);
+        toggle_npr_login(true);
     });
 
     $logout.on('click', function() {
         logout_user();
-        anonymous_path('off');
-        npr_path('off');
+        toggle_anonymous_login(false);
+        toggle_npr_login(false);
     });
 
     $anonymous_login.on('click', function(){
@@ -251,7 +244,7 @@ $(document).ready(function(){
         clear_html();
     });
 
-    $commentBtn.on('click', function() {
+    $comment_button.on('click', function() {
         post_comment({ content: $comment.val() });
     });
 
