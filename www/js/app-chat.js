@@ -1,34 +1,4 @@
 $(document).ready(function(){
-    function e() {
-        janrain.ready = true;
-    }
-    if (typeof window.janrain !== "object") window.janrain = {};
-    if (typeof window.janrain.settings !== "object") window.janrain.settings = {};
-
-    janrain.settings = {};
-    janrain.settings.tokenAction = "event";
-    janrain.settings.custom = true;
-    janrain.settings.tokenUrl = "http://login.npr.org/";
-    janrain.settings.appUrl = "https://login.npr.org/";
-    janrain.settings.type = "embed";
-    janrain.settings.appId = "odgehpicdimjmbgoofdi";
-    janrain.settings.providers = ["facebook", "google", "yahoo"];
-    if (document.addEventListener) {
-        document.addEventListener("DOMContentLoaded", e, false);
-    } else {
-        window.attachEvent("onload", e);
-    }
-    var t = document.createElement("script");
-    t.type = "text/javascript";
-    t.id = "janrainAuthWidget";
-    if (document.location.protocol === "https:") {
-        t.src = "https://rpxnow.com/js/lib/login.npr.org/engage.js";
-    } else {
-        t.src = "http://widget-cdn.rpxnow.com/js/lib/login.npr.org/engage.js";
-    }
-    var n = document.getElementsByTagName("script")[0];
-    n.parentNode.insertBefore(t, n);
-
     // Things from the DOM, cached for easy access.
     var $liveChat = $('#live-chat');
     var $chatTitle = $('#live-chat-title');
@@ -202,9 +172,54 @@ $(document).ready(function(){
         }
     }
 
+    function livechatInitUser(auth) {
+        if (auth === null) {
+            $('.login').show();
+            $('.logout').hide();
+            $('#live-chat-form h4 span').empty().text('!');
+        }
+        else {
+            $('.logout').show();
+            $('.login').hide();
+            $('#live-chat-form h4 span').empty().text(', ' + auth.Name + '.');
+        }
+    }
+
+    function livechatAuthUser(data) {
+        var auth_url = 'http://'+ window.SCRIBBLE.user_url +'/create?Token='+ window.SCRIBBLE.chat_token;
+        if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
+            $.ajax({
+                url: auth_url +'&format=json&Name='+ data.username,
+                dataType: 'jsonp',
+                cache: false,
+                success: function(auth) {
+                    console.log(auth);
+                    $.totalStorage(window.SCRIBBLE.scribble_auth_key, auth);
+                    livechatInitUser($.totalStorage(window.SCRIBBLE.scribble_auth_key));
+                }
+            });
+        }
+        else {
+            alert('Missing something. Try filling out the form again.');
+        }
+    }
+
+    function oauth_callback(response) {
+        /*
+         * Authenticate and intialize user.
+         */
+        if (response.status === 'success') {
+            response.user_data.Name = response.user_data.nick_name;
+            $.totalStorage(window.SCRIBBLE.janrain_auth_key, response.user_data);
+            livechatAuthUser({ auth_route: 'anonymous', username: response.user_data.nick_name });
+            livechatInitUser(window.SCRIBBLE.janrain_auth_key);
+        }
+ 
+    }
+
     // EVENT HANDLERS ON THE PAGE.
     $oauth.on('click',function() {
-        janrain.engage.signin.triggerFlow($(this).attr('data-service'));
+        NPR_AUTH.login($(this).attr('data-service'), oauth_callback);
         anonymous_path('off');
         npr_path('off');
     });
@@ -238,53 +253,4 @@ $(document).ready(function(){
     setInterval(update_alerts, 500);
 });
 
-function livechatInitUser(auth) {
-    if (auth === null) {
-        $('.login').show();
-        $('.logout').hide();
-        $('#live-chat-form h4 span').empty().text('!');
-    }
-    else {
-        $('.logout').show();
-        $('.login').hide();
-        $('#live-chat-form h4 span').empty().text(', ' + auth.Name + '.');
-    }
-}
 
-function livechatAuthUser(data) {
-    var auth_url = 'http://'+ window.SCRIBBLE.user_url +'/create?Token='+ window.SCRIBBLE.chat_token;
-    if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
-        $.ajax({
-            url: auth_url +'&format=json&Name='+ data.username,
-            dataType: 'jsonp',
-            cache: false,
-            success: function(auth) {
-                console.log(auth);
-                $.totalStorage(window.SCRIBBLE.scribble_auth_key, auth);
-                livechatInitUser($.totalStorage(window.SCRIBBLE.scribble_auth_key));
-            }
-        });
-    }
-    else {
-        alert('Missing something. Try filling out the form again.');
-    }
-}
-
-function janrainWidgetOnload() {
-    janrain.events.onProviderLoginToken.addHandler(function(response) {
-        $.ajax({
-            type: 'POST',
-            url: 'https://api.npr.org/infinite/v1.0/janrain/',
-            dataType: 'json',
-            data: { token: response.token, temp_user: null },
-            success: function(janrain_auth){
-                if (janrain_auth.status === 'success') {
-                    janrain_auth.user_data.Name = janrain_auth.user_data.nick_name;
-                    $.totalStorage(window.SCRIBBLE.janrain_auth_key, janrain_auth.user_data);
-                    livechatAuthUser({ auth_route: 'anonymous', username: janrain_auth.user_data.nick_name });
-                    livechatInitUser(window.SCRIBBLE.janrain_auth_key);
-                }
-            }
-        });
-    });
-}
