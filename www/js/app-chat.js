@@ -2,6 +2,7 @@
     // Immutable configuration
     var USER_URL = 'apiv1.scribblelive.com/user';
     var NPR_AUTH_URL = 'https://api.npr.org/infinite/v1.0/login/';
+    var JANRAIN_INFO_URL = 'https://rpxnow.com/api/v2/auth_info';
     var OAUTH_KEY = 'oauthKey0';
     var SCRIBBLE_AUTH_KEY = 'testAuth4';
 
@@ -138,19 +139,19 @@
                             post: post
                         }));
                     }
-                    else if (post.Type == "IMAGE") {
-                        /*{
-                        Media: [
-                                {
-                                    Type: "IMAGE",
-                                    Url: "http://foo.biz/foo.png",
-                                }
-                            ]
-                        }*/
-                        _.each(post.Media, function(media) {
-                            console.log('.');
-                        });
-                    }
+                    // else if (post.Type == "IMAGE") {
+                    //     /*{
+                    //     Media: [
+                    //             {
+                    //                 Type: "IMAGE",
+                    //                 Url: "http://foo.biz/foo.png",
+                    //             }
+                    //         ]
+                    //     }*/
+                    //     _.each(post.Media, function(media) {
+                    //          do_something();
+                    //     });
+                    // }
                 });
 
                 var posts = _.difference(new_posts, old_posts);
@@ -210,7 +211,6 @@
                     $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
                     clear_fields();
                     toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
-                    console.log(auth);
                 }
             });
         }
@@ -254,17 +254,8 @@
          */
         if (response.status === 'success') {
             $.totalStorage(OAUTH_KEY, response.user_data);
-            $.ajax({
-                success: function(provider_data) {
-                    console.log(provider_data);
-                    scribble_auth_user({
-                        auth_route: 'anonymous',
-                        username: provider_data.profile.display_name,
-                        avatar: provider_data.profile.photo
-                    });
-                    toggle_user_context(OAUTH_KEY);
-                }
-            });
+            scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
+            toggle_user_context(OAUTH_KEY);
         }
 
     }
