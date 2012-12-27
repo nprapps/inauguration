@@ -124,46 +124,8 @@
                     if (post.Type == "TEXT") {
                         post.html = JST.chat_text(post);
                     } else if (post.Type == "POLL") {
-                        /*{
-                        Entities: {
-                            Answers: [
-                                {
-                                    Id: 12345,
-                                    Text: "Foo",
-                                    Votes: 0
-                                }
-                            ],
-                            Id: 12345,
-                            Question: "Foo",
-                            TotalVotes: 0,
-                        }
-                        }*/
-
-                        post.poll_answers = '';
-
-                        _.each(post.Entities.Answers, function(answer) {
-                            post.poll_answers += '<label>'+ answer.Text +'<input name="poll-'+ post.Id +'" type="radio"></input></label>';
-                        });
-
-                        post.poll_question = post.Entities.Question;
-
                         post.html = JST.chat_poll(post);
                     } else if (post.Type == "IMAGE") {
-                        /*{
-                        Media: [
-                                {
-                                    Type: "IMAGE",
-                                    Url: "http://foo.biz/foo.png",
-                                }
-                            ]
-                        }*/
-
-                        post.image_urls = [];
-
-                        _.each(post.Media, function(media) {
-                            post.image_urls.push(media.Url);
-                        });
-
                         post.html = JST.chat_image(post);
                     }
 
