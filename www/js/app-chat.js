@@ -2,6 +2,7 @@
     // Immutable configuration
     var USER_URL = 'apiv1.scribblelive.com/user';
     var NPR_AUTH_URL = 'https://api.npr.org/infinite/v1.0/login/';
+    var JANRAIN_INFO_URL = 'https://rpxnow.com/api/v2/auth_info';
     var OAUTH_KEY = 'oauthKey0';
     var SCRIBBLE_AUTH_KEY = 'testAuth4';
 
@@ -12,37 +13,37 @@
         update_interval: 10000,
         alert_interval: 500,
         read_only: false
-    }
+    };
 
     // Imputed configuration
     var chat_url = null;
 
     // Element references
     var $live_chat = null;
-    var $chat_title = null
-    var $chat_blurb = null
-    var $chat_body = null
-    var $alerts = null
+    var $chat_title = null;
+    var $chat_blurb = null;
+    var $chat_body = null;
+    var $alerts = null;
 
-    var $editor = null
-    var $comment = null
-    var $comment_button = null
-    var $logout = null
-    var $clear = null
+    var $editor = null;
+    var $comment = null;
+    var $comment_button = null;
+    var $logout = null;
+    var $clear = null;
 
-    var $login = null
-    var $anonymous = null
-    var $oauth = null
-    var $npr = null
+    var $login = null;
+    var $anonymous = null;
+    var $oauth = null;
+    var $npr = null;
 
-    var $anonymous_login_form = null
-    var $anonymous_username = null
-    var $anonymous_login_button = null
+    var $anonymous_login_form = null;
+    var $anonymous_username = null;
+    var $anonymous_login_button = null;
 
-    var $npr_login_form = null
-    var $npr_username = null
-    var $npr_password = null
-    var $npr_login_button = null
+    var $npr_login_form = null;
+    var $npr_username = null;
+    var $npr_password = null;
+    var $npr_login_button = null;
 
     // State
     var post_ids = [];
@@ -215,7 +216,7 @@
 
         if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
             $.ajax({
-                url: auth_url +'&format=json&Name='+ data.username,
+                url: auth_url +'&format=json&Name='+ data.username +'&Avatar='+ data.avatar,
                 dataType: 'jsonp',
                 cache: false,
                 success: function(auth) {
@@ -264,7 +265,6 @@
          * Authenticate and intialize user.
          */
         if (response.status === 'success') {
-            response.user_data.Name = response.user_data.nick_name;
             $.totalStorage(OAUTH_KEY, response.user_data);
             scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
             toggle_user_context(OAUTH_KEY);
@@ -286,7 +286,7 @@
         $chat_blurb = this.find('#live-chat-blurb');
         $chat_body = this.find('#live-chat-body');
         $alerts = this.find('#live-chat-alerts');
-        
+
         $editor = this.find('#live-chat-editor');
         $comment = this.find('#live-chat-content');
         $comment_button = this.find('#live-chat-button');
@@ -301,7 +301,7 @@
         $anonymous_login_form = this.find('#live-chat-anonymous-login');
         $anonymous_username = this.find('#live-chat-anonymous-username');
         $anonymous_login_button = this.find('#live-chat-anonymous-login-button');
-        
+
         $npr_login_form = this.find('#live-chat-npr-login');
         $npr_username = this.find('#live-chat-npr-username');
         $npr_password = this.find('#live-chat-npr-password');
@@ -357,7 +357,5 @@
         setInterval(update_alerts, options.alert_interval);
 
         return this;
-    }
+    };
 }(jQuery));
-
-
