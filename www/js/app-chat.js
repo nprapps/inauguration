@@ -8,6 +8,7 @@ $(document).ready(function() {
     var OAUTH_KEY = 'oauthKey0';
     var UPDATE_POLLING_INTERVAL = 10000;
     var ALERT_POLLING_INTERVAL = 500;
+    var READ_ONLY = false;
 
     // Element references
     var $live_chat = $('#live-chat');
@@ -259,7 +260,10 @@ $(document).ready(function() {
     });
 
     // Initialize the user and the chat data.
-    toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
+    if (!READ_ONLY) {
+        toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
+    }
+
     update_live_chat();
     setInterval(update_live_chat, UPDATE_POLLING_INTERVAL);
     setInterval(update_alerts, ALERT_POLLING_INTERVAL);
