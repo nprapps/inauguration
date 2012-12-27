@@ -1,6 +1,10 @@
-<div id="chat-post-<%= Id %>" class="chat-post-text">
+<div id="chat-post-<%= Id %>" class="chat-post-image">
     <p class="chat-post-author-photo"><img src="<%= Creator.Avatar %>" /></p>
-    <p class="chat-post-content"><%= Content %></p>
+    <p class="chat-post-content">
+    <% _.each(image_urls, function(url) { %>
+        <img src="<%= url %>" />
+    <% }); %>
+    </p>
     <p class="chat-post-author"><%= Creator.Name %></p>
     <p class="chat-post-datetime"><%= Created %></p>
 </div>

@@ -116,7 +116,7 @@
                         return;
                     }
 
-                    post.CreatedJSON = parseInt(moment(post.Created).valueOf(), 10);
+                    post.CreatedJSON = parseInt(moment(post.Created).valueOf());
                     post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
 
                     if (post.Type == "TEXT") {
@@ -156,10 +156,13 @@
                             ]
                         }*/
 
+                        post.image_urls = [];
+
                         _.each(post.Media, function(media) {
+                            post.image_urls.push(media.Url);
                         });
 
-                        post.html = 'IMAGE POST -- TEMPLATE NEEDED!';
+                        post.html = JST.chat_image(post);;
                     }
 
                     new_posts.push(post);
