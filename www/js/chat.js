@@ -1,7 +1,7 @@
 /*
  * A jQuery-ized Scribble Live plugin.
  *
- * Depends on jQuery, Underscore, auth.js, 
+ * Depends on jQuery, Underscore, auth.js,
  * chat.less and the JST chat templates.
  */
 
@@ -175,7 +175,7 @@
                     });
 
                     if (new_posts.length > 0) {
-                        new_posts = _.sortBy(new_posts, 'CreatedJSON'); 
+                        new_posts = _.sortBy(new_posts, 'CreatedJSON');
                         $chat_body.append(_.pluck(new_posts, 'html'));
 
                         scroll_down = true;
@@ -195,7 +195,7 @@
                     // Handle post edits
                     _.each(data.Edits, function(post) {
                         var timestamp = parseInt(moment(post.LastModified).valueOf());
-                        
+
                         if (_.contains(edit_ids, post.Id)) {
                             if (edit_timestamps[post.Id] === timestamp) {
                                 return;
@@ -207,7 +207,7 @@
                         edit_timestamps[post.Id] = timestamp;
 
                         post.html = render_post(post);
-                        
+
                         var $existing = $chat_body.find('.chat-post[data-id="' + post.Id + '"]');
 
                         if ($existing.length > 0) {
@@ -276,7 +276,7 @@
 
             if (visible) {
                 $editor.find('h4 span').text(auth.Name);
-                
+
                 if (reauthenticate === true) {
                     if (validate_scribble_auth() === false) {
                         scribble_auth_user({ auth_route: 'anonymous', username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name });
@@ -300,6 +300,7 @@
                     dataType: 'jsonp',
                     cache: false,
                     success: function(auth) {
+                        auth.Expires = moment().add('minutes', 118).valueOf();
                         $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
                         clear_fields();
                         toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
@@ -351,7 +352,7 @@
             }
         }
 
-        // Event handlers 
+        // Event handlers
         $oauth.on('click',function() {
             NPR_AUTH.login($(this).attr('data-service'), oauth_callback);
             toggle_anonymous_login(false);
@@ -392,7 +393,7 @@
 
         // Initialize the user and the chat data.
         if (!plugin.settings.read_only) {
-            toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), true);
+            toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
         }
 
         update_live_chat();
