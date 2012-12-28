@@ -132,6 +132,15 @@
             });
         }
 
+        function identify_my_posts() {
+            if ($.totalStorage(SCRIBBLE_AUTH_KEY)) {
+                if ($.totalStorage(SCRIBBLE_AUTH_KEY).Id) {
+                    $live_chat.find('div.chat_post').removeClass('highlighted');
+                    $live_chat.find('div[data-author='+ $.totalStorage(SCRIBBLE_AUTH_KEY).Id +']').addClass('highlighted');
+                }
+            }
+        }
+
         function render_post(post) {
             post.CreatedJSON = parseInt(moment(post.Created).valueOf());
             post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
@@ -239,6 +248,8 @@
                     if (scroll_down) {
                         $chat_body.scrollTop($chat_body[0].scrollHeight);
                     }
+                    // Identifies posts from the currently logged-in author.
+                    identify_my_posts();
                 }
             });
         }
@@ -283,7 +294,6 @@
 
             if (visible) {
                 $editor.find('h4 span').text(auth.Name);
-
                 if (reauthenticate === true) {
                     if (validate_scribble_auth() === false) {
                         scribble_auth_user({ auth_route: 'anonymous', username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name });
