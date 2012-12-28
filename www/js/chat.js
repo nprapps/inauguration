@@ -202,7 +202,7 @@
                         var timestamp = parseInt(moment(post.LastModified).valueOf());
 
                         if (_.contains(edit_ids, post.Id)) {
-                            if (edit_timestamps[post.Id] === timestamp) {
+                            if (edit_timestamps[post.Id] >= timestamp) {
                                 return;
                             }
                         } else {
@@ -221,8 +221,9 @@
                         // Updating a post never seen before (e.g. on page load)
                         } else {
                             var $posts = $chat_body.find('.chat-post');
+                            var $post = null;
 
-                            _.find($posts, function(post_el, i) {
+                            var comes_before = _.find($posts, function(post_el, i) {
                                 $post = $(post_el);
 
                                 if (parseInt($post.data('timestamp')) > post.CreatedJSON) {
@@ -233,6 +234,11 @@
 
                                 return false;
                             });
+
+                            // If no place in the order, put at the end
+                            if (!comes_before) {
+                                $post.after(post.html);
+                            }
                         }
                     });
 
