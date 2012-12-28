@@ -64,6 +64,8 @@
         // State
         var post_ids = [];
         var delete_ids = [];
+        var edit_ids = [];
+        var edit_timestamps = {};
         var alerts = [];
 
         function clear_fields() {
@@ -112,6 +114,21 @@
             });
         }
 
+        function render_post(post) {
+            post.CreatedJSON = parseInt(moment(post.Created).valueOf());
+            post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
+
+            if (post.Type == "TEXT") {
+                return JST.chat_text(post);
+            } else if (post.Type == "POLL") {
+                return JST.chat_poll(post);
+            } else if (post.Type == "IMAGE") {
+                return JST.chat_image(post);
+            } else {
+                return null;
+            }
+        }
+
         function update_live_chat() {
             /*
              * Fetch latest posts and render them.
@@ -126,24 +143,17 @@
                         $chat_blurb.text(data.Description);
                     }
 
+                    var scroll_down = false;
                     var new_posts = [];
 
+                    // Handle normal posts
                     _.each(data.Posts, function(post) {
                         // Filter posts we've seen before
                         if (_.contains(post_ids, post.Id)) {
                             return;
                         }
 
-                        post.CreatedJSON = parseInt(moment(post.Created).valueOf());
-                        post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
-
-                        if (post.Type == "TEXT") {
-                            post.html = JST.chat_text(post);
-                        } else if (post.Type == "POLL") {
-                            post.html = JST.chat_poll(post);
-                        } else if (post.Type == "IMAGE") {
-                            post.html = JST.chat_image(post);
-                        }
+                        post.html = render_post(post);
 
                         new_posts.push(post);
                         post_ids.push(post.Id);
@@ -152,8 +162,11 @@
                     if (new_posts.length > 0) {
                         new_posts = _.sortBy(new_posts, 'CreatedJSON'); 
                         $chat_body.append(_.pluck(new_posts, 'html'));
+
+                        scroll_down = true;
                     }
 
+                    // Handle post deletes
                     _.each(data.Deletes, function(post) {
                         if (_.contains(delete_ids, post.Id)) {
                             return;
@@ -161,8 +174,49 @@
 
                         delete_ids.push(post.Id);
 
-                        $live_chat.find('#chat-post-' + post.Id).remove();
+                        $chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
                     });
+
+                    // Handle post edits
+                    _.each(data.Edits, function(post) {
+                        var timestamp = parseInt(moment(post.LastModified).valueOf());
+                        
+                        if (_.contains(edit_ids, post.Id)) {
+                            if (edit_timestamps[post.Id] === timestamp) {
+                                return;
+                            }
+                        } else {
+                            edit_ids.push(post.Id);
+                        }
+
+                        edit_timestamps[post.Id] = timestamp;
+
+                        post.html = render_post(post);
+                        
+                        var $existing = $chat_body.find('.chat-post[data-id="' + post.Id + '"]');
+
+                        if ($existing.length > 0) {
+                            $existing.replaceWith(post.html);
+                        } else {
+                            var $posts = $chat_body.find('.chat-post');
+
+                            _.find($posts, function(post_el, i) {
+                                $post = $(post_el);
+
+                                if (parseInt($post.data('timestamp')) > post.CreatedJSON) {
+                                    $post.before(post.html);
+
+                                    return true;
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+
+                    if (scroll_down) {
+                        $chat_body.scrollTop($chat_body[0].scrollHeight);
+                    }
                 }
             });
         }

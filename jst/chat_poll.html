@@ -1,4 +1,4 @@
-<div id="chat-post-<%= Id %>" class="chat-post-poll">
+<div class="chat-post chat-post-poll" data-id="<%= Id %>" data-timestamp="<%= CreatedJSON %>">
     <h6 class="chat-poll-question">Poll: <%= Entities.Question %></h6>
     <p class="chat-poll">
     <% _.each(Entities.Answers, function(answer) { %>

@@ -1,4 +1,4 @@
-<div id="chat-post-<%= Id %>" class="chat-post-image">
+<div class="chat-post chat-post-image" data-id="<%= Id %>" data-timestamp="<%= CreatedJSON %>">
     <p class="chat-post-author-photo"><img src="<%= Creator.Avatar %>" /></p>
     <p class="chat-post-content">
     <% _.each(Media, function(media) { %>
