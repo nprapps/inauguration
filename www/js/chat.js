@@ -13,6 +13,7 @@
         var JANRAIN_INFO_URL = 'https://rpxnow.com/api/v2/auth_info';
         var OAUTH_KEY = 'oauthKey0';
         var SCRIBBLE_AUTH_KEY = 'testAuth4';
+        var SCRIBBLE_AUTH_EXPIRATION = 118;
 
         // Settings
         var defaults = {
@@ -140,7 +141,7 @@
             } else if (post.Type == "IMAGE") {
                 return JST.chat_image(post);
             } else {
-                return null;
+                throw 'Unsupported post type.';
             }
         }
 
@@ -168,7 +169,11 @@
                             return;
                         }
 
-                        post.html = render_post(post);
+                        try {
+                            post.html = render_post(post);
+                        } catch(err) {
+                            return;
+                        }
 
                         new_posts.push(post);
                         post_ids.push(post.Id);
@@ -210,8 +215,10 @@
 
                         var $existing = $chat_body.find('.chat-post[data-id="' + post.Id + '"]');
 
+                        // Updating a post already displayed
                         if ($existing.length > 0) {
                             $existing.replaceWith(post.html);
+                        // Updating a post never seen before (e.g. on page load)
                         } else {
                             var $posts = $chat_body.find('.chat-post');
 
@@ -300,7 +307,7 @@
                     dataType: 'jsonp',
                     cache: false,
                     success: function(auth) {
-                        auth.Expires = moment().add('minutes', 118).valueOf();
+                        auth.Expires = moment().add('minutes', SCRIBBLE_AUTH_EXPIRATION).valueOf();
                         $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
                         clear_fields();
                         toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
