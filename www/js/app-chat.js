@@ -66,7 +66,10 @@
         toggle_user_context();
     }
 
-    function post_comment(data) {
+    function _send_comment(data) {
+        /*
+        * Handles comment ajax.
+        */
         var auth = $.totalStorage(SCRIBBLE_AUTH_KEY);
         var content_param = '&Content=' + data.content;
         var auth_param = '&Auth=' + auth.Auth;
@@ -86,6 +89,20 @@
                 }
             }
         });
+    }
+
+    function post_comment(data) {
+        /*
+        * If auth is good, post comment now. Otherwise, reauthenticate and then post comment.
+        */
+        if (validate_scribble_auth() === true) {
+            _send_comment(data);
+        } else {
+            scribble_auth_user({
+                auth_route: 'anonymous',
+                username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name })
+            .then(_send_comment(data));
+        }
     }
 
     function update_alerts() {
@@ -123,8 +140,6 @@
 
                     if (post.Type == "TEXT") {
                         post.html = JST.chat_text(post);
-                    } else if (post.Type == "POLL") {
-                        post.html = JST.chat_poll(post);
                     } else if (post.Type == "IMAGE") {
                         post.html = JST.chat_image(post);
                     }
@@ -134,7 +149,7 @@
                 });
 
                 if (new_posts.length > 0) {
-                    new_posts = _.sortBy(new_posts, 'CreatedJSON'); 
+                    new_posts = _.sortBy(new_posts, 'CreatedJSON');
                     $chat_body.append(_.pluck(new_posts, 'html'));
                 }
 
@@ -167,14 +182,35 @@
         $anonymous.toggleClass('disabled', visible);
     }
 
-    function toggle_user_context(auth) {
+    function validate_scribble_auth(){
+        /*
+        * Compares timestamps to validate a Scribble auth token.
+        */
+        if ($.totalStorage(SCRIBBLE_AUTH_KEY)) {
+            if ($.totalStorage(SCRIBBLE_AUTH_KEY).Expires) {
+                if ( $.totalStorage(SCRIBBLE_AUTH_KEY).Expires < moment() ) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+
+    function toggle_user_context(auth, reauthenticate) {
         /*
          * Show auth if not logged in, hide auth if logged in.
+         * If reauthenticate is true, get new credentials from Scribble.
          */
         var visible = (auth !== undefined && auth !== null);
 
         if (visible) {
             $editor.find('h4 span').text(auth.Name);
+            if (reauthenticate === true) {
+                if (validate_scribble_auth() === false) {
+                    scribble_auth_user({ auth_route: 'anonymous', username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name });
+                }
+            }
         }
 
         $login.toggle(!visible);
@@ -183,19 +219,20 @@
 
     function scribble_auth_user(data) {
         /*
-         * Login to Scribble live with username we got from [Facebook|Google|NPR|etc].
+         * Login to Scribble with username we got from [Facebook|Google|NPR|etc].
          */
         var auth_url = 'http://'+ USER_URL +'/create?Token='+ settings.chat_token;
 
         if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
-            $.ajax({
+             return $.ajax({
                 url: auth_url +'&format=json&Name='+ data.username +'&Avatar='+ data.avatar,
                 dataType: 'jsonp',
                 cache: false,
                 success: function(auth) {
+                    auth.Expires = moment().add('minutes', 5).valueOf();
                     $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
                     clear_fields();
-                    toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
+                    toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
                 }
             });
         }
@@ -228,7 +265,7 @@
             success: function(response) {
                 $.totalStorage(OAUTH_KEY, response.user_data);
                 scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
-                toggle_user_context(OAUTH_KEY);
+                toggle_user_context(OAUTH_KEY, true);
             }
         });
     }
@@ -240,7 +277,7 @@
         if (response.status === 'success') {
             $.totalStorage(OAUTH_KEY, response.user_data);
             scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
-            toggle_user_context(OAUTH_KEY);
+            toggle_user_context(OAUTH_KEY, true);
         }
 
     }
@@ -322,7 +359,7 @@
 
         // Initialize the user and the chat data.
         if (!options.read_only) {
-            toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY));
+            toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), true);
         }
 
         update_live_chat();
