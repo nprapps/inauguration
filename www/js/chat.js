@@ -1,3 +1,10 @@
+/*
+ * A jQuery-ized Scribble Live plugin.
+ *
+ * Depends on jQuery, Underscore, chat.less
+ * and the JST chat templates.
+ */
+
 (function($) {
     // Immutable configuration
     var USER_URL = 'apiv1.scribblelive.com/user';
@@ -246,40 +253,41 @@
     }
 
     $.fn.livechat = function(options) {
+        // Update options
         options = options || {};
-
-        $.each(options, function(k, v) {
-            settings[k] = options[k] || settings[k];
-        });
+        settings = $.extend(settings, options);
 
         chat_url = 'http://apiv1.scribblelive.com/event/'+ settings.chat_id +'/all/?Token='+ settings.chat_token +'&format=json';
 
+        // Render
         $live_chat = this;
-        $chat_title = this.find('#live-chat-title');
-        $chat_blurb = this.find('#live-chat-blurb');
-        $chat_body = this.find('#live-chat-body');
-        $alerts = this.find('#live-chat-alerts');
+        this.html(JST.chat());
 
-        $editor = this.find('#live-chat-editor');
-        $comment = this.find('#live-chat-content');
-        $comment_button = this.find('#live-chat-button');
-        $logout = this.find('#live-chat-logout');
-        $clear = this.find('#live-chat-clear');
+        // Cache element references
+        $chat_title = this.find('.chat-title');
+        $chat_blurb = this.find('.chat-blurb');
+        $chat_body = this.find('.chat-body');
+        $alerts = this.find('.chat-alerts');
 
-        $login = this.find('#live-chat-login');
-        $anonymous = this.find('button.anon');
-        $oauth = this.find('button.oauth');
-        $npr = this.find('button.npr');
+        $editor = this.find('.chat-editor');
+        $comment = $editor.find('.chat-content');
+        $comment_button = $editor.find('.chat-post');
+        $logout = $editor.find('.chat-logout');
+        $clear = $editor.find('.chat-clear');
 
-        $anonymous_login_form = this.find('#live-chat-anonymous-login');
-        $anonymous_username = this.find('#live-chat-anonymous-username');
-        $anonymous_login_button = this.find('#live-chat-anonymous-login-button');
+        $login = this.find('.chat-login');
+        $anonymous = $login.find('button.anon');
+        $oauth = $login.find('button.oauth');
+        $npr = $login.find('button.npr');
 
-        $npr_login_form = this.find('#live-chat-npr-login');
-        $npr_username = this.find('#live-chat-npr-username');
-        $npr_password = this.find('#live-chat-npr-password');
-        $npr_login_button = this.find('#live-chat-npr-login-button');
+        $anonymous_login_form = this.find('.chat-anonymous-login');
+        $anonymous_username = this.find('.chat-anonymous-username');
+        $anonymous_login_button = this.find('button');
 
+        $npr_login_form = this.find('.chat-npr-login');
+        $npr_username = this.find('.chat-npr-username');
+        $npr_password = this.find('.chat-npr-password');
+        $npr_login_button = this.find('button');
 
         // EVENT HANDLERS ON THE PAGE.
         $oauth.on('click',function() {
