@@ -132,16 +132,22 @@
             });
         }
 
-        function identify_my_posts() {
+        function render_post(post) {
+            /*
+            * Called once for each post.
+            * Renders appropriate template for this post type.
+            */
+
+            // Decide if this post belongs to the logged-in user.
+            post.Highlight = '';
             if ($.totalStorage(SCRIBBLE_AUTH_KEY)) {
                 if ($.totalStorage(SCRIBBLE_AUTH_KEY).Id) {
-                    $live_chat.find('div.chat_post').removeClass('highlighted');
-                    $live_chat.find('div[data-author='+ $.totalStorage(SCRIBBLE_AUTH_KEY).Id +']').addClass('highlighted');
+                    if (post.Creator.Id === $.totalStorage(SCRIBBLE_AUTH_KEY).Id) {
+                        post.Highlight = ' highlighted';
+                    }
                 }
             }
-        }
 
-        function render_post(post) {
             post.CreatedJSON = parseInt(moment(post.Created).valueOf());
             post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
 
@@ -254,8 +260,6 @@
                     if (scroll_down) {
                         $chat_body.scrollTop($chat_body[0].scrollHeight);
                     }
-                    // Identifies posts from the currently logged-in author.
-                    identify_my_posts();
                 }
             });
         }
