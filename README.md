@@ -51,6 +51,11 @@ python app.py
 
 Visit ``http://fake.npr.org:8000`` in your browser.
 
+Running the Javascript tests
+----------------------------
+
+With your local server running, visit ``http://localhost:8000/test/SpecRunner.html``.
+
 Compile with static assets
 --------------------------
 
