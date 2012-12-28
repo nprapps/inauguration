@@ -1,0 +1,47 @@
+<div class="chat-header">
+    <h2 class="chat-title"></h2>
+    <h4 class="chat-blurb"></h4>
+</div>
+
+<div class="chat-body" ></div>
+
+<div class="chat-login">
+    <h4>Have your say!</h4>
+    <div class="form-inline">
+        <a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a><br/>
+        <div class="social btn-group">
+            <button class="btn btn-mini npr">NPR</button>
+            <button class="btn btn-mini oauth" data-service="facebook">Facebook</button>
+            <button class="btn btn-mini oauth" data-service="google">Google</button>
+            <button class="btn btn-mini anon">Anonymous</button>
+        </div>
+
+        <div class="chat-anonymous-login">
+            <label>Chat name
+                <input type="text" class="chat-anonymous-username"></input>
+            </label>
+            <button class="btn btn-mini btn-info">Login</button>
+        </div>
+
+        <div class="chat-npr-login">
+            <label>NPR username
+                <input type="text" class="chat-npr-username"></input>
+            </label>
+            <label class="npr">NPR password
+                <input type="password" class="chat-npr-password"></input>
+            </label>
+            <button class="btn btn-mini btn-info">Login</button>
+        </div>
+    </div>
+</div>
+
+<div class="chat-alerts"></div>
+
+<div class="chat-editor">
+    <h4>Type your comment below, <span class="chat-username"></span>.</h4>
+    <textarea class="chat-content"></textarea>
+    <br/>
+    <button class="btn btn-mini btn-success chat-post">Post comment</button>
+    <button class="btn btn-mini btn-warning chat-logout">Logout</button>
+    <button class="btn btn-mini btn-danger chat-clear">Clear text</button>
+</div>
