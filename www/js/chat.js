@@ -8,7 +8,6 @@
 (function($) {
     $.fn.livechat = function(options) {
         // Immutable configuration
-        var USER_URL = 'apiv1.scribblelive.com/user';
         var NPR_AUTH_URL = 'https://api.npr.org/infinite/v1.0/login/';
         var JANRAIN_INFO_URL = 'https://rpxnow.com/api/v2/auth_info';
         var OAUTH_KEY = 'oauthKey0';
@@ -21,7 +20,8 @@
             chat_token: null,
             update_interval: 10000,
             alert_interval: 500,
-            read_only: false
+            read_only: false,
+            scribble_host: 'apiv1.scribblelive.com'
         };
 
         var plugin = this;
@@ -30,8 +30,8 @@
         options = options || {};
         plugin.settings = $.extend({}, defaults, options);
 
-        chat_url = 'http://apiv1.scribblelive.com/event/'+ plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
-
+        var chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
+        var user_url = 'http://' + plugin.settings.scribble_host + '/user'
         // Render
         var $live_chat = this;
         $live_chat.html(JST.chat());
@@ -168,7 +168,7 @@
                 url: chat_url + '&Max=10000&Order=desc',
                 dataType: 'jsonp',
                 cache: false,
-                success: function(data) {
+                success: function(data, status, xhr) {
                     if (post_ids.length === 0) {
                         $chat_title.text(data.Title);
                         $chat_blurb.text(data.Description);
@@ -319,7 +319,7 @@
             /*
              * Login to Scribble with username we got from [Facebook|Google|NPR|etc].
              */
-            var auth_url = 'http://'+ USER_URL +'/create?Token='+ plugin.settings.chat_token;
+            var auth_url = user_url +'/create?Token='+ plugin.settings.chat_token;
 
             if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
                 return $.ajax({
