@@ -6,7 +6,7 @@
  */
 
 (function($) {
-    $.fn.livechat = function(options) {
+    $.livechat = function(element, options) {
         // Immutable configuration
         var NPR_AUTH_URL = 'https://api.npr.org/infinite/v1.0/login/';
         var JANRAIN_INFO_URL = 'https://rpxnow.com/api/v2/auth_info';
@@ -25,64 +25,92 @@
         };
 
         var plugin = this;
-
-        // Update options
-        options = options || {};
-        plugin.settings = $.extend({}, defaults, options);
-
-        var chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
-        var user_url = 'http://' + plugin.settings.scribble_host + '/user'
-        // Render
-        var $live_chat = this;
-        $live_chat.html(JST.chat());
-
-        // Cache element references
-        var $chat_title = $live_chat.find('.chat-title');
-        var $chat_blurb = $live_chat.find('.chat-blurb');
-        var $chat_body = $live_chat.find('.chat-body');
-        var $alerts = $live_chat.find('.chat-alerts');
-
-        var $editor = $live_chat.find('.chat-editor');
-        var $comment = $editor.find('.chat-content');
-        var $comment_button = $editor.find('.chat-post');
-        var $logout = $editor.find('.chat-logout');
-        var $clear = $editor.find('.chat-clear');
-
-        var $login = $live_chat.find('.chat-login');
-        var $anonymous = $login.find('button.anon');
-        var $oauth = $login.find('button.oauth');
-        var $npr = $login.find('button.npr');
-
-        var $anonymous_login_form = $live_chat.find('.chat-anonymous-login');
-        var $anonymous_username = $anonymous_login_form.find('.chat-anonymous-username');
-        var $anonymous_login_button = $anonymous_login_form.find('button');
-
-        var $npr_login_form = $live_chat.find('.chat-npr-login');
-        var $npr_username = $npr_login_form.find('.chat-npr-username');
-        var $npr_password = $npr_login_form.find('.chat-npr-password');
-        var $npr_login_button = $npr_login_form.find('button');
+        plugin.settings = {};
+        plugin.$root = $(element);
 
         // State
+        var chat_url = null;
+        var user_url = null;
+
         var post_ids = [];
         var delete_ids = [];
         var edit_ids = [];
         var edit_timestamps = {};
         var alerts = [];
 
-        function clear_fields() {
+        plugin.init = function () {
+            /*
+             * Initialize the plugin.
+             */
+            plugin.settings = $.extend({}, defaults, options || {});
+        
+            chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
+            user_url = 'http://' + plugin.settings.scribble_host + '/user'
+
+            // Render
+            plugin.$root.html(JST.chat());
+
+            // Cache element references
+            plugin.$chat_title = plugin.$root.find('.chat-title');
+            plugin.$chat_blurb = plugin.$root.find('.chat-blurb');
+            plugin.$chat_body = plugin.$root.find('.chat-body');
+            plugin.$alerts = plugin.$root.find('.chat-alerts');
+
+            plugin.$editor = plugin.$root.find('.chat-editor');
+            plugin.$comment = plugin.$editor.find('.chat-content');
+            plugin.$comment_button = plugin.$editor.find('.chat-post');
+            plugin.$logout = plugin.$editor.find('.chat-logout');
+            plugin.$clear = plugin.$editor.find('.chat-clear');
+
+            plugin.$login = plugin.$root.find('.chat-login');
+            plugin.$anonymous = plugin.$login.find('button.anon');
+            plugin.$oauth = plugin.$login.find('button.oauth');
+            plugin.$npr = plugin.$login.find('button.npr');
+
+            plugin.$anonymous_login_form = plugin.$root.find('.chat-anonymous-login');
+            plugin.$anonymous_username = plugin.$anonymous_login_form.find('.chat-anonymous-username');
+            plugin.$anonymous_login_button = plugin.$anonymous_login_form.find('button');
+
+            plugin.$npr_login_form = plugin.$root.find('.chat-npr-login');
+            plugin.$npr_username = plugin.$npr_login_form.find('.chat-npr-username');
+            plugin.$npr_password = plugin.$npr_login_form.find('.chat-npr-password');
+            plugin.$npr_login_button = plugin.$npr_login_form.find('button');
+
+            // Setup event handlers
+            plugin.$oauth.on('click', plugin.oauth_click);
+            plugin.$anonymous.on('click', plugin.anonymous_click);
+            plugin.$npr.on('click', plugin.npr_click);
+            plugin.$logout.on('click', plugin.logout_click);
+            plugin.$anonymous_login_button.on('click', plugin.anonymous_login_click);
+            plugin.$npr_login_button.on('click', plugin.npr_login_click)
+            plugin.$clear.on('click', plugin.clear_click);
+            plugin.$comment_button.on('click', plugin.comment_click);
+
+            // Initialize the user and the chat data.
+            if (!plugin.settings.read_only) {
+                plugin.toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
+            }
+
+            plugin.update_live_chat();
+
+            setInterval(plugin.update_live_chat, plugin.settings.update_interval);
+            setInterval(plugin.update_alerts, plugin.settings.alert_interval);
+        }
+
+        plugin.clear_fields = function() {
             /*
              * Clear text entry fields.
              */
-            $anonymous_username.val('');
-            $npr_username.val('');
-            $npr_password.val('');
-            $comment.val('');
+            plugin.$anonymous_username.val('');
+            plugin.$npr_username.val('');
+            plugin.$npr_password.val('');
+            plugin.$comment.val('');
         }
 
-        function logout_user() {
+        plugin.logout_user = function() {
             $.totalStorage(SCRIBBLE_AUTH_KEY, null);
-            clear_fields();
-            toggle_user_context();
+            plugin.clear_fields();
+            plugin.toggle_user_context();
         }
 
         function _send_comment(data) {
@@ -98,7 +126,7 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(response) {
-                    $comment.val('');
+                    plugin.$comment.val('');
                     if (response.Code === 202) {
                         alerts.push({
                             klass: 'alert-info',
@@ -110,29 +138,29 @@
             });
         }
 
-        function post_comment(data) {
+        plugin.post_comment = function(data) {
             /*
             * If auth is good, post comment now. Otherwise, reauthenticate and then post comment.
             */
-            if (validate_scribble_auth() === true) {
+            if (plugin.validate_scribble_auth() === true) {
                 _send_comment(data);
             } else {
-                scribble_auth_user({
+                plugin.scribble_auth_user({
                     auth_route: 'anonymous',
                     username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name })
                 .then(_send_comment(data));
             }
         }
 
-        function update_alerts() {
+        plugin.update_alerts = function() {
             _.each(alerts, function(alert, index, list) {
                 alerts.splice(alert);
                 alert_html = JST.alert({ alert: alert });
-                $alerts.append(alert_html);
+                plugin.$alerts.append(alert_html);
             });
         }
 
-        function render_post(post) {
+        plugin.render_post = function(post) {
             /*
             * Called once for each post.
             * Renders appropriate template for this post type.
@@ -160,7 +188,7 @@
             }
         }
 
-        function update_live_chat() {
+        plugin.update_live_chat = function() {
             /*
              * Fetch latest posts and render them.
              */
@@ -170,8 +198,8 @@
                 cache: false,
                 success: function(data, status, xhr) {
                     if (post_ids.length === 0) {
-                        $chat_title.text(data.Title);
-                        $chat_blurb.text(data.Description);
+                        plugin.$root.find('.chat-title').text(data.Title);
+                        plugin.$chat_blurb.text(data.Description);
                     }
 
                     var scroll_down = false;
@@ -185,7 +213,7 @@
                         }
 
                         try {
-                            post.html = render_post(post);
+                            post.html = plugin.render_post(post);
                         } catch(err) {
                             return;
                         }
@@ -196,7 +224,7 @@
 
                     if (new_posts.length > 0) {
                         new_posts = _.sortBy(new_posts, 'CreatedJSON');
-                        $chat_body.append(_.pluck(new_posts, 'html'));
+                        plugin.$chat_body.append(_.pluck(new_posts, 'html'));
 
                         scroll_down = true;
                     }
@@ -209,7 +237,7 @@
 
                         delete_ids.push(post.Id);
 
-                        $chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
+                        plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
                     });
 
                     // Handle post edits
@@ -226,16 +254,16 @@
 
                         edit_timestamps[post.Id] = timestamp;
 
-                        post.html = render_post(post);
+                        post.html = plugin.render_post(post);
 
-                        var $existing = $chat_body.find('.chat-post[data-id="' + post.Id + '"]');
+                        var $existing = plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]');
 
                         // Updating a post already displayed
                         if ($existing.length > 0) {
                             $existing.replaceWith(post.html);
                         // Updating a post never seen before (e.g. on page load)
                         } else {
-                            var $posts = $chat_body.find('.chat-post');
+                            var $posts = plugin.$chat_body.find('.chat-post');
                             var $post = null;
 
                             var comes_before = _.find($posts, function(post_el, i) {
@@ -258,29 +286,29 @@
                     });
 
                     if (scroll_down) {
-                        $chat_body.scrollTop($chat_body[0].scrollHeight);
+                        plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
                     }
                 }
             });
         }
 
-        function toggle_npr_login(visible) {
+        plugin.toggle_npr_login = function(visible) {
             /*
              * Toggle UI elements for NPR login.
              */
-            $npr_login_form.toggle(visible);
-            $npr.toggleClass('disabled', visible);
+            plugin.$npr_login_form.toggle(visible);
+            plugin.$npr.toggleClass('disabled', visible);
         }
 
-        function toggle_anonymous_login(visible) {
+        plugin.toggle_anonymous_login = function(visible) {
             /*
              * Toggle UI elements for anonymous login.
              */
-            $anonymous_login_form.toggle(visible);
-            $anonymous.toggleClass('disabled', visible);
+            plugin.$anonymous_login_form.toggle(visible);
+            plugin.$anonymous.toggleClass('disabled', visible);
         }
 
-        function validate_scribble_auth() {
+        plugin.validate_scribble_auth = function() {
             /*
             * Compares timestamps to validate a Scribble auth token.
             */
@@ -295,7 +323,7 @@
             }
         }
 
-        function toggle_user_context(auth, reauthenticate) {
+        plugin.toggle_user_context = function(auth, reauthenticate) {
             /*
              * Show auth if not logged in, hide auth if logged in.
              * If reauthenticate is true, get new credentials from Scribble.
@@ -303,19 +331,19 @@
             var visible = (auth !== undefined && auth !== null);
 
             if (visible) {
-                $editor.find('h4 span').text(auth.Name);
+                plugin.$editor.find('h4 span').text(auth.Name);
                 if (reauthenticate === true) {
-                    if (validate_scribble_auth() === false) {
-                        scribble_auth_user({ auth_route: 'anonymous', username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name });
+                    if (plugin.validate_scribble_auth() === false) {
+                        plugin.scribble_auth_user({ auth_route: 'anonymous', username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name });
                     }
                 }
             }
 
-            $login.toggle(!visible);
-            $editor.toggle(visible);
+            plugin.$login.toggle(!visible);
+            plugin.$editor.toggle(visible);
        }
 
-        function scribble_auth_user(data) {
+        plugin.scribble_auth_user = function(data) {
             /*
              * Login to Scribble with username we got from [Facebook|Google|NPR|etc].
              */
@@ -329,8 +357,8 @@
                     success: function(auth) {
                         auth.Expires = moment().add('minutes', SCRIBBLE_AUTH_EXPIRATION).valueOf();
                         $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
-                        clear_fields();
-                        toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
+                        plugin.clear_fields();
+                        plugin.toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
                     }
                 });
             }
@@ -339,7 +367,7 @@
             }
         }
 
-        function npr_auth_user() {
+        plugin.npr_auth_user = function() {
             /*
             * From email with John Nelson:
             *   url:
@@ -350,7 +378,7 @@
             *            The other 2 can be passed in null.
             *        platform - Hardcode this to CRMAPP for now.
             */
-            var payload = { username: $npr_username.val(), password: $npr_password.val(), remember: null, temp_user: null };
+            var payload = { username: plugin.$npr_username.val(), password: plugin.$npr_password.val(), remember: null, temp_user: null };
             var b64_payload = window.btoa(JSON.stringify(payload));
 
             $.ajax({
@@ -362,71 +390,71 @@
                 data: { auth: b64_payload, platform: 'CRMAPP' },
                 success: function(response) {
                     $.totalStorage(OAUTH_KEY, response.user_data);
-                    scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
-                    toggle_user_context(OAUTH_KEY, true);
+                    plugin.scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
+                    plugin.toggle_user_context(OAUTH_KEY, true);
                 }
             });
         }
 
-        function oauth_callback(response) {
+        plugin.oauth_callback = function(response) {
             /*
              * Authenticate and intialize user.
              */
             if (response.status === 'success') {
                 $.totalStorage(OAUTH_KEY, response.user_data);
-                scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
-                toggle_user_context(OAUTH_KEY, true);
+                plugin.scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
+                plugin.toggle_user_context(OAUTH_KEY, true);
             }
         }
 
         // Event handlers
-        $oauth.on('click',function() {
-            NPR_AUTH.login($(this).attr('data-service'), oauth_callback);
-            toggle_anonymous_login(false);
-            toggle_npr_login(false);
-        });
-
-        $anonymous.on('click', function(){
-            toggle_anonymous_login(true);
-            toggle_npr_login(false);
-        });
-
-        $npr.on('click', function(){
-            toggle_anonymous_login(false);
-            toggle_npr_login(true);
-        });
-
-        $logout.on('click', function() {
-            logout_user();
-            toggle_anonymous_login(false);
-            toggle_npr_login(false);
-        });
-
-        $anonymous_login_button.on('click', function(){
-            scribble_auth_user({ auth_route: 'anonymous', username: $anonymous_username.val() });
-        });
-
-		$npr_login_button.on('click', function() {
-			npr_auth_user();
-		});
-
-        $clear.on('click', function() {
-            clear_fields();
-        });
-
-        $comment_button.on('click', function() {
-            post_comment({ content: $comment.val() });
-        });
-
-        // Initialize the user and the chat data.
-        if (!plugin.settings.read_only) {
-            toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
+        plugin.oauth_click = function() {
+            NPR_AUTH.login($(this).attr('data-service'), plugin.oauth_callback);
+            plugin.toggle_anonymous_login(false);
+            plugin.toggle_npr_login(false);
         }
 
-        update_live_chat();
-        setInterval(update_live_chat, plugin.settings.update_interval);
-        setInterval(update_alerts, plugin.settings.alert_interval);
+        plugin.anonymous_click = function() {
+            plugin.toggle_anonymous_login(true);
+            plugin.toggle_npr_login(false);
+        }
 
-        return this;
+        plugin.npr_click = function() {
+            plugin.toggle_anonymous_login(false);
+            plugin.toggle_npr_login(true);
+        }
+
+        plugin.logout_click = function() {
+            plugin.logout_user();
+            plugin.toggle_anonymous_login(false);
+            plugin.toggle_npr_login(false);
+        }
+
+        plugin.anonymous_login_click = function() {
+            plugin.scribble_auth_user({ auth_route: 'anonymous', username: plugin.$anonymous_username.val() });
+        }
+
+        plugin.npr_login_click = function() {
+			plugin.npr_auth_user();
+		}
+
+        plugin.clear_click = function() {
+            plugin.clear_fields();
+        }
+
+        plugin.comment_click = function() {
+            plugin.post_comment({ content: plugin.$comment.val() });
+        }
+
+        plugin.init();
     };
+
+    $.fn.livechat = function(options) {
+        return this.each(function() {
+            if ($(this).data('livechat') == undefined) {
+                var plugin = new $.livechat(this, options);
+                $(this).data('livechat', plugin);
+            }
+        });
+    }
 }(jQuery));
