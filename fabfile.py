@@ -213,8 +213,6 @@ def _deploy_to_s3():
     """
     Deploy the gzipped stuff to
     """
-    render()
-
     s3cmd = 's3cmd -P --add-header=Cache-Control:max-age=5 --add-header=Content-encoding:gzip --guess-mime-type --recursive --exclude live-data/* sync gzip/ %s'
 
     for bucket in env.s3_buckets:
@@ -232,6 +230,7 @@ def deploy(remote='origin'):
     require('branch', provided_by=[stable, master, branch])
 
     _confirm_branch()
+    render()
     _gzip_www()
     _deploy_to_s3()
 
