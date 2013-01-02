@@ -1,0 +1,30 @@
+.chat-login,
+.chat-anonymous-login,
+.chat-npr-login,
+.chat-editor {
+  display: none;
+}
+.chat-body {
+  height: 250px;
+  overflow-y: scroll;
+}
+.chat-body div {
+  width: 100%;
+  background-color: #eee;
+  margin: 4px 0;
+}
+.chat-body div:after {
+  content: ".";
+  clear: both;
+  display: block;
+  width: 100%;
+  text-indent: -9999px;
+}
+.chat-body p.chat-post-author-photo {
+  display: block;
+  float: left;
+  padding: 10px;
+}
+#live-chat div.highlighted {
+  background-color: pink;
+}
