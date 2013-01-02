@@ -265,6 +265,7 @@ def update_backchannel():
     """
     Update data for the backchannel from Tumblr
     """
+    import boto
     from tumblr import Api
 
     TUMBLR_FILENAME = 'www/live-data/backchannel.json'
@@ -281,20 +282,11 @@ def update_backchannel():
         f.write(json.dumps(posts))
 
     if 'settings' in env:
-        conn = boto.connect_s3()
-        bucket = conn.get_bucket(env.s3_bucket)
-        key = Key(bucket)
-        key.key = TUMBLR_FILENAME
-        key.set_contents_from_filename(
-            TUMBLR_FILENAME,
-            policy='public-read',
-            headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
-        )
-        if env.alt_s3_bucket:
+        for bucket in env.s3_buckets:
             conn = boto.connect_s3()
-            bucket = conn.get_bucket(env.alt_s3_bucket)
-            key = Key(bucket)
-            key.key = TUMBLR_FILENAME
+            bucket = conn.get_bucket(bucket)
+            key = boto.s3.key.Key(bucket)
+            key.key = '%s/live-data/backchannel.json' % env.deployed_name 
             key.set_contents_from_filename(
                 TUMBLR_FILENAME,
                 policy='public-read',
@@ -307,10 +299,8 @@ def deploy_radio(path):
     """
     require('settings', provided_by=[production, staging])
 
-    local('s3cmd -P --add-header=Cache-control:max-age=5 put ' + path + ' s3://%(s3_bucket)s/live-data/radio.json' % env)
-
-    if env.alt_s3_bucket:
-        local('s3cmd -P --add-header=Cache-control:max-age=5 put ' + path + ' s3://%(alt_s3_bucket)s/live-data/radio.json' % env)
+    for bucket in env.s3_buckets:
+        local('s3cmd -P --add-header=Cache-control:max-age=5 put ' + path + ' s3://' + bucket + '/%(deployed_name)s/live-data/radio.json' % env)
 
 def radio_off():
     """

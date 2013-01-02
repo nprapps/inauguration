@@ -2,10 +2,10 @@ $(document).ready(function() {
     var POLLING_INTERVAL = 60000;
 	var PAGE_SIZE = 25;
 
-    $river = $("#river");
+    var $river = $("#river");
 
     var polling_timer = null;
-	var river_data = []
+	var river_data = [];
 
     function render_river() {
         /*
@@ -43,17 +43,16 @@ $(document).ready(function() {
          * Fetch the latest river of news.
          */
 		$.ajax({
-		    url: 'http://www-cf.nprdev.org/buckets/agg/series/2012/elections/riverofnews/riverofnews.jsonp',
-		    dataType: 'jsonp',
-		    jsonpCallback: 'nprriverofnews',
-		    success: function(data){
+	        url: 'http://www-cf.nprdev.org/buckets/agg/series/2012/elections/riverofnews/riverofnews.jsonp',
+		    dataType: 'jsonp',
+		    jsonpCallback: 'nprriverofnews',
+		    success: function(data){
 				river_data = data;
 				render_river();
-		    }
+		    }
 		})
 	}
 
     update_river();
     setInterval(update_river, POLLING_INTERVAL);
 });
-

@@ -63,6 +63,7 @@ class JavascriptIncluder(Includer):
 
         for src in self.includes:
             with open('www/%s' % src) as f:
+                print '- compressing %s' % src
                 output.append(minify(f.read()))
 
         return '\n'.join(output)
@@ -81,6 +82,7 @@ class CSSIncluder(Includer):
 
         for src in self.includes:
             if src.endswith('less'):
+                print '- compressing %s' % src
                 src = src.replace('less', 'css')
 
             with open('www/%s' % src) as f:
