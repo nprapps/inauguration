@@ -18,7 +18,7 @@
         var defaults = {
             chat_id: null,
             chat_token: null,
-            update_interval: 10000,
+            update_interval: 1000,
             alert_interval: 500,
             read_only: false,
             scribble_host: 'apiv1.scribblelive.com'
@@ -44,9 +44,9 @@
              * Initialize the plugin.
              */
             plugin.settings = $.extend({}, defaults, options || {});
-        
+
             chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
-            user_url = 'http://' + plugin.settings.scribble_host + '/user'
+            user_url = 'http://' + plugin.settings.scribble_host + '/user';
 
             // Render
             plugin.$root.html(JST.chat());
@@ -83,7 +83,7 @@
             plugin.$npr.on('click', plugin.npr_click);
             plugin.$logout.on('click', plugin.logout_click);
             plugin.$anonymous_login_button.on('click', plugin.anonymous_login_click);
-            plugin.$npr_login_button.on('click', plugin.npr_login_click)
+            plugin.$npr_login_button.on('click', plugin.npr_login_click);
             plugin.$clear.on('click', plugin.clear_click);
             plugin.$comment_button.on('click', plugin.comment_click);
 
@@ -96,7 +96,7 @@
 
             setInterval(plugin.update_live_chat, plugin.settings.update_interval);
             setInterval(plugin.update_alerts, plugin.settings.alert_interval);
-        }
+        };
 
         plugin.clear_fields = function() {
             /*
@@ -106,13 +106,13 @@
             plugin.$npr_username.val('');
             plugin.$npr_password.val('');
             plugin.$comment.val('');
-        }
+        };
 
         plugin.logout_user = function() {
             $.totalStorage(SCRIBBLE_AUTH_KEY, null);
             plugin.clear_fields();
             plugin.toggle_user_context();
-        }
+        };
 
         function _send_comment(data) {
             /*
@@ -151,15 +151,30 @@
                     username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name })
                 .then(_send_comment(data));
             }
-        }
+        };
 
         plugin.update_alerts = function() {
+            /*
+            * Adds and expires alerts.
+            */
+
+            // Expires old alerts with each pass.
+            var now = parseInt(moment().valueOf(), 10);
+            _.each($('div.alert'), function(alert_div, index, list) {
+                var expires = alert_div.getAttribute('data-expires');
+                if (now > expires) {
+                    $(alert_div).fadeOut();
+                }
+            });
+
+            // Adds any new alerts with each pass.
             _.each(alerts, function(alert, index, list) {
                 alerts.splice(alert);
+                alert.expires = parseInt(moment().add('seconds', 3).valueOf(), 10);
                 alert_html = JST.alert({ alert: alert });
                 plugin.$alerts.append(alert_html);
             });
-        }
+        };
 
         plugin.render_post = function(post) {
             /*
@@ -177,7 +192,7 @@
                 }
             }
 
-            post.CreatedJSON = parseInt(moment(post.Created).valueOf());
+            post.CreatedJSON = parseInt(moment(post.Created).valueOf(), 10);
             post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
 
             if (post.Type == "TEXT") {
@@ -187,7 +202,7 @@
             } else {
                 throw 'Unsupported post type.';
             }
-        }
+        };
 
         plugin.render_new_posts = function(data) {
             /*
@@ -244,7 +259,7 @@
 
             // Handle post edits
             _.each(data.Edits, function(post) {
-                var timestamp = parseInt(moment(post.LastModified).valueOf());
+                var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
 
                 if (_.contains(edit_ids, post.Id)) {
                     if (edit_timestamps[post.Id] >= timestamp) {
@@ -271,7 +286,7 @@
                     var comes_before = _.find($posts, function(post_el, i) {
                         $post = $(post_el);
 
-                        if (parseInt($post.data('timestamp')) > post.CreatedJSON) {
+                        if (parseInt($post.data('timestamp'), 10) > post.CreatedJSON) {
                             $post.before(post.html);
 
                             return true;
@@ -290,7 +305,7 @@
             if (scroll_down) {
                 plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
             }
-        }
+        };
 
         plugin.update_live_chat = function() {
             /*
@@ -304,7 +319,7 @@
                     plugin.render_new_posts(data);
                 }
             });
-        }
+        };
 
         plugin.toggle_npr_login = function(visible) {
             /*
@@ -312,7 +327,7 @@
              */
             plugin.$npr_login_form.toggle(visible);
             plugin.$npr.toggleClass('disabled', visible);
-        }
+        };
 
         plugin.toggle_anonymous_login = function(visible) {
             /*
@@ -320,7 +335,7 @@
              */
             plugin.$anonymous_login_form.toggle(visible);
             plugin.$anonymous.toggleClass('disabled', visible);
-        }
+        };
 
         plugin.validate_scribble_auth = function() {
             /*
@@ -335,7 +350,7 @@
                     }
                 }
             }
-        }
+        };
 
         plugin.toggle_user_context = function(auth, reauthenticate) {
             /*
@@ -355,7 +370,7 @@
 
             plugin.$login.toggle(!visible);
             plugin.$editor.toggle(visible);
-       }
+       };
 
         plugin.scribble_auth_user = function(data) {
             /*
@@ -379,18 +394,11 @@
             else {
                 alert('Missing something. Try filling out the form again.');
             }
-        }
+        };
 
         plugin.npr_auth_user = function() {
             /*
-            * From email with John Nelson:
-            *   url:
-            *        api.npr.org/infinite/v1.0/login/
-            *    parameters:
-            *        auth - Base64 encoded json string {username:'',password:'',remember:'',temp_user:''}
-            *            I believe you will only need the username/password fields.
-            *            The other 2 can be passed in null.
-            *        platform - Hardcode this to CRMAPP for now.
+            * Authorizes an NPR user.
             */
             var payload = { username: plugin.$npr_username.val(), password: plugin.$npr_password.val(), remember: null, temp_user: null };
             var b64_payload = window.btoa(JSON.stringify(payload));
@@ -408,7 +416,7 @@
                     plugin.toggle_user_context(OAUTH_KEY, true);
                 }
             });
-        }
+        };
 
         plugin.oauth_callback = function(response) {
             /*
@@ -419,56 +427,56 @@
                 plugin.scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
                 plugin.toggle_user_context(OAUTH_KEY, true);
             }
-        }
+        };
 
         // Event handlers
         plugin.oauth_click = function() {
             NPR_AUTH.login($(this).attr('data-service'), plugin.oauth_callback);
             plugin.toggle_anonymous_login(false);
             plugin.toggle_npr_login(false);
-        }
+        };
 
         plugin.anonymous_click = function() {
             plugin.toggle_anonymous_login(true);
             plugin.toggle_npr_login(false);
-        }
+        };
 
         plugin.npr_click = function() {
             plugin.toggle_anonymous_login(false);
             plugin.toggle_npr_login(true);
-        }
+        };
 
         plugin.logout_click = function() {
             plugin.logout_user();
             plugin.toggle_anonymous_login(false);
             plugin.toggle_npr_login(false);
-        }
+        };
 
         plugin.anonymous_login_click = function() {
             plugin.scribble_auth_user({ auth_route: 'anonymous', username: plugin.$anonymous_username.val() });
-        }
+        };
 
         plugin.npr_login_click = function() {
-			plugin.npr_auth_user();
-		}
+            plugin.npr_auth_user();
+        };
 
         plugin.clear_click = function() {
             plugin.clear_fields();
-        }
+        };
 
         plugin.comment_click = function() {
             plugin.post_comment({ content: plugin.$comment.val() });
-        }
+        };
 
         plugin.init();
     };
 
     $.fn.livechat = function(options) {
         return this.each(function() {
-            if ($(this).data('livechat') == undefined) {
+            if ($(this).data('livechat') === undefined) {
                 var plugin = new $.livechat(this, options);
                 $(this).data('livechat', plugin);
             }
         });
-    }
+    };
 }(jQuery));
