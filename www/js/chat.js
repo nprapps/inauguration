@@ -37,6 +37,7 @@
         var edit_ids = [];
         var edit_timestamps = {};
         var alerts = [];
+        var first_load = true;
 
         plugin.init = function () {
             /*
@@ -197,9 +198,15 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(data, status, xhr) {
-                    if (post_ids.length === 0) {
+                    if (first_load) {
                         plugin.$root.find('.chat-title').text(data.Title);
                         plugin.$chat_blurb.text(data.Description);
+
+                        if (data.IsModerated !== 1) {
+                            console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
+                        }
+
+                        first_load = false;
                     }
 
                     var scroll_down = false;
