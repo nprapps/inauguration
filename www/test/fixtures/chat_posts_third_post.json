@@ -23,8 +23,42 @@
 		"IsApproved": 1,
 		"Source": "",
 		"EventId": 74796
-	}],
-	"Edits": [],
+	},{
+        "Id": 59888319,
+        "Content": "Test 2",
+        "Creator": {
+            "Id": 22503229,
+            "Name": "onyxfish",
+            "Avatar": ""
+        },
+        "Type": "TEXT",
+        "Created": "\/Date(1356759149000+0000)\/",
+        "LastModified": "\/Date(1356759149000+0000)\/",
+        "IsComment": 1,
+        "IsStuck": 0,
+        "IsDeleted": 0,
+        "IsApproved": 1,
+        "Source": "",
+        "EventId": 74796
+    }],
+	"Edits": [{
+        "Id": 59888320,
+        "Content": "Test 3",
+        "Creator": {
+            "Id": 22503229,
+            "Name": "onyxfish",
+            "Avatar": ""
+        },
+        "Type": "TEXT",
+        "Created": "\/Date(1356759148000+0000)\/",
+        "LastModified": "\/Date(1356759148000+0000)\/",
+        "IsComment": 1,
+        "IsStuck": 0,
+        "IsDeleted": 0,
+        "IsApproved": 1,
+        "Source": "",
+        "EventId": 74796
+    }],
 	"Deletes": [],
 	"Start": "\/Date(1355757300000+0000)\/",
 	"End": "\/Date(1359608400000+0000)\/",
