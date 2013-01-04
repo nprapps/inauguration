@@ -189,6 +189,109 @@
             }
         }
 
+        plugin.render_new_posts = function(data) {
+            /*
+             * Render the latest posts from API data.
+             */
+            if (first_load) {
+                plugin.$root.find('.chat-title').text(data.Title);
+                plugin.$chat_blurb.text(data.Description);
+
+                if (data.IsModerated !== 1) {
+                    console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
+                }
+
+                first_load = false;
+            }
+
+            var scroll_down = false;
+            var new_posts = [];
+
+            // Handle normal posts
+            _.each(data.Posts, function(post) {
+                // Filter posts we've seen before
+                if (_.contains(post_ids, post.Id)) {
+                    return;
+                }
+
+                try {
+                    post.html = plugin.render_post(post);
+                } catch(err) {
+                    return;
+                }
+
+                new_posts.push(post);
+                post_ids.push(post.Id);
+            });
+
+            if (new_posts.length > 0) {
+                new_posts = _.sortBy(new_posts, 'CreatedJSON');
+                plugin.$chat_body.append(_.pluck(new_posts, 'html'));
+
+                scroll_down = true;
+            }
+
+            // Handle post deletes
+            _.each(data.Deletes, function(post) {
+                if (_.contains(delete_ids, post.Id)) {
+                    return;
+                }
+
+                delete_ids.push(post.Id);
+
+                plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
+            });
+
+            // Handle post edits
+            _.each(data.Edits, function(post) {
+                var timestamp = parseInt(moment(post.LastModified).valueOf());
+
+                if (_.contains(edit_ids, post.Id)) {
+                    if (edit_timestamps[post.Id] >= timestamp) {
+                        return;
+                    }
+                } else {
+                    edit_ids.push(post.Id);
+                }
+
+                edit_timestamps[post.Id] = timestamp;
+
+                post.html = plugin.render_post(post);
+
+                var $existing = plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]');
+
+                // Updating a post already displayed
+                if ($existing.length > 0) {
+                    $existing.replaceWith(post.html);
+                // Updating a post never seen before (e.g. on page load)
+                } else {
+                    var $posts = plugin.$chat_body.find('.chat-post');
+                    var $post = null;
+
+                    var comes_before = _.find($posts, function(post_el, i) {
+                        $post = $(post_el);
+
+                        if (parseInt($post.data('timestamp')) > post.CreatedJSON) {
+                            $post.before(post.html);
+
+                            return true;
+                        }
+
+                        return false;
+                    });
+
+                    // If no place in the order, put at the end
+                    if (!comes_before) {
+                        $post.after(post.html);
+                    }
+                }
+            });
+
+            if (scroll_down) {
+                plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
+            }
+        }
+
         plugin.update_live_chat = function() {
             /*
              * Fetch latest posts and render them.
@@ -198,103 +301,7 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(data, status, xhr) {
-                    if (first_load) {
-                        plugin.$root.find('.chat-title').text(data.Title);
-                        plugin.$chat_blurb.text(data.Description);
-
-                        if (data.IsModerated !== 1) {
-                            console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
-                        }
-
-                        first_load = false;
-                    }
-
-                    var scroll_down = false;
-                    var new_posts = [];
-
-                    // Handle normal posts
-                    _.each(data.Posts, function(post) {
-                        // Filter posts we've seen before
-                        if (_.contains(post_ids, post.Id)) {
-                            return;
-                        }
-
-                        try {
-                            post.html = plugin.render_post(post);
-                        } catch(err) {
-                            return;
-                        }
-
-                        new_posts.push(post);
-                        post_ids.push(post.Id);
-                    });
-
-                    if (new_posts.length > 0) {
-                        new_posts = _.sortBy(new_posts, 'CreatedJSON');
-                        plugin.$chat_body.append(_.pluck(new_posts, 'html'));
-
-                        scroll_down = true;
-                    }
-
-                    // Handle post deletes
-                    _.each(data.Deletes, function(post) {
-                        if (_.contains(delete_ids, post.Id)) {
-                            return;
-                        }
-
-                        delete_ids.push(post.Id);
-
-                        plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
-                    });
-
-                    // Handle post edits
-                    _.each(data.Edits, function(post) {
-                        var timestamp = parseInt(moment(post.LastModified).valueOf());
-
-                        if (_.contains(edit_ids, post.Id)) {
-                            if (edit_timestamps[post.Id] >= timestamp) {
-                                return;
-                            }
-                        } else {
-                            edit_ids.push(post.Id);
-                        }
-
-                        edit_timestamps[post.Id] = timestamp;
-
-                        post.html = plugin.render_post(post);
-
-                        var $existing = plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]');
-
-                        // Updating a post already displayed
-                        if ($existing.length > 0) {
-                            $existing.replaceWith(post.html);
-                        // Updating a post never seen before (e.g. on page load)
-                        } else {
-                            var $posts = plugin.$chat_body.find('.chat-post');
-                            var $post = null;
-
-                            var comes_before = _.find($posts, function(post_el, i) {
-                                $post = $(post_el);
-
-                                if (parseInt($post.data('timestamp')) > post.CreatedJSON) {
-                                    $post.before(post.html);
-
-                                    return true;
-                                }
-
-                                return false;
-                            });
-
-                            // If no place in the order, put at the end
-                            if (!comes_before) {
-                                $post.after(post.html);
-                            }
-                        }
-                    });
-
-                    if (scroll_down) {
-                        plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
-                    }
+                    plugin.render_new_posts(data);
                 }
             });
         }

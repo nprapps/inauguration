@@ -1,0 +1,47 @@
+{
+	"Id": 74796,
+	"Title": "Test Event For Testing",
+	"Description": "This is a test event for testing the API.",
+	"IsLive": 1,
+	"IsDeleted": 0,
+	"IsCommenting": 1,
+	"IsModerated": 1,
+	"Posts": [{
+		"Id": 59888318,
+		"Content": "test",
+		"Creator": {
+			"Id": 22503229,
+			"Name": "onyxfish",
+			"Avatar": ""
+		},
+		"Type": "TEXT",
+		"Created": "\/Date(1356759147000+0000)\/",
+		"LastModified": "\/Date(1356759147000+0000)\/",
+		"IsComment": 1,
+		"IsStuck": 0,
+		"IsDeleted": 0,
+		"IsApproved": 1,
+		"Source": "",
+		"EventId": 74796
+	}],
+	"Edits": [],
+	"Deletes": [],
+	"Start": "\/Date(1355757300000+0000)\/",
+	"End": "\/Date(1359608400000+0000)\/",
+	"Pages": 1,
+	"NumPosts": 8,
+	"NumComments": 29,
+	"Language": "en",
+	"Location": {
+		"Lat": 38.894031164119454,
+		"Long": -77.02541367424378
+	},
+	"Created": "\/Date(1355757449000+0000)\/",
+	"LastModified": "\/Date(1356759147043+0000)\/",
+	"Meta": {
+		"DiscussionEnabled": "0",
+		"DiscussionPostsNumber": "5",
+		"Latitude": "38.894031164119454",
+		"Longitude": "-77.02541367424378"
+	}
+}

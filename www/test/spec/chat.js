@@ -1,11 +1,22 @@
 describe('$.livechat', function() {
+    var xhr_requests = [];
+
     beforeEach(function() {
+        // Set predictable jsonp callback 
+        $.ajaxSetup({
+            jsonpCallback: 'test'
+        });
+
         // Fake XHR
         this.xhr = sinon.useFakeXMLHttpRequest();
-        var requests = this.requests = [];
+        
+        this.xhr.addFilter(function(method, url) {
+            return url.indexOf('/test/fixtures') === 0;
+        });
+        this.xhr.useFilters = true;
 
         this.xhr.onCreate = function(xhr) {
-            requests.push(xhr);
+            xhr_requests.push(xhr);
         };
 
         // Fake Timers
@@ -23,6 +34,8 @@ describe('$.livechat', function() {
 
         this.timers.restore();
         this.xhr.restore();
+
+        xhr_requests = [];
     });
 
     it('should take options', function() {
@@ -51,11 +64,13 @@ describe('$.livechat', function() {
             scribble_host: window.location.host 
         }).data('livechat');
 
-        expect(this.requests.length).toBe(1);
+        xhr_requests = [];
 
         this.timers.tick(150);
+        expect(xhr_requests.length).toBe(1);
 
-        expect(this.requests.length).toBe(2);
+        this.timers.tick(150);
+        expect(xhr_requests.length).toBe(3);
     });
 
     describe('update_live_chat', function() {
@@ -66,15 +81,20 @@ describe('$.livechat', function() {
                 update_interval: 100,
                 scribble_host: window.location.host 
             }).data('livechat');
-
-            //this.requests[0].respond(200, { 'Content-Type': 'application/json' }, getJSONFixture('chat_posts_base.json'));
+            
+            xhr_requests = [];
         });
 
-        xit('should fetch the latest posts', function() {
-            //expect(this.requests.length).toBe(0);
-            //this.timers.tick(150);
-            //expect(this.requests.length).toBe(1);
+        it('should update the live chat', function() {
+            this.livechat.update_live_chat();
 
+            expect(xhr_requests.length).toBe(1);
+        });
+
+        it('should render the latest posts', function() {
+            this.livechat.render_new_posts(getJSONFixture('chat_posts_base.json'));
+
+            expect(this.livechat.$chat_body.find('.chat-post').length).toBe(1);
         });
     });
 });
