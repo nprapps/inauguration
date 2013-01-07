@@ -1,21 +1,26 @@
-<div id="mr-president-wrap">
-    <h2>Dear Mr. President ...</h2>
-    <h4>Tell the President what you want him to do in his second term.</h4>
-    <div id="mr-president" data-mr-president-id="75176" data-mr-president-token="FtP7wRfX"></div>
-    <div id="mr-president-alerts"></div>
-    <div id="mr-president-form">
-        <textarea id="mr-president-message"></textarea>
-        <label>Name
-            <input type="text" id="mr-president-name"></input>
-        </label>
-        <label>Location
-            <input type="text" id="mr-president-location"></input>
-        </label>
-        <label>Favorite cheese
-            <input type="text" id="mr-president-cheese"></input>
-        </label>
-        <label>Favorite Vice-President
-            <input type="text" id="mr-president-veep"></input>
-        </label>
-    </div>
+<h2>Dear Mr. President ...</h2>
+<h4>Tell the President what you want him to do in his second term.</h4>
+<div class="mr-president-form">
+<form action="http://nprapps.webscript.io/misterpresident/" method="post" enctype="multipart/form-data">
+    <ol>
+        <li><input type="radio" name="voted" value="voted-for">I voted for you.</li>
+        <li><input type="radio" name="voted" value="voted-against">I didn't vote for you.</li>
+        <li><input type="radio" name="voted" value="didnt-vote">I didn't vote.</li>
+        <li><input type="radio" name="voted" value="noneya">It's none of your business.</li>
+        <li><label>Please don't forget:
+            <input type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png">
+        </label></li>
+
+        <li><label>Because:
+            <textarea name="message"></textarea>
+        </label></li>
+
+        <li><label>Signed:
+            <input type="text" name="signed_name" value="Chris Q. Everyperson"></input>
+            <input type="text" name="location" value="Washington, DC"></input>
+        </label></li>
+    </ol>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
 </div>
+<div class="mr-president-alerts"></div>

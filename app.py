@@ -20,6 +20,13 @@ def simple():
     return render_template('index.html', **make_context())
 
 
+@app.route('/index_submission.html')
+def simple():
+    """
+    Example view demonstrating rendering a simple HTML page.
+    """
+    return render_template('index_submission.html', **make_context())
+
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
 def _less(filename):
