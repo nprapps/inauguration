@@ -10,17 +10,22 @@
         <meta name="if:Two column posts" content="1"/>
 
         <!-- Appearance option -->
+        <meta name="if:Show bar on top" content="1"/>
         <meta name="if:Show blog title" content="1"/>
         <meta name="if:Show blog description" content="1"/>
-        <meta name="if:Show profile photo" content="0"/>
+        <meta name="if:Show profile photo" content="1"/>
         <meta name="if:Use endless scrolling" content="1"/>
+
+
         <meta name="if:Show right column" content="1"/>
+        <meta name="if:Place timestamp in left column" content="1"/>
         <meta name="if:Use larger font for quotes" content="0"/>
         <meta name="if:Show image shadows" content="1"/>
         <meta name="if:Show tags" content="1"/>
         <meta name="if:Show post notes" content="1"/>
         <meta name="if:Show copyright in footer" content="1"/>
         <meta name="text:Disqus Shortname" content="" />
+        <meta name="text:Google Analytics ID" content=""/>
 
         <link rel="shortcut icon" href="{Favicon}" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
@@ -37,48 +42,14 @@
         <style type="text/css" media="screen">
             body {
                 -webkit-font-smoothing: antialiased;
-                font: 15px/1.5 Arial, Helvetica, sans-serif;
-                color: #111;
+                font-size: 15px;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                line-height: 24px;
                 margin: 0;
                 padding: 0;
             }
+
             *:active, *:focus { outline-width: 0px; }
-
-    		#nav { background-color: #e0e0e0; height: 44px; overflow: hidden; border-bottom: 2px solid #fff; }
-			#nav ul { list-style: none; margin: 0; padding: 0; }
-			#nav ul li { float: left; height: 44px; line-height: 44px; margin-left: 22px; font-size: 12px; }
-			#nav ul li:first-child { margin-left: 0; }
-			#nav a, #nav a:link, #nav a:visited { color: #6d8ac4; font-weight: bold; text-transform: lowercase; }
-			#nav a:hover, #nav a:active { color: #bccae5; }
-			#nav .site-links { float: left; margin-left: 30px; }
-			#nav .site-links-2 { float: right; margin-right: 120px; }
-			#nav .npr img { margin: 10px 0 0 0; width: 61px; }
-			#nav .stations { padding-left: 22px; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG4nAABzrwAA92wAAIZNAABt8wAA6sIAADA+AAAYLjTjngYAAAGBSURBVHjapJO7UQMxEIa/u6GAowO7AptRAeAKODowoSJ8qRXYDhTbJFaIqQB3YMitwVQAHeAOjuQXozkYE7AzmpX2oX38u0XbtgC4EJcA3pqGE9S1KyWcAxPgjb/pDZjIh2K63veAV+DZW3PjQhwCQ2/NphN5DBy8NQcX4hNwBVyUQA1UQONCrIAdMPgl8gDYyaaRT11M1/udahq5ECfAHXChj5dyboCtMr331qxciLvvHgAv4pfA1ltzlHOls5RsK5tvn5J/UplFTr/WWZ1HndSfupMtxXS9nyjdvozfgQ2w6ASbAWPZVbJrShkfszpHwnoGfOrMJBtl/TkCm6Jt2zRIM+A24e9CfM/De2v62Tw8AAtvzbyUcg6sEv4uxBroqeuPQE+yNA8r+XCWRch34Fo8wZhk2+6uFGmZspGtVPdBWQB8AEPgXD34AWNOKdWhoFzonutOfnAnnjKodM91v5fgQuwJ31PU99Z8pMdZRzkWH3lrnju9udKmjoF5kn8NAFaQnhYx4i5jAAAAAElFTkSuQmCC) no-repeat 0% 50%; }
-			#nav .shop { padding-left: 18px; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAICAYAAAAvOAWIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG11AABzoAAA97wAAIT6AAB5yAAA7p8AADFuAAAPXaV5P1wAAAB/SURBVHjafM6xCUJBEITh7x1WYA/mmtiSuZGI+NIXGRrYgRVoERYiiBe9yORMVjkOdGH4l2F22G57vBVkzII/J6HDGU+Uf0pxtMMDCwxR0NIkwhk9LrhjimVDqXrpFMGMFa4Nv82wxzz2EtzUrJvXwTF+/GgM/1WHDw1bf3gPAMfKIptJWVXJAAAAAElFTkSuQmCC) no-repeat 0% 50%; }
-			#nav ul.social-links { position: absolute; right: 0; top: 0; background-color: white; }
-			#nav ul.social-links span { margin-right: 20px; }
-			#nav ul.social-links a { display: block; height: 44px; width: 44px; text-indent: -999em; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAFyCAYAAACOdzgyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAADR9JREFUeNrs3V9sW9d9wPHvvbz8K4qkKFKWJVuWY1mOrThOFiRZUBTtS4EAQ4sFKLKgAwYMKwZs2ACnQIcN29NeVmRA/BA/BX0IDHRAMWAvxYBi3YIGWNc1a5q5tmMrkfXXlChTFP//v3/2cK9oSpZliaJIavn9AMHXl/dSHx6de/7cc+6h8u8fJyyOUagcsxCwgAUsYAEL+EChdfLN/F4Nv9eF3+uiUNap1nTqutlfYFVVGI8HOH0iiFtTqFQN+wUFBgNuMoU6y8kiG9lq78EDfo0r56M0dJPZpSyb+RpWS1PKo6mMRP1cnIyQL9W5fT+DYR6uraW021oL+t28dHGYpbUii2tFvB4XY7EAQ4MeNJdKtW6QzlVZ26igKHB5KopHU/n1vQ3MQ6DbuuhcqsLz56MsrtrY0WE/r87EGfBrpHM1lteLlCoNRmMBXp6J4fdq3PwijW6YXJyMdD9LTJ4MUq0bLCWLTJ4MMj4ywKezaQrlxvYDEwXG4gFeujjMp7Ob3Lqf4StXThAJesgW691JYVVVGB8ZYG4lT8CncXZskJufbzaxLlVhMOBuHr+aKrOwWmTmmQi6YbKcLDIxGuxeCoeDHgzTIl+qc+FMmESqTLFiY0+NDHB+IoSqKFRqBrfm7A+ysl5kPB5gOOwjma7w6kwQVVEwLevoU9jvdVF0UnNo0NssrgI+jemJMKqiNI+beWYIAMuCjWyVyKCHclUHBTxutTtZwqOp1Bt2ZeD1PNoODbhxrNuKPVW1d9YbJh7N/nW6buHWugSu62YzdWr1R9v5UoOdf+FyVW8WYR632qz1NE2h0WYNeGBwpWYQdC6qTKFGLOJr4u4tZZv5slo3uH0/Yxf2CsQiPrKFOgN+DSyaf5kjv+hyxTouVSE04OHBwxKvXIqz6lx4q6ky6+kKAZ+2rYg7fcIuFdK5KmfHBknnam1dcG2lsGlarKyXOD8RolTRmU8U7FRziryTsQBj8QDRkHfbhXpnPovmUpkYDbKULHa34lhOFjkZ8zM5NsjiaqH5Z3/xwjCRoKdZxM2t5FlKFpldyqEqCi9MR3m4WSHXZqXRdtVsmBa//SJDtaY390VD3iZ2K54ZH2yWHKZlsZmvcW8p15vWWrHSaFYYdgorj7esFAUFBQs7vy6uFTlsdKzHUa7qj+2r1o22L64jB1drxq7lcN/26UzLolo3dpTZfQzeLUVLlc6DO9oJzRZqzfYCQKna5+BFp7sk9yUELGABC1jAApaQ+LKGIvMlBCxgAQtYwAIWsID7ODpyMzAW8eHWVIqVBqWy3vG77h0HxyM+hkJe/F4Xhmmxmavx4GGJzXytP8F3F7N241qxR5NiER9XzkfJlRp8vpTbNnjTF+Azo0HcbpVCqcFmvkY6V2Nprci5UyFevhTjznyWh5lK/4ABAl6Nk8MBPG6VZLrCfKLAnfkMmXiAmXMRPMsqDx6W+gPcOhQbCXo4Oz7I716O88VyngcPS9QbJs9PRSlVdTKHzNcdAU+dDmGZFvlyg3SuxqezaU7GAjw7GcalKiwli8yvFrh8bohf3Fw/1FSwjoArVZ1YxMfJWABFUbi7mGVto0xDN7k8NUSpqrO0VmA0ao9P33+Q723FkUiVufnFJv/124esrBd5firKWDzARrbKynqJ6YkQCgpzD/KcPjHQnKXS85rOtCwW14rMLmW5cCbMYMDNQqKAS1U5GfOTzlVp6CYjQ77egIN+NzPPDPHihWHOjAabE5QSqTLZQp3JsSCGaZFMl4lFfM3JSsPhHoCDfjcvz8QYHfYTDXmZOh3iuXNDzdcXEgViYR+aS2UjVyMa8qIoUCw3ts1r6xp4YnSgmaLNKnrI15ydki81UFUFv89FtWagqgoet4taw2x7CtihwB63a8/9pmXx8Z0UlapBta7z8WcpGrpJJm8Xe10H71YBNHSTQulRu6FQbqAbJpYFhVID07QwTOvxOZrdAK+sl7a1D+q6ya37GXSjszOyO1ZxmJbFrbkMfm8eTVMpVfRDzQvuWk1XqRlQM6SLJGABC1jAAhawgCUkJLoQMl9CwAIWsIAFLGABC7ifQzvKN/e4VUaG/KiqQiZf27bgQLujoW2Dx+IBCuXGtiGC1ohFfDx3bghXyyDiaqqMx62ytlFpe3S/7SwRj/h4cXqYoZbnl7fCpSpcOhvZht36kH6vRjCgoShdzsO6YS8I8DsXhrk4GcHvfTSqFA56nrhYgGlZLCdLtDvLpu0ssZoqMRL1oSoKY3H7afHWfPqk2MhWDzVw0zY4HPSQLzW2PXw9FPLumkVao91FBA5frCnKY0+K7yeK5UZvwCvJ4oEnHzV0k1yp3huwYVrcvp8hU9g/YG2jzGGntB2qprMsCA/sb2S+rpu9fza/XNV3X99nlw/22Xym7WVGOtqWyBbrLKwWnvgcvmlZ3JnPkM51ZpZgW8Wa5lKJD/mIhryEBtwEfLu/TaHc4O5i9onVd9fAumGSTJexLAtFAcOwCAbcWJZFqaJTrukk05WOLVnWkYrDsiCZrpBMV+hmSANewAIWsIAFLGABC1jAEhISzZD5EgIWsIAFLGABC1jA/Rwdny+huVSmToeIhjz4vfbbf/jrVTq15ETHwVemo48N6XZyfYyOgsNBTxNbKDdIpisYhtm/WaJ1jsRysngkAzZfzovO63FxdmwQn+fRrJSxWIDIoD134vPlXMcecO0I2O1SGY8Htu0bCnnZevD9nrOGSt+ADdOiUGqgaUqzKKvUDHTdxOjwEjqdWRCjZj/KvrX6DMB8Ii8XnYAFLBXHjtBb1pdo6EezbIPcDBSwgAUsYAELWMACFnAnm5eWZUkKC/hY9+n+439WpYskYAELWMACFrCABSzgL217uJ2TvvrCiScu+n2Q+OTuBtkDfiV9Wyn8m9k0q6ly29Ba3Wh+6UhXssT0RJhEqsyvbqcO9IC1bpjcTxT479spNJfavSwRGnDz8qUY65sVZpdy+Lwuzp8OPXEFfdOyWE2VmU8UGA57efW5OD6Pi0/ubnQHvBUnon7iQz5WU2U+nU0zHPZy7lRo20SP9c0K9x8U8HldvHhh+FBfC3BoMICqKJwaGWB02M9SssSvbqcYi9uzURZXC5imxYUzYYbD3t6VEru+kUvl3Pggp+IB5lcL5Io1xp21U3perO0VXo+Li5MRqTgE3NdV82/upUE5/C8vV/TugAvlhmQJAQtYwAIWsIAFLGAB/38Ay3yJI+8i/eSjuQOd8M2vTfUWvF/AQT9YP2SJ8eMG9h838JyUEgIWsID3jKnjBq70A1haawIWsICf0oDvxJv85KO5rbZyYq+29De/NpXoCzDwc+ffr++CHm95/Xy/ZAm/UxP+fEfPZAs71akOQKfAWynbim7FJpxj6JcsMeeAtoC/cPafacHO9VspsYVed6BnnO2OYb/05fBW/j0BLDk/J1qySV+BWy+2OeArzs/cjouvb8Ct2K0So/Viay2L+wJc2YGlpebbQnekA9CpYu3re1TNHSuDpcchYAELWMACFrCABSxgAQtYwMcbrFy9evUy8EPglX2e8zHw3WvXrt3qVQrfOAAW59gbvUphDXhhrwPC4TBvvfUW09PTrK+v88477/C0c44avGe8/vrrPPvss8zOzrKwsNDzPPxU8MjICAAffPAB1Wq1v0uJ1157jVAoZGfcV17hypUr/Z3Cb775ZnP7jTfeIJFIcPPmzf5N4XfffZdEwr5ddv36dW7cuNHfKbyyskKtZj9Vm0gk+j8PS9XcIbBxnMAacGuvmuu9997bbfdnvUzhPwI+OcA5nwBv9ay1JnfgBSxgAQtYwAIWsIAFLGABC7jZRbp69ep+j/UDcWB55wvXrl3ragpPOZAnRRT4F6CMPT3xAfAG8BfA3/YiS/wJ8G97oH/oALdi3PkA3wc2n/JhjwTsd+5L3AG+veP18R3Yna8ZQKrb4I+c7Tjwzw78+8BLwMQe5/4YeL/bWULDnhf5r8DvOfsuAe/s49xkr4q1b7dgDxJzvQK/D+TaOPc/ewVOAF8FfnaA836JfROxZzVdEPjGAc77+15Xzb8E/mqfWeMD4Kf90Jb4R+xHGT7c4/gPgT/vZVtCc8rbUeAy8Gd7lL3vA38J1HsNNoDvAH8A7FzytuhcjD/AHsXveWjA/wJ/CHzXqTSmnDbCJvbQQF88bdtsXsodeAELWMACFrCABSxgAQtYwAI+tuCdQwZRpwf9Dafbf9bZv4B9a+pnwD85HVSgu8MFO1P4r7GHBN4DvtWCxdn+lvPaknNsT7PEj4B/wL7H9rQIOsf+qFfgP3WywUHjO865XQ0N+F7rjqflybfffrv1v9+jy8MG2o68uhP0tDjbixReAC60mcILvQBfd67+dlL4ei8uuuvYQ1gHjR/3Cgz2fOC/AfbzFSRF59iezCFufcrgB8DvA6/uclwSe6LzVk2Xokex87GIwZbtd4G/o8/uD+8ER7GHwf6Ygw2D9ay19lNgpl+xAP83ABB43zLoTvT1AAAAAElFTkSuQmCC) no-repeat; }
-			#nav ul.social-links a:hover { opacity: .7; }
-			#nav ul.social-links li { margin-left: 0; }
-			#nav ul.social-links .facebook a { background-position: 0px -144px; }
-			#nav ul.social-links .twitter a { background-position: 0px -96px; border-right:2px solid white;}
-			
-			#container { padding: 0 0 30px 0; }
-			
-			#header {
-				background-color: #ebebeb;
-				padding: 50px 30px 30px 30px; 
-				margin: 0 0 30px 0;
-			}
-			
-			#blog_info h1 {
-				font: normal 48px Arial, Helvetica, sans-serif;
-                color: #555;
-                margin-bottom: 10px;
-			}
-            #blog_info h1 a { color: #555; }
-            #blog_info .description { color: #787878; }
-
             img { max-width: 100% }
             .post .top.media img { width: 100%; }
             a { text-decoration: none; color: {Color:Accent}; }
@@ -97,24 +68,137 @@
             *:first-child+html .group { zoom: 1; } /* IE7 */
 
             iframe#tumblr_controls {
-                top: 53px !important;
+                top: 12px !important;
+            }
+
+            #color_bar {
+                height: 12px;
+                background: {Color:Accent};
+            }
+
+            #container {
+                width: 950px;
+                margin: 0 auto;
+                padding: 60px 20px;
+            }
+
+            #header {
+                height: 48px;
+                margin: 0 0 60px 0;
+            }
+
+            #blog_info {
+                width: 700px;
+                margin: 0 60px 0 0;
+                float: left;
+            }
+
+            #blog_info h1 {
+                font-size: 36px;
+                font-weight: bold;
+                letter-spacing: -1px;
+                line-height: 36px;
+                margin: 8px 0 0 0;
+            }
+
+            #blog_info h1 a {
+                color: #333333;
+            }
+                            
+            #blog_info h1 a:hover {
+                color: #000;
+            }
+
+            #blog_info h1 a:active {
+                position: relative;
+                top: 1px;
+            }
+
+            #blog_info p, #blog_info .cont {
+                color: #646464;
+                margin-top: 7px;
+            }
+
+            .cont {
+                margin-bottom: 7px;
+            }
+
+            #blog_avatar {
+                width: 188px;
+                position: relative;
+                float: right;
+                {block:IfNotShowBlogTitle}float: left;{/block:IfNotShowBlogTitle}
+            }
+
+            #blog_avatar a {
+                width: 48px;
+                height: 48px;
+                {block:IfShowImageShadows}
+                    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, .21);
+                    box-shadow: 0px 1px 3px rgba(0, 0, 0, .21);
+                {/block:IfShowImageShadows}  
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+            }
+
+            #blog_avatar img {
+                width: 48px;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+            }
+
+            #blog_avatar a::before {
+                content: " ";
+                width: 46px;
+                height: 46px;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+                border: 1px solid rgba(0,0,0,.1);
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                z-index: 999;
+                display: block;
+            }
+
+            #blog_avatar:hover a {
+                width: 64px;
+                height: 64px;
+                top: -8px;
+                left: -8px;
+            }
+
+            #blog_avatar:hover a img {
+                width: 64px;
+            }
+
+            #blog_avatar:hover a::before {
+                width: 62px;
+                height: 62px;
+            }
+
+            #blog_avatar:active a {
+                top: -7px;
+                -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, .21);
+                box-shadow: 0px 0px 1px rgba(0, 0, 0, .21);
             }
 
             #posts {
+                width: 700px;
                 color: #4C4C4C;
-                margin: 0 auto;
+                margin: 0 60px 0 0;
+                float: left;
             }
 
             #posts .post {
                 list-style-type: none;
-                margin: 42px 30px;
-                padding: 30px;
-/*                border: 2px solid #ebebeb; */
-                background-color: #fff;
-                -moz-box-shadow: 0 0 35px #ccc;
-                -webkit-box-shadow: 0 0 35px #ccc;
-                box-shadow: 0 0 35px #ccc;
-                border-radius: 3px;
+                border-bottom: 1px solid #E6E6E6;
+                margin: 0 0 45px 0;
+                padding: 0 0 45px 0;
             }
 
 {block:IfDisqusShortname}
@@ -134,7 +218,7 @@
 {/block:IfDisqusShortname}
 
             .top.audio * {
-                width: 100%;
+                width: 700px;
                 height: 91px
             }
 
@@ -212,6 +296,13 @@
                 float: none;
             }
 
+            {block:IfPlaceTimestampInLeftColumn}
+            .post .caption {
+                width: 513px;
+                float: right;
+            }
+            {/block:IfPlaceTimestampInLeftColumn}
+
             .content_source {
                 margin-bottom: 20px;
             }
@@ -236,11 +327,21 @@
             }
 
             .caption h2 {
-            	font: normal 30px/1.14 Georgia, serif;
+                font-size: 32px;
+                line-height: 33px;
                 margin: 0 0 18px 0;
             }
-            .caption h2 a { color: #000; }
-            .caption h2 a:hover { color: #4065a2; background: transparent; }
+
+            .caption h2 a {
+                color: #333;
+                font-weight: bold;
+                letter-spacing: -1px;
+            }
+
+            .caption h2 a:hover {
+                color: {Color:Accent};
+                background: transparent;
+            }
                                 
             .caption blockquote {
                 border-left: 2px solid #E6E6E6;
@@ -271,7 +372,6 @@
             .caption embed,
             .caption object {
                 margin: 0 0 20px 0;
-                color: #111;
             }
 
             .caption p:empty {
@@ -397,6 +497,9 @@
             .post .post_info {
                 width: auto;
                 font-size: 12px;
+                font-family: 'Times New Roman', Times, serif;
+                letter-spacing: 2px;
+                text-transform: uppercase;
                 list-style-type: none;
                 -webkit-font-smoothing: subpixel-antialiased;
                 margin: 1px 0 0 -3px;
@@ -415,10 +518,9 @@
             }
 
             .post_info .timestamp {
-                color: #666;
+                color: #4c4c4c;
                 padding: 0 2px 0 5px;
-                display: block;
-                font-size: 12px;
+                display: inline-block;
             }
 
             .post_info .timestamp:hover {
@@ -477,6 +579,15 @@
                 background: rgba({RGBcolor:Accent}, 0.2);
             }
 
+            .post .post_info.floating {
+                width: 157px;
+                float: left;
+            }
+
+            .post .post_info.floating li {
+                float: none;
+            }
+
             .post_notes {
                 clear: both;
             }
@@ -528,30 +639,36 @@
                 border-width: 0px;
             }
 
-            #sidebar { margin-top: 20px; display: none; }
+            #sidebar {
+                width: 188px;
+                color: #4c4c4c;
+                font-size: 14px;
+                margin: -8px 0 0 0;
+                float: right;
+            }
+
             #sidebar .description {
                 line-height: 21px;
                 border-bottom: 1px solid #E6E6E6;
                 margin: 3px 0 20px 0;
                 padding: 0 0 20px 0;
             }
+
             #sidebar .links {
                 font-size: 12px;
+                font-family: 'Times New Roman', Times, serif;
                 letter-spacing: 2px;
+                text-transform: uppercase;
                 list-style-type: none;
                 -webkit-font-smoothing: subpixel-antialiased;
-                margin: 0;
+                margin: 0 0 20px 0;
                 line-height: 20px;
             }
-            #sidebar .links:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
-            #sidebar .links li {
-            	float: left;
-            	margin-right: 20px;
-            }
-            
+
             #sidebar .links a {
                 color: #4c4c4c;
             }
+
             #sidebar .links a:hover {
                 color: {Color:Accent};
             }
@@ -633,6 +750,7 @@
                 font-size: 12px;
                 font-family: 'Times New Roman', Times, serif;
                 letter-spacing: 0.4em;
+                text-transform: uppercase;
                 text-overflow: ellipsis;
                 -webkit-font-smoothing: subpixel-antialiased;
                 margin: 11px 0 0 22px;
@@ -646,10 +764,12 @@
             }
 
             #footer {
+                width: 700px;
                 color: #4C4C4C;
                 font-size: 12px;
                 font-family: 'Times New Roman', Times, serif;
                 letter-spacing: 2px;
+                text-transform: uppercase;
                 -webkit-font-smoothing: subpixel-antialiased;
             }
 
@@ -779,83 +899,48 @@
                 clear: both;
                 visibility: hidden;
             }
-            
-
-            @media (min-width: 980px) {
-            	#header #blog_info, #posts { margin-right: 25%; }
-            }
-            @media (max-width: 979px) {
-				#nav .site-links-2 { display: none; }
-			}
-			@media (max-width: 767px) {
-				#nav, #footer { margin-left: -20px; margin-right: -20px; }
-				#nav .site-links { margin-left: 20px; }
-			}
-			@media (min-width: 481px) {
-				#posts .post .media { width: 50%; float: left; }
-				#posts .post .caption_and_post_info.isphoto { width: 50%; float: right; margin-top: 0; }
-				#posts .post .caption_and_post_info.isphoto .cont,
-				#posts .post .caption_and_post_info.isphoto .post_info { padding-left: 20px; }
-			}
-			@media (max-width: 480px) {
-				#nav .site-links li { display: none; }
-				#nav .site-links .npr { display: block; }
-				#blog_info h1 { font-size: 36px; }
-				#posts .post { margin: 30px 10px; }
-			}
         </style>
 
         {block:PermalinkPage}
             <!-- Simplified permalink pages (Hides right column) -->
             <style type="text/css" media="screen">
                 #container {
+                    width: 700px;
                 }
 
                 #header {
+                    width: 700px;
                 }
 
                 #blog_info {
+                    width: 513px;
                     margin: 0;
                 }
 
-                .post .post_info,
-                .post .caption {
-                    width: auto !important;
-                    float: none;
+                #blog_avatar {
+                    width: 48px;
+                    height: 48px;
+                    backround-color: red;
                 }
 
-                .post .post_info {
-                    margin-top: 45px;
+                #blog_avatar a {
+                    position: absolute;
+                    left: auto;
+                    right: 0;
                 }
 
-                .post .post_info li {
-                    line-height: 14px;
-                    margin-bottom: 10px;
-                    float: left;
+                #blog_avatar:hover a {
+                    left: auto;
+                    right: -8px;
                 }
 
-                .post .post_info li a {
-                    margin: 0 10px 0 0;
-                    padding: 0 2px 0 5px;
-                }
-            </style>
-        {block:PermalinkPage}
-
-        {block:IfNotShowRightColumn}
-            <!-- Hides right column -->
-            <style type="text/css" media="screen">
-                #container {
-                }
-
-                #header {
-                }
-
-                #blog_info {
-                    margin: 0;
+                #sidebar {
+                    display: none;
                 }
 
                 #blog_info {
                     {block:IfNotShowBlogTitle}
+                        width: 632px;
                         margin-top: -7px;
                         float: right;
                     {/block:IfNotShowBlogTitle}
@@ -866,6 +951,7 @@
                 }
 
                 .post .post_info,
+                .post .post_info.floating,
                 .post .caption {
                     width: auto !important;
                     float: none;
@@ -875,13 +961,90 @@
                     margin-top: 45px;
                 }
 
-                .post .post_info li {
+                .post .post_info li,
+                .post .post_info.floating li {
                     line-height: 14px;
                     margin-bottom: 10px;
                     float: left;
                 }
 
-                .post .post_info li a {
+                .post .post_info li a,
+                .post .post_info.floating li a {
+                    margin: 0 10px 0 0;
+                    padding: 0 2px 0 5px;
+                }
+            </style>
+        {block:PermalinkPage}
+
+        {block:IfNotShowRightColumn}
+            <!-- Hides right column -->
+            <style type="text/css" media="screen">
+                #container {
+                    width: 700px;
+                }
+
+                #header {
+                    width: 700px;
+                }
+
+                #blog_info {
+                    width: 513px;
+                    margin: 0;
+                }
+
+                #blog_avatar {
+                    width: 48px;
+                    height: 48px;
+                    backround-color: red;
+                }
+
+                #blog_avatar a {
+                    position: absolute;
+                    left: auto;
+                    right: 0;
+                }
+
+                #blog_avatar:hover a {
+                    left: auto;
+                    right: -8px;
+                }
+
+                #sidebar {
+                    display: none;
+                }
+
+                #blog_info {
+                    {block:IfNotShowBlogTitle}
+                        width: 632px;
+                        margin-top: -7px;
+                        float: right;
+                    {/block:IfNotShowBlogTitle}
+                }
+
+                #blog_info .description {
+                    margin-bottom: 60px;
+                }
+
+                .post .post_info,
+                .post .post_info.floating,
+                .post .caption {
+                    width: auto !important;
+                    float: none;
+                }
+
+                .post .post_info {
+                    margin-top: 45px;
+                }
+
+                .post .post_info li,
+                .post .post_info.floating li {
+                    line-height: 14px;
+                    margin-bottom: 10px;
+                    float: left;
+                }
+
+                .post .post_info li a,
+                .post .post_info.floating li a {
                     margin: 0 10px 0 0;
                     padding: 0 2px 0 5px;
                 }
@@ -895,55 +1058,62 @@
 
     </head>
     <body>
-		<div id="nav">
-			<ul class="site-links">
-				<li class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></li>
-				<li class="news"><a href="http://www.npr.org/sections/news/">News</a></li>
-				<li class="arts"><a href="http://www.npr.org/sections/arts/">Arts &amp; Life</a></li>
-				<li class="music"><a href="http://www.npr.org/music/">Music</a></li>
-				<li class="listen"><a href="http://www.npr.org/listen/">Listen</a></li>
-			</ul>
-			<ul class="social-links">
-			<!--TODO: FIX SOCIAL LINKS -->
-				<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Bob+Boilen's+Wristbands+2012,+from+@nprmusic+%26+@allsongs.&amp;url=http%3A%2F%2Fapps.npr.org%2Fbobs-boilens-wristbands-2012%2F" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Bob\'s Concert Tickets']);">Share This Page On Twitter</a></li>
-				<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Bob+Boilen's+Wristbands+2012,+from+NPR+Music.&amp;u=http%3A%2F%2Fapps.npr.org%2Fbob-boilens-wristbands-2012%2F" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Bob\'s Concert Tickets']);">Like This Page On Facebook</a></li>
-			</ul>
-			<ul class="site-links-2">
-				<li class="stations"><a href="http://www.npr.org/templates/stations/stations/">Stations</a></li>
-				<li class="donate"><a href="http://www.npr.org/stations/donate/index.php">Donate</a></li>
-				<li class="shop"><a href="http://shop.npr.org">Shop</a></li>
-			</ul>
-		</div>
-
+        {block:IfShowBarOnTop}<section id="color_bar"></section>{/block:IfShowBarOnTop}
 
         <section id="container" class="group">            
             <header id="header">
                 <section id="blog_info">
                     {block:IfShowBlogTitle}<h1><a href="/">{Title}</a></h1>{/block:IfShowBlogTitle}
-					{block:IfShowBlogDescription}{block:Description}<div class="cont description group">{Description}</div>{/block:Description}{/block:IfShowBlogDescription}
+                    {block:PermalinkPage}{block:IfShowBlogDescription}{block:Description}<div class="description cont">{Description}</div>{/block:Description}{/block:IfShowBlogDescription}{/block:PermalinkPage}
+                    {block:IfNotShowRightColumn}{block:IfShowBlogDescription}<div class="cont description"{block:PermalinkPage} style="display:none"{/block:PermalinkPage}>{Description}</div>{/block:IfShowBlogDescription}{/block:IfNotShowRightColumn}
                 </section>
 
-				<aside id="sidebar">
-					{block:HasPages}
-						<ul class="links">
-							{block:Pages}
-								<li><a href="{URL}">{Label}</a></li>
-							{/block:Pages}
-						</ul>
-					{/block:HasPages}
-		
-					<ul class="links" style="display:none;{block:AskEnabled} display:block;{/block:AskEnabled}{block:SubmissionsEnabled} display:block;{/block:SubmissionsEnabled}">
-						{block:AskEnabled}<li><a href="/ask" class="ask"><span class="icon"></span>ask me anything</a></li>{/block:AskEnabled}
-						{block:SubmissionsEnabled}<li><a href="/submit" class="submit"><span class="icon"></span>submit a post</a></li>{/block:SubmissionsEnabled}
-					</ul>
-		
-					<ul class="links">
-						<li><a href="{RSS}" class="rss"><span class="icon"></span>rss</a></li>
-						<li><a href="/archive" class="archive"><span class="icon"></span>archive</a></li>
-					</ul>
-				</aside>
+                {block:IfShowProfilePhoto}
+                    <section id="blog_avatar">
+                        <a href="/" class="avatar"><img src="{PortraitURL-64}"></a>
+                    </section>
+                {/block:IfShowProfilePhoto}
             </header>
 
+            <aside id="sidebar">
+                {block:IfShowBlogDescription}{block:Description}<div class="cont description group">{Description}</div>{/block:Description}{/block:IfShowBlogDescription}
+
+                {block:HasPages}
+                    <ul class="links">
+                        {block:Pages}
+                            <li><a href="{URL}">{Label}</a></li>
+                        {/block:Pages}
+                    </ul>
+                {/block:HasPages}
+
+                <ul class="links" style="display:none;{block:AskEnabled} display:block;{/block:AskEnabled}{block:SubmissionsEnabled} display:block;{/block:SubmissionsEnabled}">
+                    {block:AskEnabled}<li><a href="/ask" class="ask"><span class="icon"></span>ask me anything</a></li>{/block:AskEnabled}
+                    {block:SubmissionsEnabled}<li><a href="/submit" class="submit"><span class="icon"></span>submit a post</a></li>{/block:SubmissionsEnabled}
+                </ul>
+
+                <ul class="links">
+                    <li><a href="{RSS}" class="rss"><span class="icon"></span>rss</a></li>
+                    <li><a href="/archive" class="archive"><span class="icon"></span>archive</a></li>
+                </ul>
+
+                {block:Twitter}
+                    <aside id="twitter_container" style="display:none"></aside>
+
+                    <script type="text/javascript">
+                        function recent_tweets(data) {
+                            document.getElementById("twitter_container").innerHTML =
+                            document.getElementById("twitter_container").innerHTML +
+                            '<a class="bubble" href="http://twitter.com/{TwitterUsername}/status/' +
+                            (data[0].id_str ? data[0].id_str : data[0].id) +
+                            '">' + data[0].text +
+                            '<span class="arrow border"></span><span class="arrow fill"></span></a>' +
+                            '<a href="http://twitter.com/{TwitterUsername}" class="twitter_username">@{TwitterUsername}</a>';
+
+                            document.getElementById("twitter_container").style.display = 'block';
+                        }
+                    </script>
+                {/block:Twitter}
+            </aside>
 
             <ul id="posts">
                 <!-- START POSTS -->
@@ -953,7 +1123,7 @@
 
                         {block:Photo}
                             <section class="top media" style="display:block;">
-                                 <a href="{Permalink}" class="link"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"></a>
+                                 {LinkOpenTag}<img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"> {LinkCloseTag}{Question}
                             </section>
                         {/block:Photo}
 
@@ -1475,47 +1645,18 @@
         </script>
         {/block:IfUseEndlessScrolling}
 
+        {block:Twitter}
+            <script type="text/javascript" src="/tweets.js"></script>
+        {/block:Twitter}
 
-		<!-- GOOGLE ANALYTICS -->
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5828686-4']);
-			_gaq.push(['_trackPageview']);
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
-	
-	
-		<!-- CHARTBEAT -->
-		<script type="text/javascript">
-			var _sf_async_config={};
-			/** CONFIGURATION START **/
-			_sf_async_config.uid = 18888;
-			_sf_async_config.domain = "npr.org";
-			/** CONFIGURATION END **/
-			(function(){
-				function loadChartbeat() {
-					window._sf_endpt=(new Date()).getTime();
-					var e = document.createElement("script");
-					e.setAttribute("language", "javascript");
-					e.setAttribute("type", "text/javascript");
-					e.setAttribute("src",
-						(("https:" == document.location.protocol) ?
-						 "https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/" :
-						 "http://static.chartbeat.com/") +
-						"js/chartbeat.js");
-					document.body.appendChild(e);
-				}
-				var oldonload = window.onload;
-				window.onload = (typeof window.onload != "function") ?
-					loadChartbeat : function() { oldonload(); loadChartbeat(); };
-			})();
-		</script>
-
-
+        {block:IfGoogleAnalyticsID}
+            <script type="text/javascript">
+                var _gaq=[['_setAccount','{text:Google Analytics ID}'],['_trackPageview']];
+                        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+                        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+                        s.parentNode.insertBefore(g,s)}(document,'script'));
+            </script>
+        {/block:IfGoogleAnalyticsID}
         {block:IfUseEndlessScrolling}<script type="text/javascript" src="http://assets.tumblr.com/javascript/tumblelog.js"></script>{/block:IfUseEndlessScrolling}
     </body>
 </html>
