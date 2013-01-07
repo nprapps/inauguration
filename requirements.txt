@@ -9,6 +9,6 @@ envoy==0.0.2
 slimit==0.7.4
 cssmin==0.1.4
 requests==0.14.2
-git+https://github.com/jyr/python-tumblr.git@b91d98257
 poster==0.8.1
 boto==2.6.60
+python-tumblr

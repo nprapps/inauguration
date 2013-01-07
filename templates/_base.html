@@ -66,19 +66,24 @@
 <body>
 	{% block outer_content %}
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-<!--          <div class="nav-collapse collapse"> -->
-            <ul class="nav">
-              <li class="npr"><a href="http://npr.org">NPR</a></li>
-              <li class="news"><a href="http://www.npr.org/sections/news/">News</a></li>
-              <li class="music"><a href="http://www.npr.org/music/">Music</a></li>
-              <li class="donate"><a href="http://www.npr.org/stations/donate/">Donate</a></li>
-            </ul>
-<!--          ></div> -->
-        </div>
-      </div>
+    <div id="nav">
+    	<ul class="site-links">
+    		<li class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></li>
+    		<li class="news"><a href="http://www.npr.org/sections/news/">News</a></li>
+    		<li class="arts"><a href="http://www.npr.org/sections/arts/">Arts &amp; Life</a></li>
+    		<li class="music"><a href="http://www.npr.org/music/">Music</a></li>
+    		<li class="listen"><a href="http://www.npr.org/listen/">Listen</a></li>
+    	</ul>
+		<ul class="social-links">
+		<!--TODO: FIX SOCIAL LINKS -->
+            <li class="twitter"><a rel="external" href="http://twitter.com/share?text=Bob+Boilen's+Wristbands+2012,+from+@nprmusic+%26+@allsongs.&amp;url=http%3A%2F%2Fapps.npr.org%2Fbobs-boilens-wristbands-2012%2F" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Bob\'s Concert Tickets']);">Share This Page On Twitter</a></li>
+            <li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Bob+Boilen's+Wristbands+2012,+from+NPR+Music.&amp;u=http%3A%2F%2Fapps.npr.org%2Fbob-boilens-wristbands-2012%2F" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Bob\'s Concert Tickets']);">Like This Page On Facebook</a></li>
+        </ul>
+    	<ul class="site-links-2">
+			<li class="stations"><a href="http://www.npr.org/templates/stations/stations/">Stations</a></li>
+			<li class="donate"><a href="http://www.npr.org/stations/donate/index.php">Donate</a></li>
+			<li class="shop"><a href="http://shop.npr.org">Shop</a></li>
+		</ul>
     </div>
 
 

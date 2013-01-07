@@ -19,13 +19,13 @@ def simple():
     """
     return render_template('index.html', **make_context())
 
-
-@app.route('/index_submission.html')
+@app.route('/index_form.html')
 def simple():
     """
-    Example view demonstrating rendering a simple HTML page.
+    'Dear Mr. President' submission form (pre-Inauguration)
     """
-    return render_template('index_submission.html', **make_context())
+    return render_template('index_form.html', **make_context())
+
 
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
