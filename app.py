@@ -68,7 +68,7 @@ def _post_to_tumblr():
         'data': request.files['image']
     })
 
-    return redirect(u"http://%s/%s" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
+    return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
 
 
 # Render LESS files on-demand
