@@ -1,8 +1,9 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 10px;
   font: 14px/1.5 Arial, Helvetica, sans-serif;
   color: #111;
+  background-color: #fff;
 }
 a {
   color: #4774cc;
