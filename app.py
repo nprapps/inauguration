@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from mimetypes import guess_type
+import os
 
 import envoy
 from flask import Flask, render_template, redirect
@@ -30,7 +31,7 @@ def tumblr_form():
     return render_template('tumblr_form.html', **make_context())
 
 
-@app.route('/misterpresident/', methods=['POST'])
+@app.route('/dear-mr-president/', methods=['POST'])
 def _post_to_tumblr():
     """
     Handles the POST to Tumblr.
@@ -39,35 +40,35 @@ def _post_to_tumblr():
         """
         Formats a string all pretty.
         """
-        return string.replace('-', ' ').replace("its", "it's").replace("didnt", "didn't").replace('i ', 'I ')
+        return string.replace('-', ' ').replace("its", "It's").replace("didnt", "didn't").replace('i ', 'I ')
 
     # Request is a global. Import it down here where we need it.
     from flask import request
-    voted = u"<div class='voted' data-vote-type='%s'>%s</div>" % (request.form['voted'], clean(request.form['voted'] + '.'))
-    message = u"<div class='message'>%s</div>" % clean(request.form['message'])
-    signed_name = u"<div class='signature-name'>%s</div>" % clean(request.form['signed_name'])
-    location = u"<div class='location'>%s</div>" % clean(request.form['location'])
+    caption = u"""<p class='intro'>Dear Mr. President,</p>
+    <p class='voted' data-vote-type='%s'>%s.</p>
+    <p class='message'>But please don't forget: %s</p>
+    <p class='signature-name'>Signed,<br/>%s from %s</p>""" % (
+        request.form['voted'],
+        clean(request.form['voted']),
+        request.form['message'],
+        request.form['signed_name'],
+        request.form['location']
+    )
 
-    blog_url = 'testmisterpresident.tumblr.com'
     t = Tumblpy(
-        app_key='Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH',
-        app_secret='QYQ6xuMMYzRmovnkiN1t5V0pLoeTPTYzNrMt1WH3gLDu3cm7XA',
-        oauth_token='5jSuDYkecwiLxvSvpzcdnvI7UNY4ea5aHUjsV3hA24X3vwQwqe',
-        oauth_token_secret='Ay59qTVESMoidphwEF4hjhTD25AruTqWrB9GLa31tXHewFkrQa')
+        app_key=app_config.TUMBLR_KEY,
+        app_secret=os.environ['TUMBLR_APP_SECRET'],
+        oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
+        oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
 
-    caption = u"<div class='intro'>Dear Mr. President,</div>" % (
-        voted,
-        message,
-        signed_name,
-        location)
-
-    q = t.post('post', blog_url=blog_url, params={
+    tumblr_post = t.post('post', blog_url=app_config.TUMBLR_URL, params={
         'type': 'photo',
         'caption': caption,
+        'tags': u"%s" % request.form['voted'],
         'data': request.files['image']
     })
 
-    return redirect(u"http://%s/%s" % (blog_url, q['id']), code=301)
+    return redirect(u"http://%s/%s" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
 
 
 # Render LESS files on-demand

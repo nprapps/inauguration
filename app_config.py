@@ -3,7 +3,7 @@
 import os
 
 PROJECT_NAME = 'inauguration'
-DEPLOYED_NAME = PROJECT_NAME 
+DEPLOYED_NAME = PROJECT_NAME
 
 PRODUCTION_S3_BUCKETS = ['apps.npr.org', 'apps2.npr.org']
 PRODUCTION_SERVERS = ['cron.nprapps.org']
@@ -20,3 +20,5 @@ else:
     S3_BUCKETS = STAGING_S3_BUCKETS
     SERVERS = STAGING_SERVERS
 
+TUMBLR_KEY = 'Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH'
+TUMBLR_URL = 'testmisterpresident.tumblr.com'
