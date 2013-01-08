@@ -49,6 +49,14 @@ def president():
     return redirect(redirect_url, code=301)
 
 
+@app.route('/index_form.html')
+def form():
+    """
+    'Dear Mr. President' submission form (pre-Inauguration)
+    """
+    return render_template('index_form.html', **make_context())
+
+
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
 def _less(filename):
