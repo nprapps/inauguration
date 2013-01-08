@@ -87,33 +87,40 @@
 				padding: 0 30px;
             	cursor: pointer;
             }
-            #dmp-form .wrap:hover {
-            	background-color: #9eb7dd;
-            }
-            #dmp-form .wrap {
-            	background-color: #7598c9;
-            }
             #dmp-form .hdr {
             	overflow: hidden;
+            	background-color: #7598c9;
+            	height: 88px;
             }
+            #dmp-form .hdr:hover {
+            	background-color: #9eb7dd;
+            }
+            #dmp-form .hdr:after {
+                visibility: hidden;
+                display: block;
+                content: "";
+                clear: both;
+                height: 0;
+			}
             #dmp-form .hdr h3 {
             	font-weight: bold;
             	font-size: 20px;
-            	height: 88px;
             	line-height: 88px;
             }
-            #dmp-form span {
-            	background: url('http://stage-apps.npr.org/inauguration/img/btn-share.png') no-repeat;
+            #dmp-form .hdr h3 span {
+            	background: url('http://stage-apps.npr.org/inauguration/img/btn-share.png') no-repeat 50% 50%;
             	width: 88px; height: 88px;
             	border-right: 1px solid #fff;
             	margin-right: 22px;
             	display: inline-block;
+            	float: left;
             }
             #dmp-form .dmp-iframe {
             	width: 100%;
-            	height: 550px;
+            	height: 625px;
             	display: none;
             }
+
 
             img { max-width: 100% }
             .post .top.media img { width: 100%; }
@@ -779,6 +786,8 @@
 			@media (max-width: 767px) {
 				#nav, #footer { margin-left: -20px; margin-right: -20px; }
 				#nav .site-links { margin-left: 20px; }
+				#dmp-form .hdr h3 { line-height: 26px; padding-top: 18px; }
+				#dmp-form .hdr h3 span { margin-top: -18px; }
 			}
 			@media (min-width: 481px) {
 				#posts .post .media { width: 50%; float: left; }
@@ -792,8 +801,10 @@
 				#blog_info h1 { font-size: 36px; }
 				#posts .post { margin-left: 10px; margin-right: 10px; padding: 15px; }
 				#dmp-form { margin-left: -20px; margin-right: -20px; }
-				#dmp-form h3 { margin-left: 10px; margin-right: 10px; }
-				#dmp-form .dmp-iframe { height: 590px; margin-bottom: 10px; }
+				#dmp-form .hdr { height: 64px; }
+				#dmp-form .hdr h3 { margin-left: 10px; margin-right: 10px; font-size: 16px; line-height: 22px; padding-top: 11px; }
+				#dmp-form .hdr h3 span { width: 64px; height: 64px; background-position: 70% 50%; margin-top: -11px; background-image: url('http://stage-apps.npr.org/inauguration/img/btn-share-small.png') }
+				#dmp-form .dmp-iframe { height: 700px; margin-bottom: 10px; }
 			}
         </style>
 
@@ -871,7 +882,9 @@
 
 			<section id="dmp-form">
 				<div class="wrap">
-					<h3><span></span>SHARE: What Would You Tell The President?</h3>
+					<div class="hdr">
+						<h3><span></span>SHARE: What Would You Tell The President?</h3>
+					</div>
 					<iframe class="dmp-iframe" src="http://stage-apps.npr.org/inauguration/tumblr_form.html" frameborder="0" scrolling="no"></iframe>
 				</div>
 			</section>
