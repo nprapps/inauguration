@@ -41,6 +41,8 @@ def _post_to_tumblr():
         """
         return string.replace('-', ' ').replace("its", "it's").replace("didnt", "didn't").replace('i ', 'I ')
 
+    # Request is a global. Import it down here where we need it.
+    from flask import request
     voted = u"<div class='voted' data-vote-type='%s'>%s</div>" % (request.form['voted'], clean(request.form['voted'] + '.'))
     message = u"<div class='message'>%s</div>" % clean(request.form['message'])
     signed_name = u"<div class='signature-name'>%s</div>" % clean(request.form['signed_name'])
@@ -66,14 +68,6 @@ def _post_to_tumblr():
     })
 
     return redirect(u"http://%s/%s" % (blog_url, q['id']), code=301)
-
-
-@app.route('/index_form.html')
-def index_form():
-    """
-    'Dear Mr. President' submission form (pre-Inauguration)
-    """
-    return render_template('index_form.html', **make_context())
 
 
 # Render LESS files on-demand
