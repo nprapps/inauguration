@@ -20,6 +20,13 @@ def simple():
     """
     return render_template('index.html', **make_context())
 
+@app.route('/tumblr_form.html')
+def tumblr():
+    """
+    Standalone form page to iframe into Tumblr.
+    """
+    return render_template('tumblr_form.html', **make_context())
+
 
 @app.route('/misterpresident/', methods=['GET', 'POST'])
 def president():
