@@ -21,7 +21,7 @@ def simple():
     return render_template('index.html', **make_context())
 
 @app.route('/tumblr_form.html')
-def simple():
+def tumblr():
     """
     Standalone form page to iframe into Tumblr.
     """
