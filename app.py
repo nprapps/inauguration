@@ -3,7 +3,7 @@
 from mimetypes import guess_type
 
 import envoy
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, redirect
 from tumblpy import Tumblpy
 
 import app_config
@@ -34,6 +34,8 @@ def tumblr_form():
 def _post_to_tumblr():
     """
     """
+    from flask import request
+
     def _format(string):
         return string\
             .replace('-', ' ')\
