@@ -20,8 +20,9 @@ def simple():
     """
     return render_template('index.html', **make_context())
 
+
 @app.route('/tumblr_form.html')
-def tumblr():
+def tumblr_form():
     """
     Standalone form page to iframe into Tumblr.
     """
@@ -29,7 +30,7 @@ def tumblr():
 
 
 @app.route('/misterpresident/', methods=['GET', 'POST'])
-def president():
+def post_to_tumblr():
     """
     """
     def _format(string, extra):
@@ -65,7 +66,7 @@ def president():
 
 
 @app.route('/index_form.html')
-def form():
+def index_form():
     """
     'Dear Mr. President' submission form (pre-Inauguration)
     """
