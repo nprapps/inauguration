@@ -67,7 +67,7 @@
 			#header {
 				background-color: #ebebeb;
 				padding: 50px 30px 30px 30px; 
-				margin: 0 0 30px 0;
+				margin: 0;
 			}
 			
 			#blog_info h1 {
@@ -77,6 +77,29 @@
 			}
             #blog_info h1 a { color: #555; }
             #blog_info .description { color: #787878; }
+            
+            #dmp-form {
+            	background-color: #7598c9;
+            	color: #fff;
+				margin: 2px 0 30px 0;
+				padding: 0 30px;
+            }
+            #dmp-form:hover {
+            	background-color: #9eb7dd;
+            }
+            #dmp-form h3 {
+            	line-height: 44px;
+            	height: 44px;
+            	font-weight: bold;
+            	cursor: pointer;
+            }
+            #dmp-form span {
+            	background: url('http://apps.npr.org/music-memoriam-2012/img/glyphicons-halflings-white.png') no-repeat;
+            	background-position: -23px -145px;
+            	padding-right: 10px;
+            	width: 14px; height: 13px;
+            	display: inline-block;
+            }
 
             img { max-width: 100% }
             .post .top.media img { width: 100%; }
@@ -400,8 +423,13 @@
                 font-size: 12px;
                 list-style-type: none;
                 -webkit-font-smoothing: subpixel-antialiased;
-                margin: 1px 0 0 -3px;
+                margin: 1px 0 -10px -3px;
                 overflow: hidden;
+            }
+            
+            .post .post_info.social {
+            	padding-bottom: 5px;
+            	padding-top: 15px;
             }
 
             .post_info li {
@@ -414,10 +442,14 @@
                 margin: 0 10px 0 0;
                 padding: 0 2px 0 5px;
             }
-
+            
+            .post_info .facebook {
+            	padding-right: 20px;
+            }
+            
             .post_info .timestamp {
                 color: #666;
-                padding: 0 2px 0 5px;
+                padding: 0 2px 0 0;
                 display: block;
                 font-size: 12px;
             }
@@ -445,17 +477,6 @@
             }
 
             /* Baselines */
-
-            {block:IfPlaceTimestampInLeftColumn}
-            .timestamp.has_caption {
-                margin-top: 6px;
-            }
-
-            .timestamp.has_caption.with_title {
-                margin-top: 18px
-            }
-            {/block:IfPlaceTimestampInLeftColumn}
-
             .tag {
                 color: {Color:Accent};
                 display: table;
@@ -588,68 +609,9 @@
                 display: none;
             }
 
-            #twitter_container .bubble:first-child {
-                display: block;
-            }
-
-            .bubble .arrow {
-                width: 0; 
-                height: 0; 
-                position: absolute;
-                display: block;
-            }
-
-            .bubble .arrow.fill {
-                border-left: 8px solid transparent;
-                border-right: 8px solid transparent;
-                border-top: 8px solid #f5f5f5;
-                bottom: -8px;
-                left: 25px;
-            }
-
-            .bubble .arrow.border {
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-                border-top: 10px solid #d5d5d5;
-                bottom: -10px;
-                left: 23px;
-            }
-
-            .bubble:hover {
-                background: #f2f2f2;
-                border-color: #CFCFCF;
-            }
-
-            .bubble:hover .arrow.fill {
-                border-top-color: #F1F1F1;
-            }
-
-            .bubble:hover .arrow.border {
-                border-top-color: #d5d5d5;
-            }
-
-            .twitter_username {
-                max-width: 166px;
-                color: #4c4c4c;
-                font-size: 12px;
-                font-family: 'Times New Roman', Times, serif;
-                letter-spacing: 0.4em;
-                text-overflow: ellipsis;
-                -webkit-font-smoothing: subpixel-antialiased;
-                margin: 11px 0 0 22px;
-                overflow: hidden;
-                display: inline-block;
-                opacity: 1;
-            }
-
-            .twitter_username:hover {
-                color: {Color:Accent};
-            }
-
             #footer {
                 color: #4C4C4C;
                 font-size: 12px;
-                font-family: 'Times New Roman', Times, serif;
                 letter-spacing: 2px;
                 -webkit-font-smoothing: subpixel-antialiased;
             }
@@ -783,7 +745,7 @@
             
 
             @media (min-width: 980px) {
-            	#header #blog_info, #posts { 
+            	#header #blog_info, #posts, #dmp-form .wrap { 
             		margin-left: auto; margin-right: auto;
             		width: 80%;
             		max-width: 1000px;
@@ -801,7 +763,7 @@
 				#posts .post .media { width: 50%; float: left; }
 				#posts .post .caption_and_post_info.isphoto { width: 50%; float: right; margin-top: 0; }
 				#posts .post .caption_and_post_info.isphoto .cont,
-				#posts .post .caption_and_post_info.isphoto .post_info { padding-left: 20px; }
+				#posts .post .caption_and_post_info.isphoto .post_info { padding-left: 30px; }
 			}
 			@media (max-width: 480px) {
 				#nav .site-links li { display: none; }
@@ -824,6 +786,16 @@
 
     </head>
     <body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=138837436154588";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
+
 		<div id="nav">
 			<ul class="site-links">
 				<li class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></li>
@@ -851,7 +823,7 @@
                     {block:IfShowBlogTitle}<h1><a href="/">{Title}</a></h1>{/block:IfShowBlogTitle}
 					{block:IfShowBlogDescription}{block:Description}<div class="cont description group">{Description}</div>{/block:Description}{/block:IfShowBlogDescription}
                 </section>
-
+                
 				<aside id="sidebar">
 					{block:HasPages}
 						<ul class="links">
@@ -872,6 +844,13 @@
 					</ul>
 				</aside>
             </header>
+
+			<section id="dmp-form">
+				<div class="wrap">
+					<h3><span></span>SHARE: What Would You Tell The President?</h3>
+					<iframe class="dmp-iframe" src="http://www.npr.org"></iframe>
+				</div>
+			</section>
 
 
             <ul id="posts">
@@ -1122,27 +1101,20 @@
                                 {/block:ContentSource}
                                 </section>
                             {/block:Video}
+                            
+                            <ul class="post_info social">
+								<li class="facebook">
+									<div class="fb-like" data-href="{Permalink}" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false" data-font="arial"></div>
+								</li>
+								<li class="twitter">
+									<a href="https://twitter.com/share" class="twitter-share-button" data-url="{Permalink}" data-text="Dear Mr. President..." data-hashtags="inauguration" data-via="nprnews" data-lang="en">Tweet</a>
+								</li>
+                            </ul>
 
                             <ul class="
                                 post_info
-                                {block:IfPlaceTimestampInLeftColumn}
-                                    {block:Text} floating{/block:Text}
-                                    {block:Answer} floating{/block:Answer}
-                                    {block:Photo}{block:Caption} floating{/block:Caption}{/block:Photo}
-                                    {block:Photo}{block:ContentSource} floating{/block:ContentSource}{/block:Photo}
-                                    {block:Photoset}{block:Caption} floating{/block:Caption}{/block:Photoset}
-                                    {block:Photoset}{block:ContentSource} floating{/block:ContentSource}{/block:Photoset}
-                                    {block:Quote} floating{/block:Quote}
-                                    {block:Link}{block:Description} floating{/block:Description}{/block:Link}
-                                    {block:Link}{block:ContentSource} floating{/block:ContentSource}{/block:Link}
-                                    {block:Chat} floating{/block:Chat}
-                                    {block:Audio}{block:Caption} floating{/block:Caption}{/block:Audio}
-                                    {block:Audio}{block:ContentSource} floating{/block:ContentSource}{/block:Audio}
-                                    {block:Video}{block:Caption} floating{/block:Caption}{/block:Video}
-                                    {block:Video}{block:ContentSource} floating{/block:ContentSource}{/block:Video}
-                                {/block:IfPlaceTimestampInLeftColumn}
                             ">
-                                <li><a href="{Permalink}" class="
+                                <li class="timestamp-wrap"><a href="{Permalink}" class="
                                     timestamp
                                     {block:Text}has_caption{block:Title} with_title{/block:Title}{/block:Text}
                                     {block:Photo}{block:Caption}has_caption{/block:Caption}{/block:Photo}
@@ -1235,8 +1207,8 @@
             </footer>
         </section>
 
-        {block:IfUseEndlessScrolling}
         <script type="text/javascript" src="http://assets.tumblr.com/javascript/jquery-1.7.2.min.js"></script>
+        {block:IfUseEndlessScrolling}
         <script type="text/javascript">
             var Tumblelog = {};
 
@@ -1403,6 +1375,18 @@
             });
         </script>
         {/block:IfUseEndlessScrolling}
+        
+        
+        <!-- SHARE DROPDOWN SCRIPT -->
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$dmp = $('#dmp-form');
+			$dmp_frame = $dmp.find('iframe');
+			$dmp.click(function() {
+				$dmp_frame.slideToggle();
+			});
+      	});
+		</script>        
 
 
 		<!-- GOOGLE ANALYTICS -->
@@ -1446,5 +1430,8 @@
 
 
         {block:IfUseEndlessScrolling}<script type="text/javascript" src="http://assets.tumblr.com/javascript/tumblelog.js"></script>{/block:IfUseEndlessScrolling}
+
+		<!-- TWITTER -->
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </body>
 </html>
