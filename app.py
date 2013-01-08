@@ -11,7 +11,7 @@ import app_config
 from render_utils import make_context
 
 app = Flask(app_config.PROJECT_NAME)
-
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 # Example application views
 @app.route('/')
@@ -68,7 +68,7 @@ def _post_to_tumblr():
         'data': request.files['image']
     })
 
-    return redirect(u"http://%s/%s" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
+    return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
 
 
 # Render LESS files on-demand
