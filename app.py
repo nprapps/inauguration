@@ -31,7 +31,7 @@ def tumblr_form():
 
 
 @app.route('/misterpresident/', methods=['GET', 'POST'])
-def post_to_tumblr():
+def _post_to_tumblr():
     """
     """
     def _format(string):
@@ -68,14 +68,6 @@ def post_to_tumblr():
     redirect_url = u"http://%s/%s" % (blog_url, q['id'])
 
     return redirect(redirect_url, code=301)
-
-
-@app.route('/index_form.html')
-def index_form():
-    """
-    'Dear Mr. President' submission form (pre-Inauguration)
-    """
-    return render_template('index_form.html', **make_context())
 
 
 # Render LESS files on-demand
