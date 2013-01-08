@@ -1,26 +1,25 @@
 <h2>Dear Mr. President ...</h2>
 <h4>Tell the President what you want him to do in his second term.</h4>
 <div class="mr-president-form">
-<form action="http://nprapps.webscript.io/misterpresident/" method="post" enctype="multipart/form-data">
-    <ol>
-        <li><input type="radio" name="voted" value="voted-for">I voted for you.</li>
-        <li><input type="radio" name="voted" value="voted-against">I didn't vote for you.</li>
-        <li><input type="radio" name="voted" value="didnt-vote">I didn't vote.</li>
-        <li><input type="radio" name="voted" value="noneya">It's none of your business.</li>
-        <li><label>Please don't forget:
-            <input type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png">
-        </label></li>
+    <form action="/misterpresident/" method="post" enctype="multipart/form-data">
+        <ol>
+            <li><input type="radio" name="voted" value="i-voted-for-you">I voted for you.</li>
+            <li><input type="radio" name="voted" value="i-didnt-vote-for-you">I didn't vote for you.</li>
+            <li><input type="radio" name="voted" value="i-didnt-vote">I didn't vote.</li>
+            <li><input type="radio" name="voted" value="its-none-of-your-business">It's none of your business.</li>
+            <li><label>Please don't forget:
+                <input type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png">
+            </label></li>
 
-        <li><label>Because:
-            <textarea name="message"></textarea>
-        </label></li>
+            <li><label>Because:
+                <textarea name="message"></textarea>
+            </label></li>
 
-        <li><label>Signed:
-            <input type="text" name="signed_name" value="Chris Q. Everyperson"></input>
-            <input type="text" name="location" value="Washington, DC"></input>
-        </label></li>
-    </ol>
-    <button type="submit" class="btn btn-primary">Upload</button>
-</form>
+            <li><label>Signed:
+                <input type="text" name="signed_name" value="Chris Q. Everyperson"></input>
+                <input type="text" name="location" value="Washington, DC"></input>
+            </label></li>
+        </ol>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
 </div>
-<div class="mr-president-alerts"></div>

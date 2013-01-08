@@ -3,7 +3,8 @@
 from mimetypes import guess_type
 
 import envoy
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
+from tumblpy import Tumblpy
 
 import app_config
 from render_utils import make_context
@@ -20,12 +21,33 @@ def simple():
     return render_template('index.html', **make_context())
 
 
-@app.route('/index_submission.html')
-def simple():
+@app.route('/misterpresident/', methods=['GET', 'POST'])
+def president():
     """
-    Example view demonstrating rendering a simple HTML page.
     """
-    return render_template('index_submission.html', **make_context())
+    blog_url = 'testmisterpresident.tumblr.com'
+    t = Tumblpy(
+        app_key='Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH',
+        app_secret='QYQ6xuMMYzRmovnkiN1t5V0pLoeTPTYzNrMt1WH3gLDu3cm7XA',
+        oauth_token='5jSuDYkecwiLxvSvpzcdnvI7UNY4ea5aHUjsV3hA24X3vwQwqe',
+        oauth_token_secret='Ay59qTVESMoidphwEF4hjhTD25AruTqWrB9GLa31tXHewFkrQa')
+
+    caption = u"<p>Dear Mr. President:<br/>%s<br/>%s<br/>Signed,<br/>%s from %s.</p>" % (
+        request.form['voted'],
+        request.form['message'],
+        request.form['signed_name'],
+        request.form['location'])
+
+    q = t.post('post', blog_url=blog_url, params={
+        'type': 'photo',
+        'caption': caption,
+        'data': request.files['image']
+    })
+
+    redirect_url = u"http://%s/%s" % (blog_url, q['id'])
+
+    return redirect(redirect_url, code=301)
+
 
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
@@ -35,7 +57,7 @@ def _less(filename):
 
     r = envoy.run('node_modules/.bin/lessc -', data=less)
 
-    return r.std_out, 200, { 'Content-Type': 'text/css' }
+    return r.std_out, 200, {'Content-Type': 'text/css'}
 
 
 # Render JST templates on-demand
@@ -43,14 +65,14 @@ def _less(filename):
 def _templates_js():
     r = envoy.run('node_modules/.bin/jst --template underscore jst')
 
-    return r.std_out, 200, { 'Content-Type': 'application/javascript' }
+    return r.std_out, 200, {'Content-Type': 'application/javascript'}
 
 
 # Server arbitrary static files on-demand
 @app.route('/<path:path>')
 def _img(path):
     with open('www/%s' % path) as f:
-        return f.read(), 200, { 'Content-Type': guess_type(path) }
+        return f.read(), 200, {'Content-Type': guess_type(path)}
 
 
 if __name__ == '__main__':

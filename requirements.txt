@@ -12,3 +12,4 @@ requests==0.14.2
 git+https://github.com/jyr/python-tumblr.git@b91d98257
 poster==0.8.1
 boto==2.6.60
+python-tumblpy==0.6.3
