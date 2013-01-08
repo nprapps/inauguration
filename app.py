@@ -8,6 +8,7 @@ from tumblpy import Tumblpy
 
 import app_config
 from render_utils import make_context
+
 app = Flask(app_config.PROJECT_NAME)
 
 
@@ -33,10 +34,14 @@ def tumblr_form():
 def post_to_tumblr():
     """
     """
-    def _format(string, extra):
-        return string.replace('-', ' ').replace("its", "it's").replace("didnt", "didn't").replace('i ', 'I ') + extra
+    def _format(string):
+        return string\
+            .replace('-', ' ')\
+            .replace("its", "it's")\
+            .replace("didnt", "didn't")\
+            .replace('i ', 'I ')
 
-    voted = _format(request.form['voted'])
+    voted = _format(request.form['voted'] + '.')
     message = _format(request.form['message'])
     signed_name = _format(request.form['signed_name'])
     location = _format(request.form['location'])

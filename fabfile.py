@@ -13,7 +13,7 @@ from etc import github
 """
 Base configuration
 """
-env.project_name = app_config.PROJECT_NAME 
+env.project_name = app_config.PROJECT_NAME
 env.deployed_name = app_config.DEPLOYED_NAME
 env.deploy_to_servers = False
 env.repo_url = 'git@github.com:nprapps/%(project_name)s.git' % env
@@ -82,18 +82,20 @@ def less():
 
         local('node_modules/.bin/lessc %s %s' % (path, out_path))
 
+
 def jst():
     """
     Render Underscore templates to a JST package.
     """
     local('node_modules/.bin/jst --template underscore jst www/js/templates.js')
 
+
 def render():
     """
     Render HTML templates and compile assets.
     """
     from flask import g
-    
+
     less()
     jst()
 
@@ -116,7 +118,7 @@ def render():
         elif rule_string.endswith('.html'):
             filename = 'www' + rule_string
         else:
-            print 'Skipping %s' % name 
+            print 'Skipping %s' % name
             continue
 
         print 'Rendering %s' % (filename)
@@ -236,7 +238,7 @@ def deploy(remote='origin'):
 
     if env.get('deploy_to_servers', False):
         checkout_latest(remote)
-    
+
 """
 Destruction
 """
@@ -246,7 +248,7 @@ def shiva_the_destroyer():
     """
     with settings(warn_only=True):
         s3cmd = 's3cmd del --recursive %s' % env
-        
+
         for bucket in env.s3_buckets:
             env.s3_bucket = bucket
             local(s3cmd % ('s3://%(s3_bucket)s/%(deployed_name)s' % env))
@@ -285,7 +287,7 @@ def update_backchannel():
             conn = boto.connect_s3()
             bucket = conn.get_bucket(bucket)
             key = boto.s3.key.Key(bucket)
-            key.key = '%s/live-data/backchannel.json' % env.deployed_name 
+            key.key = '%s/live-data/backchannel.json' % env.deployed_name
             key.set_contents_from_filename(
                 TUMBLR_FILENAME,
                 policy='public-read',
