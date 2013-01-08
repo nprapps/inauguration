@@ -25,6 +25,14 @@ def simple():
 def president():
     """
     """
+    def _format(string, extra):
+        return string.replace('-', ' ').replace("its", "it's").replace("didnt", "didn't").replace('i ', 'I ') + extra
+
+    voted = _format(request.form['voted'])
+    message = _format(request.form['message'])
+    signed_name = _format(request.form['signed_name'])
+    location = _format(request.form['location'])
+
     blog_url = 'testmisterpresident.tumblr.com'
     t = Tumblpy(
         app_key='Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH',
@@ -33,10 +41,10 @@ def president():
         oauth_token_secret='Ay59qTVESMoidphwEF4hjhTD25AruTqWrB9GLa31tXHewFkrQa')
 
     caption = u"<p>Dear Mr. President:<br/>%s<br/>%s<br/>Signed,<br/>%s from %s.</p>" % (
-        request.form['voted'],
-        request.form['message'],
-        request.form['signed_name'],
-        request.form['location'])
+        voted,
+        message,
+        signed_name,
+        location)
 
     q = t.post('post', blog_url=blog_url, params={
         'type': 'photo',
