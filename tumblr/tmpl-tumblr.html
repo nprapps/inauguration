@@ -14,7 +14,6 @@
         <meta name="if:Show blog description" content="1"/>
         <meta name="if:Show profile photo" content="0"/>
         <meta name="if:Use endless scrolling" content="1"/>
-        <meta name="if:Show right column" content="1"/>
         <meta name="if:Use larger font for quotes" content="0"/>
         <meta name="if:Show image shadows" content="1"/>
         <meta name="if:Show tags" content="1"/>
@@ -103,19 +102,21 @@
             #posts {
                 color: #4C4C4C;
                 margin: 0 auto;
+                position: relative;
+                z-index: 1;
             }
-
             #posts .post {
                 list-style-type: none;
-                margin: 42px 30px;
+                margin: 30px;
                 padding: 30px;
-/*                border: 2px solid #ebebeb; */
+                border: 3px solid #f7f7f7;
                 background-color: #fff;
-                -moz-box-shadow: 0 0 35px #ccc;
-                -webkit-box-shadow: 0 0 35px #ccc;
-                box-shadow: 0 0 35px #ccc;
-                border-radius: 3px;
+                -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.04) inset;
+                -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.04) inset; 
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.04) inset;
+                /* box shadow from: http://matthamm.com/box-shadow-curl.html */
             }
+            
 
 {block:IfDisqusShortname}
             #posts .post #disqus_thread {
@@ -782,7 +783,12 @@
             
 
             @media (min-width: 980px) {
-            	#header #blog_info, #posts { margin-right: 25%; }
+            	#header #blog_info, #posts { 
+            		margin-left: auto; margin-right: auto;
+            		width: 80%;
+            		max-width: 1000px;
+            	}
+            	#posts .post { margin-right: 0; margin-left: 0; }
             }
             @media (max-width: 979px) {
 				#nav .site-links-2 { display: none; }
@@ -801,92 +807,15 @@
 				#nav .site-links li { display: none; }
 				#nav .site-links .npr { display: block; }
 				#blog_info h1 { font-size: 36px; }
-				#posts .post { margin: 30px 10px; }
+				#posts .post { margin-left: 10px; margin-right: 10px; padding: 15px; }
 			}
         </style>
 
         {block:PermalinkPage}
             <!-- Simplified permalink pages (Hides right column) -->
             <style type="text/css" media="screen">
-                #container {
-                }
-
-                #header {
-                }
-
-                #blog_info {
-                    margin: 0;
-                }
-
-                .post .post_info,
-                .post .caption {
-                    width: auto !important;
-                    float: none;
-                }
-
-                .post .post_info {
-                    margin-top: 45px;
-                }
-
-                .post .post_info li {
-                    line-height: 14px;
-                    margin-bottom: 10px;
-                    float: left;
-                }
-
-                .post .post_info li a {
-                    margin: 0 10px 0 0;
-                    padding: 0 2px 0 5px;
-                }
             </style>
         {block:PermalinkPage}
-
-        {block:IfNotShowRightColumn}
-            <!-- Hides right column -->
-            <style type="text/css" media="screen">
-                #container {
-                }
-
-                #header {
-                }
-
-                #blog_info {
-                    margin: 0;
-                }
-
-                #blog_info {
-                    {block:IfNotShowBlogTitle}
-                        margin-top: -7px;
-                        float: right;
-                    {/block:IfNotShowBlogTitle}
-                }
-
-                #blog_info .description {
-                    margin-bottom: 60px;
-                }
-
-                .post .post_info,
-                .post .caption {
-                    width: auto !important;
-                    float: none;
-                }
-
-                .post .post_info {
-                    margin-top: 45px;
-                }
-
-                .post .post_info li {
-                    line-height: 14px;
-                    margin-bottom: 10px;
-                    float: left;
-                }
-
-                .post .post_info li a {
-                    margin: 0 10px 0 0;
-                    padding: 0 2px 0 5px;
-                }
-            </style>
-        {/block:IfNotShowRightColumn}
 
         <!-- Custom CSS -->
         <style type="text/css" media="screen">
