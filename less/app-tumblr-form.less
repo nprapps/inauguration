@@ -4,9 +4,14 @@ body {
 	font: 14px/1.5 Arial, Helvetica, sans-serif;
 	color: #111;
 }
+a {
+	color: #4774cc;
+	text-decoration: none;
+	
+	&:hover { color: #bccae5; }
+}
 
 .mr-president-form {
-	
 	form {
 		margin: 0;
 		padding: 0;
@@ -18,7 +23,7 @@ body {
 	}
 	ol > li {
 		padding: 0;
-		margin-bottom: 20px;
+		margin-bottom: 25px;
 	}
 	ul > li {
 		padding: 0;
@@ -27,5 +32,15 @@ body {
 	label {
 		font-weight: bold;
 		display: block;
+		margin-bottom: 5px;
+	}
+	.instructions {
+		font-size: 12px;
+		color: #666;
+		margin-top: 5px;
+	}
+	textarea {
+		width: 95%;
+		height: 100px;
 	}
 }
