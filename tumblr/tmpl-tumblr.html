@@ -61,12 +61,16 @@
 			#nav ul.social-links .facebook a { background-position: 0px -144px; }
 			#nav ul.social-links .twitter a { background-position: 0px -96px; border-right:2px solid white;}
 			
-			#container { padding: 0 0 30px 0; }
+			#container {
+				padding: 0 0 30px 0;
+				background-color: #e4e4e4;
+			}
 			
 			#header {
 				background-color: #ebebeb;
 				padding: 50px 30px 30px 30px; 
 				margin: 0;
+				border-bottom: 2px solid #fff;
 			}
 			
 			#blog_info h1 {
@@ -78,25 +82,31 @@
             #blog_info .description { color: #787878; }
             
             #dmp-form {
-            	background-color: #7598c9;
             	color: #fff;
-				margin: 2px 0 30px 0;
+				margin: 30px 0;
 				padding: 0 30px;
             	cursor: pointer;
             }
-            #dmp-form:hover {
+            #dmp-form .wrap:hover {
             	background-color: #9eb7dd;
             }
-            #dmp-form h3 {
-            	line-height: 44px;
-            	height: 44px;
+            #dmp-form .wrap {
+            	background-color: #7598c9;
+            }
+            #dmp-form .hdr {
+            	overflow: hidden;
+            }
+            #dmp-form .hdr h3 {
             	font-weight: bold;
+            	font-size: 20px;
+            	height: 88px;
+            	line-height: 88px;
             }
             #dmp-form span {
-            	background: url('http://apps.npr.org/music-memoriam-2012/img/glyphicons-halflings-white.png') no-repeat;
-            	background-position: -23px -145px;
-            	padding-right: 10px;
-            	width: 14px; height: 13px;
+            	background: url('http://stage-apps.npr.org/inauguration/img/btn-share.png') no-repeat;
+            	width: 88px; height: 88px;
+            	border-right: 1px solid #fff;
+            	margin-right: 22px;
             	display: inline-block;
             }
             #dmp-form .dmp-iframe {
@@ -239,6 +249,11 @@
                 width: auto;
                 float: none;
                 padding-bottom: 15px;
+            }
+
+            .post .caption p {
+            	font-size: 16px;
+            	line-height: 1.5;
             }
             
             .content_source {
