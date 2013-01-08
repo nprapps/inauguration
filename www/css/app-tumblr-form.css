@@ -1,8 +1,9 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 10px;
   font: 14px/1.5 Arial, Helvetica, sans-serif;
   color: #111;
+  background-color: #fff;
 }
 a {
   color: #4774cc;
@@ -20,6 +21,13 @@ a:hover {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.mr-president-form li:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
 }
 .mr-president-form ol > li {
   padding: 0;
@@ -53,5 +61,9 @@ a:hover {
   padding: 5px 10px;
 }
 .mr-president-form input[type='radio'] {
+  margin-right: 10px;
+}
+.mr-president-form img.sample-photo {
+  float: left;
   margin-right: 10px;
 }
