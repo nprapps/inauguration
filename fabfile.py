@@ -6,7 +6,6 @@ import os
 
 from fabric.api import *
 
-import app
 import app_config
 from etc import github
 
@@ -94,6 +93,7 @@ def render():
     """
     Render HTML templates and compile assets.
     """
+    import app
     from flask import g
 
     less()

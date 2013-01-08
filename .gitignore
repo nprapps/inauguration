@@ -44,3 +44,4 @@ www/js/templates.js
 www/js/tables.min.js
 
 www/live-data/*.json
+www/css/chat.css
