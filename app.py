@@ -3,7 +3,7 @@
 from mimetypes import guess_type
 
 import envoy
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, redirect
 from tumblpy import Tumblpy
 
 import app_config
@@ -30,21 +30,21 @@ def tumblr_form():
     return render_template('tumblr_form.html', **make_context())
 
 
-@app.route('/misterpresident/', methods=['GET', 'POST'])
-def post_to_tumblr():
+@app.route('/misterpresident/', methods=['POST'])
+def _post_to_tumblr():
     """
+    Handles the POST to Tumblr.
     """
-    def _format(string):
-        return string\
-            .replace('-', ' ')\
-            .replace("its", "it's")\
-            .replace("didnt", "didn't")\
-            .replace('i ', 'I ')
+    def clean(string):
+        """
+        Formats a string all pretty.
+        """
+        return string.replace('-', ' ').replace("its", "it's").replace("didnt", "didn't").replace('i ', 'I ')
 
-    voted = _format(request.form['voted'] + '.')
-    message = _format(request.form['message'])
-    signed_name = _format(request.form['signed_name'])
-    location = _format(request.form['location'])
+    voted = u"<div class='voted' data-vote-type='%s'>%s</div>" % (request.form['voted'], clean(request.form['voted'] + '.'))
+    message = u"<div class='message'>%s</div>" % clean(request.form['message'])
+    signed_name = u"<div class='signature-name'>%s</div>" % clean(request.form['signed_name'])
+    location = u"<div class='location'>%s</div>" % clean(request.form['location'])
 
     blog_url = 'testmisterpresident.tumblr.com'
     t = Tumblpy(
@@ -53,7 +53,7 @@ def post_to_tumblr():
         oauth_token='5jSuDYkecwiLxvSvpzcdnvI7UNY4ea5aHUjsV3hA24X3vwQwqe',
         oauth_token_secret='Ay59qTVESMoidphwEF4hjhTD25AruTqWrB9GLa31tXHewFkrQa')
 
-    caption = u"<p>Dear Mr. President:<br/>%s<br/>%s<br/>Signed,<br/>%s from %s.</p>" % (
+    caption = u"<div class='intro'>Dear Mr. President,</div>" % (
         voted,
         message,
         signed_name,
@@ -65,9 +65,7 @@ def post_to_tumblr():
         'data': request.files['image']
     })
 
-    redirect_url = u"http://%s/%s" % (blog_url, q['id'])
-
-    return redirect(redirect_url, code=301)
+    return redirect(u"http://%s/%s" % (blog_url, q['id']), code=301)
 
 
 @app.route('/index_form.html')
