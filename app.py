@@ -11,7 +11,7 @@ import app_config
 from render_utils import make_context
 
 app = Flask(app_config.PROJECT_NAME)
-
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 # Example application views
 @app.route('/')
