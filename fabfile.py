@@ -294,6 +294,9 @@ def update_backchannel():
                 headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
             )
 
+def update_mister_president():
+    local('python update_mister_president.py')
+
 def deploy_radio(path):
     """
     Deploys an radio status file to radio.json
