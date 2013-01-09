@@ -17,9 +17,8 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 #
 # Commenting out base routes.
 #
-# @app.route('/')
+@app.route('/')
 @app.route('/index.html')
-@app.route('/testing/')
 def simple():
     """
     Example view demonstrating rendering a simple HTML page.
@@ -27,12 +26,12 @@ def simple():
     return render_template('index.html', **make_context())
 
 
-# @app.route('/tumblr_form.html')
-# def tumblr_form():
-#     """
-#     Standalone form page to iframe into Tumblr.
-#     """
-#     return render_template('tumblr_form.html', **make_context())
+@app.route('/tumblr_form.html')
+def tumblr_form():
+    """
+    Standalone form page to iframe into Tumblr.
+    """
+    return render_template('tumblr_form.html', **make_context())
 
 
 @app.route('/dear-mr-president/', methods=['POST'])
