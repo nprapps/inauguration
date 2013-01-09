@@ -16,12 +16,6 @@ a:hover {
   max-width: 600px;
   margin: 0 auto;
   padding-top: 10px;
-  /*
-	input[type='file'] {
-		font-size: 16px;
-	}
-	*/
-
 }
 .mr-president-form form {
   margin: 0;
@@ -92,6 +86,9 @@ a:hover {
   margin-right: 10px;
   margin-top: -6px;
 }
+.mr-president-form input[type='file'] {
+  font-size: 16px;
+}
 .mr-president-form img.sample-photo {
   float: right;
   margin-left: 10px;
@@ -110,4 +107,12 @@ a:hover {
 }
 .mr-president-form button[type='submit']:hover {
   opacity: 0.7;
+}
+@media (max-width: 480px) {
+  textarea {
+    width: 94%;
+  }
+  input[type='file'] {
+    font-size: 13px;
+  }
 }
