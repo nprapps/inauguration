@@ -9,6 +9,7 @@ import app_config
 TUMBLR_FILENAME = 'www/live-data/misterpresident.json'
 TUMBLR_BLOG_ID = 'inauguration2013'
 TUMBLR_MAX_POSTS = 10000
+MAX_PER_CATEGORY = 100
 
 api = Api(TUMBLR_BLOG_ID)
 
@@ -38,9 +39,11 @@ for post in posts:
         if tag == 'its-none-of-your-business-how-i-voted':
             tag = 'id-rather-not-say-how-i-voted'
 
-        output[tag].append(simple_post)
+        if len(output[tag]) <= MAX_PER_CATEGORY:
+            output[tag].append(simple_post)
 
-    output['latest'].append(simple_post)
+    if len(output['latest']) <= MAX_PER_CATEGORY:
+        output['latest'].append(simple_post)
 
 with open(TUMBLR_FILENAME, 'w') as f:
     f.write(json.dumps(output))
