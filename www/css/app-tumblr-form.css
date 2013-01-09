@@ -16,6 +16,12 @@ a:hover {
   max-width: 600px;
   margin: 0 auto;
   padding-top: 10px;
+  /*
+	input[type='file'] {
+		font-size: 16px;
+	}
+	*/
+
 }
 .mr-president-form form {
   margin: 0;
@@ -85,9 +91,6 @@ a:hover {
 .mr-president-form input[type='radio'] {
   margin-right: 10px;
   margin-top: -6px;
-}
-.mr-president-form input[type='file'] {
-  font-size: 16px;
 }
 .mr-president-form img.sample-photo {
   float: right;
