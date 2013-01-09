@@ -1,6 +1,6 @@
 body {
 	margin: 0;
-	padding: 2px;
+	padding: 0;
 	font: 14px/1.5 Arial, Helvetica, sans-serif;
 	color: #111;
 	background-color: #f1f1f1;
@@ -15,6 +15,7 @@ a {
 .mr-president-form {
 	max-width: 600px;
 	margin: 0 auto;
+	padding-top: 10px;
 
 	form {
 		margin: 0;
@@ -33,11 +34,10 @@ a {
 		height: 0;
     }
 	ol > li {
-		padding: 15px 20px;
+		padding: 10px 20px;
 		background-color: #f1f1f1;
 		border-bottom: 2px solid #fff;
 	}
-	ol > li:first-child,
 	ol > li.form-submit,
 	ol > li.form-photo {
 		border-bottom: 0;
@@ -52,15 +52,20 @@ a {
 	}
 	label {
 		font-weight: bold;
-		font-size: 16px;
+		font-size: 17px;
 		display: block;
 		margin-bottom: 5px;
 	}
-	li.form-message label,
-	.instructions {
+	label.instructions {
 		font-weight: normal;
-		font-size: 13px;
+		font-size: 14px;
 		margin-bottom: 5px;
+	}
+	li.form-photo label.header {
+		margin-bottom: 15px;
+	}
+	li.form-photo label.instructions {
+		margin-bottom: 15px;
 	}
 	textarea {
 		width: 95%;
@@ -78,6 +83,10 @@ a {
 	}
 	input[type='radio'] {
 		margin-right: 10px;
+		margin-top: -6px;
+	}
+	input[type='file'] {
+		font-size: 16px;
 	}
 	img.sample-photo {
 		float: right;
