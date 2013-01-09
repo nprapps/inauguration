@@ -38,6 +38,11 @@ a:hover {
   background-color: #f1f1f1;
   border-bottom: 2px solid #fff;
 }
+.mr-president-form ol > li:first-child,
+.mr-president-form ol > li.form-submit {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
 .mr-president-form ul > li {
   padding: 0;
   margin: 0 0 5px 0;
