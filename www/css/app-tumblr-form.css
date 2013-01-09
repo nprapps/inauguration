@@ -64,7 +64,8 @@ a:hover {
   margin-bottom: 5px;
 }
 .mr-president-form textarea {
-  width: 100%;
+  width: 95%;
+  padding: 2%;
   height: 100px;
   font: 13px/1.5 Arial, Helvetica, sans-serif;
   color: #111;

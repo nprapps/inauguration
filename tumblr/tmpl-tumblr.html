@@ -39,8 +39,11 @@
                 color: #111;
                 margin: 0;
                 padding: 0;
+                height: 100%;
+				background-color: #888;
             }
             *:active, *:focus { outline-width: 0px; }
+            iframe { display: block; }
 
     		#nav { background-color: #e0e0e0; height: 44px; overflow: hidden; border-bottom: 2px solid #fff; }
 			#nav ul { list-style: none; margin: 0; padding: 0; }
@@ -61,10 +64,7 @@
 			#nav ul.social-links .facebook a { background-position: 0px -144px; }
 			#nav ul.social-links .twitter a { background-position: 0px -96px; border-right:2px solid white;}
 			
-			#container {
-				padding: 0 0 30px 0;
-				background-color: #888;
-			}
+			#container { padding: 0 0 30px 0; }
 			
 			#header {
 				background-color: #ebebeb;
@@ -90,6 +90,8 @@
                 -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
                 -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); 
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                width: 100%;
+                overflow: hidden;
             }
             #dmp-form .hdr {
             	cursor: pointer;
@@ -121,9 +123,9 @@
             	float: left;
             }
             #dmp-form .dmp-iframe {
-            	width: 100%;
-            	height: 700px;
+            	height: 710px;
             	display: none;
+            	width: 100%;
             }
 
 
@@ -157,6 +159,8 @@
             #posts .post {
                 list-style-type: none;
                 margin: 30px;
+            }
+            #posts .post .wrap {
                 padding: 30px;
                 border: 3px solid #f7f7f7;
                 background-color: #fff;
@@ -684,6 +688,7 @@
 
             #footer {
                 -webkit-font-smoothing: subpixel-antialiased;
+                margin: 0 30px 30px 30px;
             }
 
             #footer .copyright {
@@ -835,7 +840,6 @@
             		width: 80%;
             		max-width: 1000px;
             	}
-            	#posts .post { margin-right: 0; margin-left: 0; }
             }
             @media (max-width: 979px) {
 				#nav .site-links-2 { display: none; }
@@ -845,9 +849,9 @@
 				#posts .post .caption_and_post_info.isphoto { width: 50%; float: right; margin-top: 0; }
 				#posts .post .caption_and_post_info.isphoto .cont,
 				#posts .post .caption_and_post_info.isphoto .post_info { margin-left: 30px; }
+				#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 			}
 			@media (max-width: 767px) {
-				#nav, #footer { margin-left: -20px; margin-right: -20px; }
 				#nav .site-links { margin-left: 20px; }
 				#dmp-form .hdr h3 { line-height: 26px; padding-top: 18px; }
 				#dmp-form .hdr h3 span { margin-top: -18px; }
@@ -858,12 +862,14 @@
 				#nav .site-links li { display: none; }
 				#nav .site-links .npr { display: block; }
 				#blog_info h1 { font-size: 36px; }
-				#posts .post { margin-left: 10px; margin-right: 10px; padding: 15px; }
-				#dmp-form { margin-left: -20px; margin-right: -20px; }
+				#posts .post { margin-left: 10px; margin-right: 10px; }
+				#posts .post .wrap { padding: 15px; }
+				#dmp-form { padding-left: 10px; padding-right: 10px; }
 				#dmp-form .hdr { height: 64px; }
 				#dmp-form .hdr h3 { font-size: 16px; line-height: 22px; padding-top: 11px; }
 				#dmp-form .hdr h3 span { width: 64px; height: 64px; background-position: 50% 50%; margin-top: -11px; background-image: url('http://stage-apps.npr.org/inauguration/img/btn-share-small.png') }
-				#dmp-form .dmp-iframe { height: 715px; margin-bottom: 10px; }
+				#dmp-form .dmp-iframe { height: 725px; }
+				#footer { padding-left: 10px; margin-left: 0; margin-right: 0; }
 			}
         </style>
 
@@ -934,7 +940,7 @@
 					<div class="hdr">
 						<h3><span></span>SHARE: What Do You Want The President To Remember?</h3>
 					</div>
-					<iframe class="dmp-iframe" src="http://stage-apps.npr.org/inauguration/tumblr_form.html" frameborder="0" scrolling="no"></iframe>
+					<iframe class="dmp-iframe" src="http://stage-apps.npr.org/inauguration/tumblr_form.html" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 				</div>
 			</section>
 
@@ -943,11 +949,12 @@
                 <!-- START POSTS -->
                 {block:Posts}
 
-                        <li class="post group" {block:IfShowPostNotes} {block:PostNotes} style="padding:0"{/block:PostNotes} {/block:IfShowPostNotes}>  
+                        <li class="post group" {block:IfShowPostNotes} {block:PostNotes} style="padding:0"{/block:PostNotes} {/block:IfShowPostNotes}>
+                        	<div class="wrap">
 
                         {block:Photo}
                             <section class="top media" style="display:block;">
-                                 <a href="{Permalink}" class="link"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"></a>
+                                 <a href="{Permalink}#posts" class="link"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"></a>
                             </section>
                         {/block:Photo}
 
@@ -987,7 +994,7 @@
                             ">
                                 <li class="timestamp-wrap">
                                 {block:IndexPage}
-                                <a href="{Permalink}" class="
+                                <a href="{Permalink}#posts" class="
                                     timestamp
                                     {block:Text}has_caption{block:Title} with_title{/block:Title}{/block:Text}
                                     {block:Photo}{block:Caption}has_caption{/block:Caption}{/block:Photo}
@@ -1250,6 +1257,8 @@
                                 {/block:Permalink}{/block:IfDisqusShortname}
 
                                 </section>
+                                
+                        </div> <!-- end .wrap -->
                     </li>
 
                 {/block:Posts}
