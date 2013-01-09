@@ -13,9 +13,13 @@ from render_utils import make_context
 app = Flask(app_config.PROJECT_NAME)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-# Example application views
-@app.route('/')
-@app.route('/index.html')
+
+#
+# Commenting out base routes.
+#
+# @app.route('/')
+# @app.route('/index.html')
+@app.route('/testing/')
 def simple():
     """
     Example view demonstrating rendering a simple HTML page.
@@ -23,12 +27,12 @@ def simple():
     return render_template('index.html', **make_context())
 
 
-@app.route('/tumblr_form.html')
-def tumblr_form():
-    """
-    Standalone form page to iframe into Tumblr.
-    """
-    return render_template('tumblr_form.html', **make_context())
+# @app.route('/tumblr_form.html')
+# def tumblr_form():
+#     """
+#     Standalone form page to iframe into Tumblr.
+#     """
+#     return render_template('tumblr_form.html', **make_context())
 
 
 @app.route('/dear-mr-president/', methods=['POST'])
@@ -98,4 +102,4 @@ def _img(path):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=app_config.DEBUG)
