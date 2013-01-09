@@ -25,4 +25,4 @@ else:
     SERVERS = STAGING_SERVERS
 
 TUMBLR_KEY = 'Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH'
-TUMBLR_URL = 'testmisterpresident.tumblr.com'
+TUMBLR_URL = 'inauguration2013.tumblr.com'
