@@ -37,6 +37,9 @@ a {
 		padding: 0;
 		margin: 0 0 10px 0;
 	}
+	ul > li:hover {
+		background-color: #eee;
+	}
 	label {
 		font-weight: bold;
 		display: block;
@@ -84,8 +87,17 @@ a {
 
 @media (min-width: 768px) {
 	.mr-president-form { 
+		li.form-vote ul { border-bottom: 2px solid #ebebeb; padding-bottom: 10px; }
+		li.form-vote ul:after {
+			visibility: hidden;
+			display: block;
+			content: "";
+			clear: both;
+			height: 0;
+		}
+		li.form-vote li { width: 25%; float: left; }
 		li.form-photo { width: 45%; float: left; }
 		li.form-message { width: 45%; float: right; }
-		li.form-signature { clear: both; }
+		li.form-signature { clear: both; border-top: 2px solid #ebebeb; padding-top: 15px; }
 	}
 }

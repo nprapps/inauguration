@@ -80,3 +80,16 @@ a:hover {
 .mr-president-form button[type='submit']:hover {
   opacity: 0.7;
 }
+@media (min-width: 768px) {
+  .mr-president-form li.form-photo {
+    width: 45%;
+    float: left;
+  }
+  .mr-president-form li.form-message {
+    width: 45%;
+    float: right;
+  }
+  .mr-president-form li.form-signature {
+    clear: both;
+  }
+}
