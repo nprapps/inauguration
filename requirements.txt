@@ -12,3 +12,4 @@ poster==0.8.1
 boto==2.6.0
 requests==0.14.1
 python-tumblpy==0.6.3
+python-tumblr==0.1
