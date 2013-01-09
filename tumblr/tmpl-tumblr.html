@@ -39,6 +39,8 @@
                 color: #111;
                 margin: 0;
                 padding: 0;
+                height: 100%;
+				background-color: #888;
             }
             *:active, *:focus { outline-width: 0px; }
 
@@ -63,7 +65,6 @@
 			
 			#container {
 				padding: 0 0 30px 0;
-				background-color: #888;
 			}
 			
 			#header {
@@ -157,6 +158,8 @@
             #posts .post {
                 list-style-type: none;
                 margin: 30px;
+            }
+            #posts .post .wrap {
                 padding: 30px;
                 border: 3px solid #f7f7f7;
                 background-color: #fff;
@@ -684,6 +687,7 @@
 
             #footer {
                 -webkit-font-smoothing: subpixel-antialiased;
+                margin: 0 30px 30px 30px;
             }
 
             #footer .copyright {
@@ -835,7 +839,9 @@
             		width: 80%;
             		max-width: 1000px;
             	}
+            	/*
             	#posts .post { margin-right: 0; margin-left: 0; }
+            	*/
             }
             @media (max-width: 979px) {
 				#nav .site-links-2 { display: none; }
@@ -845,9 +851,9 @@
 				#posts .post .caption_and_post_info.isphoto { width: 50%; float: right; margin-top: 0; }
 				#posts .post .caption_and_post_info.isphoto .cont,
 				#posts .post .caption_and_post_info.isphoto .post_info { margin-left: 30px; }
+				#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 			}
 			@media (max-width: 767px) {
-				#nav, #footer { margin-left: -20px; margin-right: -20px; }
 				#nav .site-links { margin-left: 20px; }
 				#dmp-form .hdr h3 { line-height: 26px; padding-top: 18px; }
 				#dmp-form .hdr h3 span { margin-top: -18px; }
@@ -858,12 +864,14 @@
 				#nav .site-links li { display: none; }
 				#nav .site-links .npr { display: block; }
 				#blog_info h1 { font-size: 36px; }
-				#posts .post { margin-left: 10px; margin-right: 10px; padding: 15px; }
+				#posts .post { margin-left: 10px; margin-right: 10px; }
+				#posts .post .wrap { padding: 15px; }
 				#dmp-form { margin-left: -20px; margin-right: -20px; }
 				#dmp-form .hdr { height: 64px; }
 				#dmp-form .hdr h3 { font-size: 16px; line-height: 22px; padding-top: 11px; }
 				#dmp-form .hdr h3 span { width: 64px; height: 64px; background-position: 50% 50%; margin-top: -11px; background-image: url('http://stage-apps.npr.org/inauguration/img/btn-share-small.png') }
 				#dmp-form .dmp-iframe { height: 715px; margin-bottom: 10px; }
+				#footer { padding-left: 10px; }
 			}
         </style>
 
@@ -943,11 +951,12 @@
                 <!-- START POSTS -->
                 {block:Posts}
 
-                        <li class="post group" {block:IfShowPostNotes} {block:PostNotes} style="padding:0"{/block:PostNotes} {/block:IfShowPostNotes}>  
+                        <li class="post group" {block:IfShowPostNotes} {block:PostNotes} style="padding:0"{/block:PostNotes} {/block:IfShowPostNotes}>
+                        	<div class="wrap">
 
                         {block:Photo}
                             <section class="top media" style="display:block;">
-                                 <a href="{Permalink}" class="link"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"></a>
+                                 <a href="{Permalink}#posts" class="link"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"></a>
                             </section>
                         {/block:Photo}
 
@@ -987,7 +996,7 @@
                             ">
                                 <li class="timestamp-wrap">
                                 {block:IndexPage}
-                                <a href="{Permalink}" class="
+                                <a href="{Permalink}#posts" class="
                                     timestamp
                                     {block:Text}has_caption{block:Title} with_title{/block:Title}{/block:Text}
                                     {block:Photo}{block:Caption}has_caption{/block:Caption}{/block:Photo}
@@ -1250,6 +1259,8 @@
                                 {/block:Permalink}{/block:IfDisqusShortname}
 
                                 </section>
+                                
+                        </div> <!-- end .wrap -->
                     </li>
 
                 {/block:Posts}

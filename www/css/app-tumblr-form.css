@@ -39,7 +39,8 @@ a:hover {
   border-bottom: 2px solid #fff;
 }
 .mr-president-form ol > li:first-child,
-.mr-president-form ol > li.form-submit {
+.mr-president-form ol > li.form-submit,
+.mr-president-form ol > li.form-photo {
   border-bottom: 0;
   padding-bottom: 0;
 }
@@ -52,12 +53,14 @@ a:hover {
 }
 .mr-president-form label {
   font-weight: bold;
+  font-size: 16px;
   display: block;
   margin-bottom: 5px;
 }
+.mr-president-form li.form-message label,
 .mr-president-form .instructions {
-  font-size: 12px;
-  color: #666;
+  font-weight: normal;
+  font-size: 13px;
   margin-bottom: 5px;
 }
 .mr-president-form textarea {
