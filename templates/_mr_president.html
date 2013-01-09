@@ -1,33 +1,33 @@
 <div class="mr-president-form">
-	<form action="http://54.245.53.112/dear-mr-president/" method="post" enctype="multipart/form-data">
-		<ol>
-			<li><label for="voted">Dear Mr. President,</label></li>
-			<li class="form-vote">
-				<ul>
-					<li><input type="radio" name="voted" value="i-voted-for-you">I voted for you.</li>
-					<li><input type="radio" name="voted" value="i-didnt-vote-for-you">I didn't vote for you.</li>
-					<li><input type="radio" name="voted" value="i-didnt-vote">I didn't vote.</li>
-					<li><input type="radio" name="voted" value="its-none-of-your-business-how-i-voted">It's none of your business how I voted.</li>
-				</ul>
-			</li>
-			<li class="form-photo">
-				<img src="img/sample-photo-2.jpg" alt="Sample Photo" class="sample-photo" />
-				<label for="image">Please don&rsquo;t forget...</label>
-				<div class="instructions">Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.</div>
-				<input type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png">
-			</li>
-			<li class="form-message">
-				<label for="message">Explain why this matters to you.</label>
-				<textarea name="message"></textarea>
-			</li>
-			<li class="form-signature">
-				<label for="signed_name">Signed,</label>
-				<input type="text" name="signed_name" placeholder="Chris Q. Everyperson"></input> from
-				<input type="text" name="location" placeholder="Washington, DC"></input>
-			</li>
-			<li class="form-submit">
-				<button type="submit" class="btn">Send Your Postcard</button>
-			</li>
+    <form action="http://54.245.53.112/dear-mr-president/" method="post" enctype="multipart/form-data">
+        <ol>
+            <li><label for="voted">Dear Mr. President,</label></li>
+            <li class="form-vote">
+                <ul>
+                    <li><input type="radio" name="voted" value="i-voted-for-you">I voted for you.</li>
+                    <li><input type="radio" name="voted" value="i-didnt-vote-for-you">I didn't vote for you.</li>
+                    <li><input type="radio" name="voted" value="i-didnt-vote">I didn't vote.</li>
+                    <li><input type="radio" name="voted" value="its-none-of-your-business-how-i-voted" checked="checked">It's none of your business how I voted.</li>
+                </ul>
+            </li>
+            <li class="form-photo">
+                <img src="img/sample-photo-2.jpg" alt="Sample Photo" class="sample-photo" />
+                <label for="image">Please don&rsquo;t forget...</label>
+                <div class="instructions">Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.</div>
+                <input type="file" name="image" accept="image/*" required>
+            </li>
+            <li class="form-message">
+                <label for="message">Explain why this matters to you.</label>
+                <textarea name="message" required></textarea>
+            </li>
+            <li class="form-signature">
+            <label for="signed_name">Signed,</label>
+                <input type="text" name="signed_name" placeholder="Chris Q. Everyperson" required></input> from
+                <input type="text" name="location" placeholder="Washington, DC" required></input>
+            </li>
+            <li class="form-submit">
+                <button type="submit" class="btn">Send Your Postcard</button>
+            </li>
         </ol>
     </form>
 </div>
