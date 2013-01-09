@@ -48,7 +48,7 @@ a {
 	.instructions {
 		font-size: 12px;
 		color: #666;
-		margin-top: 5px;
+		margin-bottom: 5px;
 	}
 	textarea {
 		width: 100%;
@@ -69,6 +69,8 @@ a {
 	img.sample-photo {
 		float: left;
 		margin-right: 10px;
+		width: 30%;
+		max-width: 138px;
 	}
 	button[type='submit'] {
 		background-color: #7598c9;
@@ -95,8 +97,9 @@ a {
 			clear: both;
 			height: 0;
 		}
-		li.form-vote li { width: 25%; float: left; }
+		li.form-vote li { float: left; margin-right: 30px; }
 		li.form-photo { width: 45%; float: left; }
+		img.sample-photo {  }
 		li.form-message { width: 45%; float: right; }
 		li.form-signature { clear: both; border-top: 2px solid #ebebeb; padding-top: 15px; }
 	}

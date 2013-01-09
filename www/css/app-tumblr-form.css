@@ -37,6 +37,9 @@ a:hover {
   padding: 0;
   margin: 0 0 10px 0;
 }
+.mr-president-form ul > li:hover {
+  background-color: #eee;
+}
 .mr-president-form label {
   font-weight: bold;
   display: block;
@@ -81,6 +84,21 @@ a:hover {
   opacity: 0.7;
 }
 @media (min-width: 768px) {
+  .mr-president-form li.form-vote ul {
+    border-bottom: 2px solid #ebebeb;
+    padding-bottom: 10px;
+  }
+  .mr-president-form li.form-vote ul:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+  }
+  .mr-president-form li.form-vote li {
+    width: 25%;
+    float: left;
+  }
   .mr-president-form li.form-photo {
     width: 45%;
     float: left;
@@ -91,5 +109,7 @@ a:hover {
   }
   .mr-president-form li.form-signature {
     clear: both;
+    border-top: 2px solid #ebebeb;
+    padding-top: 15px;
   }
 }
