@@ -14,11 +14,33 @@
     <h2>Dear Mr. President ...</h2>
     <h4>Tell the President what you want him to do in his second term.</h4>
     {% include '_mr_president.html' %}
+
+    <div id="photo-feed">
+        <h2>Latest</h2>
+        <div id="photos-latest" class="photo-list"></div>
+
+        <h2>NPR's Picks</h2>
+        <div id="photos-npr-picks" class="photo-list"></div>
+
+        <h2>I voted for you</h2>
+        <div id="photos-i-voted-for-you" class="photo-list"></div>
+
+        <h2>I didn't vote for you</h2>
+        <div id="photos-i-didnt-vote-for-you" class="photo-list"></div>
+
+        <h2>I'd rather not say how I voted</h2>
+        <div id="photos-id-rather-not-say-how-i-voted" class="photo-list"></div>
+
+        <h2>I didn't vote</h2>
+        <div id="photos-i-didnt-vote" class="photo-list"></div>
+    </div>
+
     <div id="live-chat"></div>
 {% endblock %}
 
 {% block extra_foot_js %}
     {{ JS.push('js/auth.js') }}
     {{ JS.push('js/app-radio.js') }}
+    {{ JS.push('js/app-photo-feed.js') }}
     {{ JS.push('js/chat.js') }}
 {% endblock %}

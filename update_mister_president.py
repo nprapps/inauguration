@@ -30,14 +30,17 @@ for post in posts:
         'id': post['id'],
         'url': post['url'],
         'text': post['photo-caption'],
-        'photo_url': post['photo-url-500'],
+        'photo_url': post['photo-url-100'],
         'timestamp': post['unix-timestamp']
     }
 
     for tag in post['tags']:
         if tag == 'its-none-of-your-business-how-i-voted':
             tag = 'id-rather-not-say-how-i-voted'
+
         output[tag].append(simple_post)
+
+    output['latest'].append(simple_post)
 
 with open(TUMBLR_FILENAME, 'w') as f:
     f.write(json.dumps(output))
