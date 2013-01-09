@@ -12,6 +12,10 @@ a {
 a:hover {
   color: #bccae5;
 }
+.mr-president-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
 .mr-president-form form {
   margin: 0;
   padding: 0;
@@ -31,8 +35,8 @@ a:hover {
 }
 .mr-president-form ol > li {
   padding: 15px 20px;
-  margin-bottom: 2px;
   background-color: #f1f1f1;
+  border-bottom: 2px solid #fff;
 }
 .mr-president-form ul > li {
   padding: 0;
@@ -68,8 +72,8 @@ a:hover {
   margin-right: 10px;
 }
 .mr-president-form img.sample-photo {
-  float: left;
-  margin-right: 10px;
+  float: right;
+  margin-left: 10px;
   width: 30%;
   max-width: 138px;
 }

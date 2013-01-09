@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <base target="_top" />
 
     
     <link rel="stylesheet" type="text/css" href="css/app-tumblr-form.min.css" />
@@ -15,6 +16,7 @@
 <div class="mr-president-form">
 	<form action="http://54.245.53.112/dear-mr-president/" method="post" enctype="multipart/form-data">
 		<ol>
+			<li><label for="voted">Dear Mr. President,</label></li>
 			<li class="form-vote">
 				<ul>
 					<li><input type="radio" name="voted" value="i-voted-for-you">I voted for you.</li>
@@ -25,21 +27,21 @@
 			</li>
 			<li class="form-photo">
 				<img src="img/sample-photo.jpg" alt="Sample Photo" class="sample-photo" />
-				<label for="image">Please don't forget:</label>
+				<label for="image">Please don't forget</label>
 				<div class="instructions">Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.</div>
 				<input type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png">
 			</li>
 			<li class="form-message">
-				<label for="message">Why this matters to me:</label>
+				<label for="message">Why this matters to me</label>
 				<textarea name="message"></textarea>
 			</li>
 			<li class="form-signature">
-				<label for="signed_name">Signed:</label>
+				<label for="signed_name">Signed</label>
 				<input type="text" name="signed_name" value="Chris Q. Everyperson"></input> from
 				<input type="text" name="location" value="Washington, DC"></input>
 			</li>
 			<li class="form-submit">
-				<button type="submit" class="btn">Upload</button>
+				<button type="submit" class="btn">Send Your Postcard</button>
 			</li>
         </ol>
     </form>
