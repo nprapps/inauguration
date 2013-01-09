@@ -11,13 +11,17 @@
                 </ul>
             </li>
             <li class="form-photo">
+                <label>Please don&rsquo;t forget...</label>
                 <img src="img/sample-photo-2.jpg" alt="Sample Photo" class="sample-photo" />
-                <label for="image">Please don&rsquo;t forget...</label>
-                <div class="instructions">Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.</div>
+                <label for="image" class="instructions">
+                	<strong>Step 1:</strong> Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.
+                </label>
                 <input type="file" name="image" accept="image/*" required>
             </li>
             <li class="form-message">
-                <label for="message">Explain why this matters to you.</label>
+                <label for="message" class="instructions">
+                	<strong>Step 2:</strong> Explain why this matters to you.
+                </label>
                 <textarea name="message" required></textarea>
             </li>
             <li class="form-signature">
@@ -26,7 +30,7 @@
                 <input type="text" name="location" placeholder="Washington, DC" required></input>
             </li>
             <li class="form-submit">
-                <button type="submit" class="btn">Send Us Your Postcard</button>
+                <button type="submit">Send Us Your Postcard</button>
             </li>
         </ol>
     </form>
