@@ -682,15 +682,25 @@
             }
 
             #footer {
-                color: #4C4C4C;
-                font-size: 12px;
-                letter-spacing: 2px;
                 -webkit-font-smoothing: subpixel-antialiased;
             }
 
             #footer .copyright {
                 width: 50%;
                 float: left;
+            }
+            
+            #footer .pagination-index a {
+            	display: inline-block;
+            	background-color: #ebebeb;
+            	font-size: 12px;
+            	text-transform: lowercase;
+            	font-weight: bold;
+            	padding: 0 20px;
+            	line-height: 44px;
+            }
+            #footer .pagination-index a:hover {
+            	color: #bccae5;
             }
 
             #footer .pagination {
@@ -817,7 +827,9 @@
             
 
             @media (min-width: 980px) {
-            	#header #blog_info, #posts, #dmp-form .wrap { 
+            	#header #blog_info, #posts, 
+            	#dmp-form .wrap,
+            	#footer .pagination-index { 
             		margin-left: auto; margin-right: auto;
             		width: 80%;
             		max-width: 1000px;
@@ -877,8 +889,8 @@
 			</ul>
 			<ul class="social-links">
 			<!--TODO: FIX SOCIAL LINKS -->
-				<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Bob+Boilen's+Wristbands+2012,+from+@nprmusic+%26+@allsongs.&amp;url=http%3A%2F%2Fapps.npr.org%2Fbobs-boilens-wristbands-2012%2F" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Bob\'s Concert Tickets']);">Share This Page On Twitter</a></li>
-				<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Bob+Boilen's+Wristbands+2012,+from+NPR+Music.&amp;u=http%3A%2F%2Fapps.npr.org%2Fbob-boilens-wristbands-2012%2F" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Bob\'s Concert Tickets']);">Like This Page On Facebook</a></li>
+				<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President...+%23inauguration&amp;url={URL}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Bob\'s Concert Tickets']);">Share This Page On Twitter</a></li>
+				<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President...+%23inauguration&amp;u={URL}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Bob\'s Concert Tickets']);">Like This Page On Facebook</a></li>
 			</ul>
 			<ul class="site-links-2">
 				<li class="stations"><a href="http://www.npr.org/templates/stations/stations/">Stations</a></li>
@@ -1261,6 +1273,11 @@
             {/block:IfDisqusShortname}
 
             <footer id="footer">
+				{block:PermalinkPage}
+					<nav class="pagination-index">
+						<a href="/">See More Notes To The President&nbsp;&rsaquo;</a>
+					</nav>
+				{/block:PermalinkPage}
                 {block:IfShowCopyrightInFooter}
                     <section class="copyright">&copy; {CopyrightYears} {Title}</section>
                 {/block:IfShowCopyrightInFooter}
@@ -1277,6 +1294,7 @@
                         <section class="count">Page  {CurrentPage} / {TotalPages}</section>
                     </nav>
                 {/block:Pagination}
+                
             </footer>
         </section>
 
