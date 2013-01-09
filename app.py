@@ -18,7 +18,7 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 # Commenting out base routes.
 #
 # @app.route('/')
-# @app.route('/index.html')
+@app.route('/index.html')
 @app.route('/testing/')
 def simple():
     """
