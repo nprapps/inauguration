@@ -1,9 +1,9 @@
 body {
 	margin: 0;
-	padding: 20px;
+	padding: 2px;
 	font: 14px/1.5 Arial, Helvetica, sans-serif;
 	color: #111;
-	background-color: #fff;
+	background-color: #f1f1f1;
 }
 a {
 	color: #4774cc;
@@ -30,12 +30,16 @@ a {
 		height: 0;
     }
 	ol > li {
-		padding: 0;
-		margin-bottom: 25px;
+		padding: 15px 20px;
+		margin-bottom: 2px;
+		background-color: #f1f1f1;
 	}
 	ul > li {
 		padding: 0;
-		margin: 0 0 10px 0;
+		margin: 0 0 5px 0;
+	}
+	ul > li:hover {
+		background-color: #eee;
 	}
 	label {
 		font-weight: bold;
@@ -45,7 +49,7 @@ a {
 	.instructions {
 		font-size: 12px;
 		color: #666;
-		margin-top: 5px;
+		margin-bottom: 5px;
 	}
 	textarea {
 		width: 100%;
@@ -66,5 +70,20 @@ a {
 	img.sample-photo {
 		float: left;
 		margin-right: 10px;
+		width: 30%;
+		max-width: 138px;
+	}
+	button[type='submit'] {
+		background-color: #7598c9;
+		border: none;
+		line-height: 45px;
+		height: 45px;
+		color: #fff;
+		padding: 0 20px;
+		font-size: 12px;
+		cursor: pointer;
+	}
+	button[type='submit']:hover {
+		opacity: 0.7;
 	}
 }
