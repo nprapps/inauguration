@@ -7,15 +7,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <base target="_top" />
+
     
     
     
     <link rel="stylesheet" type="text/css" href="css/app-tumblr-form.min.css" />
 </head>
 <body>
+    
+    
+    
+    
+    <script type="text/javascript" src="js/app-tumblr-form.min.js"></script>
 
 <div class="mr-president-form">
-    <form action="http://54.245.53.112/dear-mr-president/" method="post" enctype="multipart/form-data">
+    <form id="president-form" action="http://54.245.53.112/dear-mr-president/" method="post" enctype="multipart/form-data">
         <ol>
             <li><label for="voted">Dear Mr. President,</label></li>
             <li class="form-vote">
@@ -42,10 +48,29 @@
                 <input type="text" name="location" placeholder="Washington, DC" required></input>
             </li>
             <li class="form-submit">
-                <button type="submit" class="btn">Send Your Postcard</button>
+                <input type="submit" class="btn" value="Send Your Postcard"></input>
             </li>
         </ol>
     </form>
+    <!--[if IE]>
+    <script type="text/javascript">
+        $('#president-form').submit(function(event){
+            return false;
+            var inputs = [];
+            inputs.push($(this).find('textarea').text());
+            inputs.push($(this).find("input[type='file']").attr('value'));
+            inputs.push($(this).find("input[name='signed_name']").attr('value'));
+            inputs.push($(this).find("input[name='signed_name']").attr('value'));
+            _.each(inputs, function(input){
+                if (input === null){
+                    alert('NULL');
+                } else {
+                    alert(input);
+                }
+            });
+        });
+    </script>
+    <![endif]-->
 </div>
 
 </body>
