@@ -43,7 +43,7 @@ def _post_to_tumblr():
         """
         Formats a string all pretty.
         """
-        return string.replace('-', ' ').replace("its", "It's").replace("didnt", "didn't").replace('i ', 'I ')
+        return string.replace('-', ' ').replace("id", "I'd").replace("didnt", "didn't").replace('i ', 'I ')
 
     # Request is a global. Import it down here where we need it.
     from flask import request
