@@ -109,10 +109,7 @@ a:hover {
   opacity: 0.7;
 }
 @media (max-width: 480px) {
-  textarea {
-    width: 94%;
-  }
-  input[type='file'] {
-    font-size: 13px;
+  .mr-president-form input[type='file'] {
+    font-size: 12px;
   }
 }
