@@ -1,8 +1,8 @@
 <div class="mr-president-form">
     <form id="president-form" action="http://54.245.53.112/dear-mr-president/" method="post" enctype="multipart/form-data">
         <ol>
-            <li><label for="voted">Dear Mr. President,</label></li>
             <li class="form-vote">
+            	<label for="voted">Dear Mr. President,</label>
                 <ul>
                     <li><input type="radio" name="voted" value="i-voted-for-you">I voted for you.</li>
                     <li><input type="radio" name="voted" value="i-didnt-vote-for-you">I didn't vote for you.</li>
@@ -11,12 +11,12 @@
                 </ul>
             </li>
             <li class="form-photo">
-                <label>Please don&rsquo;t forget...</label>
+                <label class="header">Please don&rsquo;t forget...</label>
                 <img src="img/sample-photo-2.jpg" alt="Sample Photo" class="sample-photo" />
                 <label for="image" class="instructions">
                 	<strong>Step 1:</strong> Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.
                 </label>
-                <input type="file" name="image" accept="image/*" required>
+                <input type="file" name="image" width="90" accept="image/*" required>
             </li>
             <li class="form-message">
                 <label for="message" class="instructions">
