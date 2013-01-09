@@ -49,7 +49,7 @@ def _post_to_tumblr():
     from flask import request
     caption = u"""<p class='intro'>Dear Mr. President,</p>
     <p class='voted' data-vote-type='%s'>%s.</p>
-    <p class='message'>But please don't forget: %s</p>
+    <p class='message'>%s</p>
     <p class='signature-name'>Signed,<br/>%s from %s</p>""" % (
         request.form['voted'],
         clean(request.form['voted']),
