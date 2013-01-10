@@ -5,3 +5,8 @@ $('#live-chat').livechat({
     alert_interval: 500,
     read_only: false
 });
+$('#live-chat-widget').livechatwidget({
+    chat_id: '74796',
+    chat_token: 'FtP7wRfX',
+    update_interval: 10000
+});

@@ -20,6 +20,7 @@ DEBUG = False
 TUMBLR_URL = None
 TUMBLR_KEY = None
 
+
 def configure_targets(deployment_target):
     """
     Configure deployment targets. Functionalized
@@ -39,10 +40,9 @@ def configure_targets(deployment_target):
     else:
         S3_BUCKETS = STAGING_S3_BUCKETS
         SERVERS = STAGING_SERVERS
-        TUMBLR_URL = 'inaugurationtest.tumblr.com' 
+        TUMBLR_URL = 'inaugurationtest.tumblr.com'
         TUMBLR_BLOG_ID = 'inaugurationtest'
         TUMBLR_KEY = 'BY8IUMsmErCgSIkC44VqNIrs31QXPogKzv3L3ScyUEsEzY51GI'
 
 # Configure targets on import
 configure_targets(DEPLOYMENT_TARGET)
-    

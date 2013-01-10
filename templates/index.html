@@ -10,6 +10,7 @@
 
 {% block content %}
     <h1>Inauguration 2013</h1>
+    <div id="live-chat-widget"></div>
     {% include '_radio.html' %}
     <h2>Dear Mr. President ...</h2>
     <h4>Tell the President what you want him to do in his second term.</h4>
@@ -43,4 +44,5 @@
     {{ JS.push('js/app-radio.js') }}
     {{ JS.push('js/app-photo-feed.js') }}
     {{ JS.push('js/chat.js') }}
+    {{ JS.push('js/chat-widget.js') }}
 {% endblock %}
