@@ -7,11 +7,10 @@ from tumblr import Api
 import app_config
 
 TUMBLR_FILENAME = 'www/live-data/misterpresident.json'
-TUMBLR_BLOG_ID = 'inauguration2013'
 TUMBLR_MAX_POSTS = 10000
 MAX_PER_CATEGORY = 100
 
-api = Api(TUMBLR_BLOG_ID)
+api = Api(app_config.TUMBLR_BLOG_ID)
 
 posts = list(api.read(max=TUMBLR_MAX_POSTS))
 
