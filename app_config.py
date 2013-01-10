@@ -22,9 +22,9 @@ if DEPLOYMENT_TARGET == 'production':
     SERVERS = PRODUCTION_SERVERS
     TUMBLR_URL = 'inauguration2013.tumblr.com'
     TUMBLR_KEY = 'Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH'
+
 else:
     S3_BUCKETS = STAGING_S3_BUCKETS
     SERVERS = STAGING_SERVERS
-    TUMBLR_URL = 'inaugurationtest.tumblr.com' 
+    TUMBLR_URL = 'inaugurationtest.tumblr.com'
     TUMBLR_KEY = 'BY8IUMsmErCgSIkC44VqNIrs31QXPogKzv3L3ScyUEsEzY51GI'
-    
