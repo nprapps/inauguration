@@ -40,6 +40,13 @@ cp data/radio-off.json www/live-data/radio.json
 fab update_backchannel
 ```
 
+Export the tumblr OAuth tokens:
+```
+export TUMBLR_APP_SECRET=QYQ...
+export TUMBLR_OAUTH_TOKEN=5jS...
+export TUMBLR_OAUTH_TOKEN_SECRET=Ay5...
+```
+
 Update your hosts file to assign localhost to the domain ``fake.npr.org`` so that authentication will work. Do something like ``sudo nano -w /etc/hosts`` and add a line at the bottom like ``127.0.0.1    fake.npr.org``.
 
 
