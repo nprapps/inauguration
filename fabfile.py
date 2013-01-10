@@ -96,6 +96,9 @@ def render():
     """
     from flask import g
 
+    # Fake out settings for deployment
+    app_config.configure_targets(env.settings)
+
     less()
     jst()
 
@@ -134,6 +137,9 @@ def render():
 
         with open(filename, 'w') as f:
             f.write(content)
+
+    # Reset faked-out settings
+    app_config.configure_targets(app_config.DEPLOYMENT_TARGET)
 
 """
 Setup
