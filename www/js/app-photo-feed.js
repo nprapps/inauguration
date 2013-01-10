@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var POLLING_INTERVAL = 120000;
     var PHOTO_CATEGORIES = ['latest', 'npr-picks', 'i-voted-for-you', 'i-didnt-vote-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote']
-
+    var photos_html = {};
 
     function ISODateString(d) {
         function pad(n) {
@@ -18,49 +18,48 @@ $(document).ready(function() {
         $.getJSON('live-data/misterpresident.json?t=' + (new Date()).getTime(), {}, function(data) {
             for (var i = 0; i < PHOTO_CATEGORIES.length; i++) {
                 var category = PHOTO_CATEGORIES[i];
+                var template = JST.tumblr_photo;
 
                 var posts = data[category];
                 var posts_length = posts.length;
-    
+
                 var $photos = $("#photos-" + category);
 
                 for (var j = 0; j < posts_length; j++) {
                     var post = posts[j];
 
+                    var html = template({
+                        post: post,
+                        isodate: ISODateString(new Date(post["timestamp"] * 1000))
+                    });
+                    var $el = $(html);
+
                     // Old
-                    // if (post.id in posts_html) {
-                    //     // Changed
-                    //     if (html != posts_html[post.id]) {
-                    //         el.show();
-                    //         $posts.find("#post-" + post.id).replaceWith(el);
+                    if (post.id in photos_html) {
+                        // Changed
+                        if ($photos != photos_html[post.id]) {
+                            $photos.show();
+                            $photos.find("#post-" + post.id).replaceWith($el);
+                        }
 
-                    //         if (post.type === "regular") {
-                    //            has_tweets = true;
-                    //         }
-                    //     }
-                    // // New
-                    // } else {
-                    //     $posts.prepend(el);
+                    // New
+                    } else {
+                        $photos.prepend($el);
 
-                    //     el = null;
-                    //     el = $posts.find("#post-" + post.id)
+                        $el = null;
+                        $el = $photos.find("#post-" + post.id)
 
-                    //     if (first_run) {
-                    //         el.show();
-                    //     } else {
-                    //         el.slideDown(1000);
-                    //     }
+                        if (first_run) {
+                            $el.show();
+                        } else {
+                            $el.slideDown(1000);
+                        }
 
-                    //     el.find(".tstamp").timeago();
-                    //     el = null;
+                        $el.find(".tstamp").timeago();
+                        $el = null;
+                    }
 
-                    //     if (post.type === "regular") {
-                    //         has_tweets = true;
-                    //     }
-                    // }
-
-                    // posts_html[post.id] = html;
-                    $photos.append('<img src="' + post.photo_url + '"/>');
+                    photos_html[post.id] = html;
                 }
 
                 // $posts.find(".post:nth-child(5)").nextAll().remove();
