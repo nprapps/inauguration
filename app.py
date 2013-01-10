@@ -73,22 +73,20 @@ def _post_to_tumblr():
         strip_html(request.form['location'])
     )
 
-    return caption
+    t = Tumblpy(
+        app_key=app_config.TUMBLR_KEY,
+        app_secret=os.environ['TUMBLR_APP_SECRET'],
+        oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
+        oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
 
-    # t = Tumblpy(
-    #     app_key=app_config.TUMBLR_KEY,
-    #     app_secret=os.environ['TUMBLR_APP_SECRET'],
-    #     oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
-    #     oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
+    tumblr_post = t.post('post', blog_url=app_config.TUMBLR_URL, params={
+        'type': 'photo',
+        'caption': caption,
+        'tags': u"%s" % request.form['voted'],
+        'data': request.files['image']
+    })
 
-    # tumblr_post = t.post('post', blog_url=app_config.TUMBLR_URL, params={
-    #     'type': 'photo',
-    #     'caption': caption,
-    #     'tags': u"%s" % request.form['voted'],
-    #     'data': request.files['image']
-    # })
-
-    # return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
+    return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
 
 
 # Render LESS files on-demand
