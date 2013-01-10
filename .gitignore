@@ -43,5 +43,6 @@ www/js/app-footer.min.js
 www/js/templates.js
 www/js/tables.min.js
 
+www/tumblr_form.html
 www/live-data/*.json
 www/css/chat.css

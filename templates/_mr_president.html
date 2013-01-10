@@ -1,5 +1,5 @@
 <div class="mr-president-form">
-    <form id="president-form" action="http://54.245.228.214/dear-mr-president/" method="post" enctype="multipart/form-data">
+    <form id="president-form" action="http://{{ SERVERS[0] }}/dear-mr-president/" method="post" enctype="multipart/form-data">
         <ol>
             <li class="form-vote">
             	<label for="voted">Dear Mr. President,</label>
@@ -26,8 +26,8 @@
             </li>
             <li class="form-signature">
             <label for="signed_name">Signed,</label>
-                <input type="text" name="signed_name" placeholder="Chris Q. Everyperson" required></input> from
-                <input type="text" name="location" placeholder="Washington, DC" required></input>
+                <input type="text" name="signed_name" placeholder="Your Name" required></input> from
+                <input type="text" name="location" placeholder="Your City And State" required></input>
             </li>
             <li class="form-submit">
                 <span class="gentle-reminder" style="display:none;">Please add a photo, an explanation, your name and where you're from. Thanks!<br/></span>
