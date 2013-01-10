@@ -97,7 +97,7 @@ def render():
     from flask import g
 
     # Fake out settings for deployment
-    app_config.configure_targets(env.settings)
+    app_config.configure_targets(env.get(settings, None))
 
     less()
     jst()
