@@ -115,7 +115,7 @@
             	line-height: 88px;
             }
             #dmp-form .hdr h3 span {
-            	background: url('http://stage-apps.npr.org/inauguration/img/btn-share.png') no-repeat 50% 50%;
+            	background: url('http://apps.npr.org/inauguration/img/btn-share.png') no-repeat 50% 50%;
             	width: 88px; height: 88px;
             	border-right: 1px solid #fff;
             	margin-right: 22px;
@@ -271,6 +271,12 @@
             .post .caption p {
             	font-size: 16px;
             	line-height: 1.5;
+            }
+            
+            .post .caption p.told-to-npr {
+                font-style: italic;
+                color: #666;
+                font-size: 14px;
             }
             
             .content_source {
@@ -866,8 +872,8 @@
 				#posts .post .wrap { padding: 15px; }
 				#dmp-form { padding-left: 10px; padding-right: 10px; }
 				#dmp-form .hdr { height: 64px; }
-				#dmp-form .hdr h3 { font-size: 16px; line-height: 22px; padding-top: 11px; }
-				#dmp-form .hdr h3 span { width: 64px; height: 64px; background-position: 50% 50%; margin-top: -11px; background-image: url('http://stage-apps.npr.org/inauguration/img/btn-share-small.png') }
+				#dmp-form .hdr h3 { font-size: 13px; line-height: 19px; padding-top: 13px; padding-right: 10px; }
+				#dmp-form .hdr h3 span { width: 64px; height: 64px; margin-right: 15px; background-position: 50% 50%; margin-top: -13px; background-image: url('http://apps.npr.org/inauguration/img/btn-share-small.png') }
 				#dmp-form .dmp-iframe { height: 725px; }
 				#footer { padding-left: 10px; margin-left: 0; margin-right: 0; }
 			}
@@ -883,6 +889,14 @@
         <style type="text/css" media="screen">
             {CustomCSS}
         </style>
+        
+    	<meta property="og:title" content="Dear Mr. President" />
+    	<meta property="og:url" content="http://inauguration2013.tumblr.com/" />
+    	<meta property="og:type" content="article" />
+    	<meta property="og:description" content="Dear Mr. President, Please don't forget ______. Send your postcard." />
+    	<meta property="og:image" content="https://pbs.twimg.com/media/BAMzZIHCIAAA3Er.jpg" />
+    	<meta property="og:site_name" content="NPR.org" />
+    	<meta property="fb:app_id" content="138837436154588" />
 
     </head>
     <body class="{block:IndexPage}index-page{/block:IndexPage}{block:PermalinkPage}permalink-page{/block:PermalinkPage}">
@@ -896,8 +910,8 @@
 			</ul>
 			<ul class="social-links">
 			<!--TODO: FIX SOCIAL LINKS -->
-				<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President...+%23inauguration&amp;url={URL}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Bob\'s Concert Tickets']);">Share This Page On Twitter</a></li>
-				<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President...+%23inauguration&amp;u={URL}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Bob\'s Concert Tickets']);">Like This Page On Facebook</a></li>
+				<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear%20Mr.%20President%2C%20Please%20don't%20forget%20______.%20Send%20your%20postcard.%20%23inauguration%20http%3A%2F%2Ft.co%2F2icgw7d3" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Dear Mr. President']);">Share This Page On Twitter</a></li>
+				<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?u=http://inauguration2013.tumblr.com/" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Dear Mr. President']);">Like This Page On Facebook</a></li>
 			</ul>
 			<ul class="site-links-2">
 				<li class="stations"><a href="http://www.npr.org/templates/stations/stations/">Stations</a></li>
@@ -940,7 +954,7 @@
 					<div class="hdr">
 						<h3><span></span>SHARE: What Do You Want The President To Remember?</h3>
 					</div>
-					<iframe class="dmp-iframe" src="http://stage-apps.npr.org/inauguration/tumblr_form.html" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+					<iframe class="dmp-iframe" src="http://apps.npr.org/inauguration/tumblr_form.html" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 				</div>
 			</section>
 
@@ -1233,7 +1247,7 @@
 
 								<ul class="post_info social">
 									<li class="share">Share This Postcard</li>
-									<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President...+%23inauguration&amp;u={Permalink}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Post', 'Dear Mr President']);" title="Like This Page On Facebook"><span></span>Facebook</a></li>
+									<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President...&amp;u={Permalink}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Post', 'Dear Mr President']);" title="Like This Page On Facebook"><span></span>Facebook</a></li>
 									<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President...+%23inauguration&amp;url={Permalink}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Post', 'Dear Mr President']);" title="Share This Page On Twitter"><span></span>Twitter</a></li>
 								</ul>
 

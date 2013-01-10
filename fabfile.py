@@ -15,7 +15,7 @@ Base configuration
 """
 env.project_name = app_config.PROJECT_NAME
 env.deployed_name = app_config.DEPLOYED_NAME
-env.deploy_to_servers = False
+env.deploy_to_servers = True 
 env.repo_url = 'git@github.com:nprapps/%(project_name)s.git' % env
 env.alt_repo_url = None #'git@bitbucket.org:nprapps/%(project_name)s.git' % env
 env.user = 'ubuntu'
@@ -293,6 +293,9 @@ def update_backchannel():
                 policy='public-read',
                 headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
             )
+
+def update_mister_president():
+    local('python update_mister_president.py')
 
 def deploy_radio(path):
     """
