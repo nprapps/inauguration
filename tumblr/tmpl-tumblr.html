@@ -169,6 +169,7 @@
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.04) inset;
                 /* box shadow from: http://matthamm.com/box-shadow-curl.html */
             }
+			#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
             
 
 {block:IfDisqusShortname}
@@ -255,9 +256,21 @@
                 top: 1px;
             }
 
+			#posts .post .media { 
+				width: 50%; 
+				float: left;
+			}
+			#posts .post .caption_and_post_info.isphoto { 
+				width: 50%; 
+				float: right; 
+				margin-top: 0;
+			}
+			#posts .post .caption_and_post_info.isphoto .cont,
+			#posts .post .caption_and_post_info.isphoto .post_info { 
+				margin-left: 30px;
+			}
             #posts .post .caption_and_post_info.after_top_part {
                 border-top: 0;
-                margin: 30px auto auto auto;
                 padding-top: 0;
             }
 
@@ -851,13 +864,14 @@
 				#nav .site-links-2 { display: none; }
 			}
 			@media (min-width: 768px) {
-				#posts .post .media { width: 50%; float: left; }
-				#posts .post .caption_and_post_info.isphoto { width: 50%; float: right; margin-top: 0; }
-				#posts .post .caption_and_post_info.isphoto .cont,
-				#posts .post .caption_and_post_info.isphoto .post_info { margin-left: 30px; }
-				#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 			}
 			@media (max-width: 767px) {
+				#posts .post .media { width: auto; float: none; }
+				#posts .post .caption_and_post_info.isphoto { width: auto; float: none; margin-top: 30px; }
+				#posts .post .caption_and_post_info.isphoto .cont,
+				#posts .post .caption_and_post_info.isphoto .post_info { margin-left: 0; }
+				#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+
 				#nav .site-links { margin-left: 20px; }
 				#dmp-form .hdr h3 { line-height: 26px; padding-top: 18px; }
 				#dmp-form .hdr h3 span { margin-top: -18px; }
