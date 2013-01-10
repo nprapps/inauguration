@@ -1,7 +1,13 @@
 $(document).ready(function() {
-    var POLLING_INTERVAL = 120000;
+    var POLLING_INTERVAL = 5000;
     var PHOTO_CATEGORIES = ['latest', 'npr-picks', 'i-voted-for-you', 'i-didnt-vote-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote']
-    var photos_html = {};
+
+    var photos = {};
+    var photos_in_categories = {};
+
+    _.each(PHOTO_CATEGORIES, function(category) {
+        photos_in_categories[category] = [];
+    });
 
     function ISODateString(d) {
         function pad(n) {
@@ -18,7 +24,7 @@ $(document).ready(function() {
         $.getJSON('live-data/misterpresident.json?t=' + (new Date()).getTime(), {}, function(data) {
             for (var i = 0; i < PHOTO_CATEGORIES.length; i++) {
                 var category = PHOTO_CATEGORIES[i];
-                var template = JST.tumblr_photo;
+                //var template = JST.tumblr_photo;
 
                 var posts = data[category];
                 var posts_length = posts.length;
@@ -28,18 +34,15 @@ $(document).ready(function() {
                 for (var j = 0; j < posts_length; j++) {
                     var post = posts[j];
 
-                    var html = template({
-                        post: post,
-                        isodate: ISODateString(new Date(post["timestamp"] * 1000))
-                    });
+                    var html = '<img class="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
                     var $el = $(html);
 
                     // Old
-                    if (post.id in photos_html) {
+                    if (_.indexOf(photos_in_categories[category], post.id) >= 0) {
                         // Changed
-                        if ($photos != photos_html[post.id]) {
+                        if (photos[post.id] != post) {
                             $photos.show();
-                            $photos.find("#post-" + post.id).replaceWith($el);
+                            $photos.find(".photo-" + post.id).replaceWith($el);
                         }
 
                     // New
@@ -47,7 +50,7 @@ $(document).ready(function() {
                         $photos.prepend($el);
 
                         $el = null;
-                        $el = $photos.find("#post-" + post.id)
+                        $el = $photos.find("#photo-" + post.id)
 
                         if (first_run) {
                             $el.show();
@@ -55,11 +58,12 @@ $(document).ready(function() {
                             $el.slideDown(1000);
                         }
 
-                        $el.find(".tstamp").timeago();
                         $el = null;
+
+                        photos_in_categories[category].push(post.id);
                     }
 
-                    photos_html[post.id] = html;
+                    photos[post.id] = post;
                 }
 
                 // $posts.find(".post:nth-child(5)").nextAll().remove();
