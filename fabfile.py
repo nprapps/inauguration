@@ -329,3 +329,9 @@ def radio_live():
     Shortcut to deploy_radio:data/radio-live.json
     """
     deploy_radio('data/radio-live.json')
+
+def local_cron():
+    """
+    Run fake cron jobs.
+    """
+    local('while true; do fab update_mister_president; date; sleep 2; done')

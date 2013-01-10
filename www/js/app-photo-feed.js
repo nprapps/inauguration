@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var POLLING_INTERVAL = 120000;
+    var POLLING_INTERVAL = 5000;
     var PHOTO_CATEGORIES = ['latest', 'npr-picks', 'i-voted-for-you', 'i-didnt-vote-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote']
 
     var photos = {};
@@ -34,7 +34,7 @@ $(document).ready(function() {
                 for (var j = 0; j < posts_length; j++) {
                     var post = posts[j];
 
-                    var html = '<img id="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
+                    var html = '<img class="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
                     var $el = $(html);
 
                     // Old
@@ -42,7 +42,7 @@ $(document).ready(function() {
                         // Changed
                         if (photos[post.id] != post) {
                             $photos.show();
-                            $photos.find("#photo-" + post.id).replaceWith($el);
+                            $photos.find(".photo-" + post.id).replaceWith($el);
                         }
 
                     // New
