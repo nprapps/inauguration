@@ -2,6 +2,7 @@
 
 from mimetypes import guess_type
 import os
+import re
 
 import envoy
 from flask import Flask, render_template, redirect
@@ -47,31 +48,47 @@ def _post_to_tumblr():
 
     # Request is a global. Import it down here where we need it.
     from flask import request
+
+    def strip_html(value):
+        """
+        Strips HTML from a string.
+        """
+        return re.compile(r'</?\S([^=]*=(\s*"[^"]*"|\s*\'[^\']*\'|\S*)|[^>])*?>', re.IGNORECASE).sub('', value)
+
+    def strip_breaks(value):
+        """
+        Converts newlines, returns and other breaks to <br/>.
+        """
+        value = re.sub(r'\r\n|\r|\n', '\n', value)
+        return value.replace('\n', '<br />')
+
     caption = u"""<p class='intro'>Dear Mr. President,</p>
     <p class='voted' data-vote-type='%s'>%s.</p>
     <p class='message'>%s</p>
     <p class='signature-name'>Signed,<br/>%s from %s</p>""" % (
         request.form['voted'],
         clean(request.form['voted']),
-        request.form['message'],
-        request.form['signed_name'],
-        request.form['location']
+        strip_breaks(strip_html(request.form['message'])),
+        strip_html(request.form['signed_name']),
+        strip_html(request.form['location'])
     )
 
-    t = Tumblpy(
-        app_key=app_config.TUMBLR_KEY,
-        app_secret=os.environ['TUMBLR_APP_SECRET'],
-        oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
-        oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
+    return caption
 
-    tumblr_post = t.post('post', blog_url=app_config.TUMBLR_URL, params={
-        'type': 'photo',
-        'caption': caption,
-        'tags': u"%s" % request.form['voted'],
-        'data': request.files['image']
-    })
+    # t = Tumblpy(
+    #     app_key=app_config.TUMBLR_KEY,
+    #     app_secret=os.environ['TUMBLR_APP_SECRET'],
+    #     oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
+    #     oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
 
-    return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
+    # tumblr_post = t.post('post', blog_url=app_config.TUMBLR_URL, params={
+    #     'type': 'photo',
+    #     'caption': caption,
+    #     'tags': u"%s" % request.form['voted'],
+    #     'data': request.files['image']
+    # })
+
+    # return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
 
 
 # Render LESS files on-demand
