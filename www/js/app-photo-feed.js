@@ -1,6 +1,9 @@
 $(document).ready(function() {
-    var POLLING_INTERVAL = 5000;
+    var POLLING_INTERVAL = 120000;
     var PHOTO_CATEGORIES = ['latest', 'npr-picks', 'i-voted-for-you', 'i-didnt-vote-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote']
+
+    var MAX_POSTS_PER_CATEGORY = 100;
+    var INITIAL_NUM_POSTS = 20;
 
     var photos = {};
     var photos_in_categories = {};
@@ -17,6 +20,24 @@ $(document).ready(function() {
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     }
 
+    // Paginate: Takes a page number, number of photos per page, and data (array of photos)
+    function paginate(page_number, per_page, data) {
+        var start = Math.max(page_number-1, 0);
+        var end = start + per_page;
+        var paginated_photos = [];
+
+        if (end < data.length) {
+            paginated_photos = data.splice(start, per_page);
+        }
+
+        else {
+            end = data.length-1;
+            paginated_photos = data.splice(start, per_page);
+        }
+
+        return paginated_photos;
+    }
+
     function update_backchannel(first_run) {
         /*
          * Update the backchannel from our tumblr feed.
@@ -26,8 +47,10 @@ $(document).ready(function() {
                 var category = PHOTO_CATEGORIES[i];
                 //var template = JST.tumblr_photo;
 
-                var posts = data[category];
-                var posts_length = posts.length;
+                var page_num = 1;
+                var posts = paginate(page_num, 20, data[category]);
+                // var posts = data[category];
+                var posts_length = Math.min(posts.length, MAX_POSTS_PER_CATEGORY);
 
                 var $photos = $("#photos-" + category);
 
@@ -47,7 +70,7 @@ $(document).ready(function() {
 
                     // New
                     } else {
-                        $photos.prepend($el);
+                        $photos.append($el);
 
                         $el = null;
                         $el = $photos.find("#photo-" + post.id)

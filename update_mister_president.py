@@ -14,7 +14,7 @@ api = Api(app_config.TUMBLR_BLOG_ID)
 
 posts = list(api.read(max=TUMBLR_MAX_POSTS))
 
-posts.reverse()
+# posts.reverse()
 
 output = {
     'id-rather-not-say-how-i-voted': [],
