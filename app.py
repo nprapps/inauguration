@@ -82,7 +82,7 @@ def _post_to_tumblr():
     tumblr_post = t.post('post', blog_url=app_config.TUMBLR_URL, params={
         'type': 'photo',
         'caption': caption,
-        'tags': u"%s" % request.form['voted'],
+        'tags': u"%s" % request.form['voted'].replace('-', ''),
         'data': request.files['image']
     })
 
