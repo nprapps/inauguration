@@ -13,6 +13,7 @@
 
         // These will be overwritten in init() with the options passed by the page.
         var defaults = {
+            scribble_host: 'apiv1.scribblelive.com',
             chat_id: null,
             chat_token: null,
             update_interval: 1000
