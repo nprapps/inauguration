@@ -16,6 +16,9 @@
     <h4>Tell the President what you want him to do in his second term.</h4>
     {% include '_mr_president.html' %}
 
+    <button class="live-chat-toggle">Turn on live chat.</button>
+    <div id="live-chat" style="display:none;"></div>
+
     <div id="photo-feed">
         <h2>Latest</h2>
         <div id="photos-latest" class="photo-list"></div>
@@ -35,8 +38,6 @@
         <h2>I didn't vote</h2>
         <div id="photos-i-didnt-vote" class="photo-list"></div>
     </div>
-
-    <div id="live-chat"></div>
 {% endblock %}
 
 {% block extra_foot_js %}
