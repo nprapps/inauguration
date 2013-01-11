@@ -1,15 +1,17 @@
 $(document).ready(function() {
-    var POLLING_INTERVAL = 120000;
-    var PHOTO_CATEGORIES = ['latest', 'npr-picks', 'i-voted-for-you', 'i-didnt-vote-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote']
+    var POLLING_INTERVAL = 5000;
+    var PHOTO_CATEGORIES = ['latest', 'nprpicks', 'ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
 
     var MAX_POSTS_PER_CATEGORY = 100;
     var INITIAL_NUM_POSTS = 20;
 
     var photos = {};
     var photos_in_categories = {};
+    var page_state = {};
 
     _.each(PHOTO_CATEGORIES, function(category) {
         photos_in_categories[category] = [];
+        page_state[category] = 1;
     });
 
     function ISODateString(d) {
@@ -38,6 +40,14 @@ $(document).ready(function() {
         return paginated_photos;
     }
 
+
+    var $photo_container = $("#photo-feed");
+    $photo_container.on('click', 'button', function(){
+        var tmp_category = $(this).attr('id').replace('button-', '');
+        page_state[tmp_category] += 1;
+        console.log(page_state[tmp_category]);
+    });
+
     function update_backchannel(first_run) {
         /*
          * Update the backchannel from our tumblr feed.
@@ -47,8 +57,7 @@ $(document).ready(function() {
                 var category = PHOTO_CATEGORIES[i];
                 //var template = JST.tumblr_photo;
 
-                var page_num = 1;
-                var posts = paginate(page_num, 20, data[category]);
+                var posts = paginate(page_state[category], 1, data[category]);
                 // var posts = data[category];
                 var posts_length = Math.min(posts.length, MAX_POSTS_PER_CATEGORY);
 

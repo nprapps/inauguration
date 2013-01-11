@@ -17,11 +17,11 @@ posts = list(api.read(max=TUMBLR_MAX_POSTS))
 # posts.reverse()
 
 output = {
-    'id-rather-not-say-how-i-voted': [],
-    'i-voted-for-you': [],
-    'i-didnt-vote-for-you': [],
-    'i-didnt-vote': [],
-    'npr-picks': [],
+    'idrathernotsayhowivoted': [],
+    'ivotedforyou': [],
+    'ididntvoteforyou': [],
+    'ididntvote': [],
+    'nprpicks': [],
     'latest': []
 }
 
@@ -35,9 +35,6 @@ for post in posts:
     }
 
     for tag in post['tags']:
-        if tag == 'its-none-of-your-business-how-i-voted':
-            tag = 'id-rather-not-say-how-i-voted'
-
         if len(output[tag]) <= MAX_PER_CATEGORY:
             output[tag].append(simple_post)
 
