@@ -10,17 +10,40 @@
 
 {% block top_content %}
     <h1>Inauguration 2013</h1>
+    {% include '_radio.html' %}
+    <div id="live-chat-widget"></div>
 {% endblock %}
 
 {% block main_content %}
-    <button class="live-chat-toggle">Turn on live chat.</button>
-
-    <div id="live-chat-widget"></div>
-    {% include '_radio.html' %}
-    {% include '_mr_president.html' %}
-
+	<div class="container toggles">
+		<div class="row">
+			<div class="span12">
+				<button class="live-chat-toggle">Turn on live chat.</button>
+			</div>
+		</div>
+	</div>
+	
     <div id="live-chat" style="display:none;"></div>
 
+	<div id="mr-president">
+		<div class="hdr mr-president-hdr">
+			<div class="container">
+				<div class="row">
+					<div class="span12">
+						<h2 class="mr-president-title">Dear Mr. President</h2>
+						<h4 class="mr-president-blurb">President Obama will soon be sworn into office, and whether you voted for him or not, he's everybody's president. What do you want him to remember in his second term? We will feature your responses in our inauguration coverage!</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					{% include '_mr_president.html' %}
+				<div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% block extra_foot_js %}

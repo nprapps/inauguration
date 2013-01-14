@@ -85,43 +85,43 @@
 			<li class="shop"><a href="http://shop.npr.org">Shop</a></li>
 		</ul>
     </div>
+    
+    <header id="radio-topper">
+    	<div class="container">
+    		<div class="row">
+				<div class="span8">
+					{% block top_content %}
+					<h1>{{ project_name }}</h1>
+					App content goes here.
+					{% endblock top_content %}
+				</div>
+				<div class="span4">
+					<!-- START 300X250 AD -->
+					<div class="adwrapper"><div class="sponsor300">
+					<!-- DFP AD MANAGER -->
+					<script type="text/javascript">
+					<!--
+						try{
+							DFP.renderLocation(0);
+						} catch(e) {
+							NPR.messaging.warning('Problem fetching/rendering ad server code.', 'DFP.renderlocation', NPR.messaging.constants.SPONSORSHIP_ERROR);
+						}
+					// -->
+					</script>
+					<!-- END UNDERWRITING -->
+					<p class="left">NPR thanks our sponsors</p>
+					<p class="right"><a href="http://www.npr.org/about/place/corpsupport/">Become an NPR Sponsor </a></p>
+					</div></div>
+					<!-- END 300X250 AD -->
+				</div>
+    		</div>
+    	</div>
+    </header>
 
-
-    <div class="container-fluid the-goods">
-        <div class="row-fluid" id="radio-topper">
-            <div class="span8">
-                {% block top_content %}
-                <h1>{{ project_name }}</h1>
-                App content goes here.
-                {% endblock top_content %}
-            </div>
-            <div class="span4">
-                <!-- START 300X250 AD -->
-                <div class="adwrapper"><div class="sponsor300">
-				<!-- DFP AD MANAGER -->
-				<script type="text/javascript">
-				<!--
-					try{
-						DFP.renderLocation(0);
-					} catch(e) {
-						NPR.messaging.warning('Problem fetching/rendering ad server code.', 'DFP.renderlocation', NPR.messaging.constants.SPONSORSHIP_ERROR);
-					}
-				// -->
-				</script>
-				<!-- END UNDERWRITING -->
-				<p class="left">NPR thanks our sponsors</p>
-				<p class="right"><a href="http://www.npr.org/about/place/corpsupport/">Become an NPR Sponsor </a></p>
-				</div></div>
-				<!-- END 300X250 AD -->
-            </div>
-        </div>
-        <div class="row-fluid" id="chat-photos">
-            <div class="span12">
-                {% block main_content %}
-                App content goes here.
-                {% endblock main_content %}
-            </div>
-        </div>
+    <div id="main-content">
+		{% block main_content %}
+		App content goes here.
+		{% endblock main_content %}
     </div> <!-- end main container -->
 
 
