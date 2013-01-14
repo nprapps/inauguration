@@ -2,7 +2,7 @@ $(document).ready(function() {
     var PHOTO_CATEGORIES = ['latest', 'nprpicks', 'ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
 
     var MAX_PHOTOS_PER_CATEGORY = 100;
-    var PHOTOS_PER_PAGE = 10;
+    var PHOTOS_PER_PAGE = 20;
 
     var photos = {};
     var feed_data = null;
