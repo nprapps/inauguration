@@ -1,47 +1,93 @@
-<div class="chat-header">
-    <h2 class="chat-title"></h2>
-    <h4 class="chat-blurb"></h4>
+<div class="row">
+	<div class="span12">
+		<div class="chat-header">
+			<h2 class="chat-title"></h2>
+			<h4 class="chat-blurb"></h4>
+		</div>
+	</div>
 </div>
 
-<div class="chat-body" ></div>
+<div class="row">
+	<div class="span3 chat-schedule-wrap">
 
-<div class="chat-login">
-    <h4>Have your say!</h4>
-    <div class="form-inline">
-        <a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a><br/>
-        <div class="social btn-group">
-            <button class="btn btn-mini npr">NPR</button>
-            <button class="btn btn-mini oauth" data-service="facebook">Facebook</button>
-            <button class="btn btn-mini oauth" data-service="google">Google</button>
-            <button class="btn btn-mini anon">Anonymous</button>
-        </div>
+		<div class="chat-schedule">
+			<h3>Chat Schedule</h3>
+			<ul>
+				<li>
+					<h5>10 a.m. ET</h5>
+					<ul>
+						<li><a href="">Nina Totenberg</a>, legal affairs correspondent</li>
+						<li><a href="">Dick Meyer</a>, editorial director for NPR Digital Media</li>
+						<li><a href="">Vaughn Ververs</a>, senior political editor, CBSNews.com</li>
+					</ul>
+				</li>
+				<li>
+					<h5>11 a.m. ET</h5>
+					<ul>
+						<li><a href="">Neal Conan</a>, host of NPR's Talk of the Nation</li>
+						<li><a href="">Mara Liasson</a>, national political correspondent</li>
+						<li><a href="">Rod Dreher</a>, columnist for the Dallas Morning News</li>
+					</ul>
+				</li>
+				<li>
+					<h5>1 p.m. ET or after the inaugural speech</h5>
+					<ul>
+						<li><a href="">Ken Rudin</a>, political editor</li>
+						<li><a href="">Ron Elving</a>, senior Washington editor</li>
+						<li><a href="">Earl Ofari Hutchinson</a>, author of "How Obama Won"</li>
+					</ul>
+				</li>
+			</ul>	
+		</div>
 
-        <div class="chat-anonymous-login">
-            <label>Chat name
-                <input type="text" class="chat-anonymous-username"></input>
-            </label>
-            <button class="btn btn-mini btn-info">Login</button>
-        </div>
+	</div>
+	<div class="span9 chat-body-wrap">
 
-        <div class="chat-npr-login">
-            <label>NPR username
-                <input type="text" class="chat-npr-username"></input>
-            </label>
-            <label class="npr">NPR password
-                <input type="password" class="chat-npr-password"></input>
-            </label>
-            <button class="btn btn-mini btn-info">Login</button>
-        </div>
-    </div>
-</div>
-
-<div class="chat-alerts"></div>
-
-<div class="chat-editor">
-    <h4>Type your comment below, <span class="chat-username"></span>.</h4>
-    <textarea class="chat-content"></textarea>
-    <br/>
-    <button class="btn btn-mini btn-success chat-post">Post comment</button>
-    <button class="btn btn-mini btn-warning chat-logout">Logout</button>
-    <button class="btn btn-mini btn-danger chat-clear">Clear text</button>
+		<div class="chat-body"></div>
+		
+		
+		<div class="chat-user-entry">
+			<div class="chat-login">
+				<h4>Have your say!</h4>
+				<div class="form-inline">
+					<a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a><br/>
+					<div class="social btn-group">
+						<button class="btn btn-mini npr">NPR</button>
+						<button class="btn btn-mini oauth" data-service="facebook">Facebook</button>
+						<button class="btn btn-mini oauth" data-service="google">Google</button>
+						<button class="btn btn-mini anon">Anonymous</button>
+					</div>
+			
+					<div class="chat-anonymous-login">
+						<label>Chat name
+							<input type="text" class="chat-anonymous-username"></input>
+						</label>
+						<button class="btn btn-mini btn-info">Login</button>
+					</div>
+			
+					<div class="chat-npr-login">
+						<label>NPR username
+							<input type="text" class="chat-npr-username"></input>
+						</label>
+						<label class="npr">NPR password
+							<input type="password" class="chat-npr-password"></input>
+						</label>
+						<button class="btn btn-mini btn-info">Login</button>
+					</div>
+				</div>
+			</div>
+			
+			<div class="chat-alerts"></div>
+			
+			<div class="chat-editor">
+				<h4>Type your comment below, <span class="chat-username"></span>.</h4>
+				<textarea class="chat-content"></textarea>
+				<br/>
+				<button class="btn btn-mini btn-success chat-post">Post comment</button>
+				<button class="btn btn-mini btn-warning chat-logout">Logout</button>
+				<button class="btn btn-mini btn-danger chat-clear">Clear text</button>
+			</div>
+		</div>
+		
+	</div>
 </div>

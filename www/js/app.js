@@ -57,5 +57,6 @@ $(function(){
             init_live_widget();
         }
     });
+    $button.trigger('click');
 
 });
