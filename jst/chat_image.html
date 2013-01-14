@@ -1,10 +1,19 @@
 <div class="chat-post chat-post-image" data-id="<%= Id %>" data-timestamp="<%= CreatedJSON %>">
-    <p class="chat-post-author-photo"><img src="<%= Creator.Avatar %>" /></p>
+    <div class="chat-post-author-photo">
+    	<%if (Creator.Avatar) { %>
+			<img src="<%= Creator.Avatar %>" alt="<%= Creator.Name %>" />
+		<%} else {%>
+			<img src="img/chat-no-photo.gif" alt="<%= Creator.Name %>" />
+		<%}%>
+	</div>
+    <p class="chat-post-info">
+    	<span class="chat-post-author"><%= Creator.Name %></span>
+    	<span class="bullet" aria-hidden="true">&#8226;</span>
+    	<span class="chat-post-datetime"><%= Created %></span>
+    </p>
     <p class="chat-post-content">
     <% _.each(Media, function(media) { %>
         <img src="<%= media.Url %>" />
     <% }); %>
     </p>
-    <p class="chat-post-author"><%= Creator.Name %></p>
-    <p class="chat-post-datetime"><%= Created %></p>
 </div>
