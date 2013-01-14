@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import boto
+import gzip
 import json
+
+import boto
 from tumblr import Api
 
 import app_config
@@ -41,7 +43,7 @@ for post in posts:
     if len(output['latest']) <= MAX_PER_CATEGORY:
         output['latest'].append(simple_post)
 
-with open(TUMBLR_FILENAME, 'w') as f:
+with gzip.open(TUMBLR_FILENAME, 'wb') as f:
     f.write(json.dumps(output))
 
 if app_config.DEPLOYMENT_TARGET:
@@ -53,6 +55,9 @@ if app_config.DEPLOYMENT_TARGET:
         key.set_contents_from_filename(
             TUMBLR_FILENAME,
             policy='public-read',
-            headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
+            headers={
+                'Cache-Control': 'max-age=5 no-cache no-store must-revalidate',
+                'Content-Encoding': 'gzip'
+            }
         )
 

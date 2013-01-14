@@ -23,7 +23,7 @@ tags = ['ivotedforyou', 'idrathernotsayhowivoted', 'ididntvoteforyou', 'ididntvo
 images = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg']
 
 n = 0
-while n < 5:
+while n < 50:
     tag = choice(tags)
     if n % 5 == 0:
         tag += ',nprpicks'
