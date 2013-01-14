@@ -160,9 +160,12 @@
     {% endblock extra_foot %}
 
     <!-- GOOGLE ANALYTICS -->
-	<script type="text/javascript">
+    <script type="text/javascript">
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-5828686-4']);
+        var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+        _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+        _gaq.push(['_setAccount', 'UA-5828686-12']);
+        _gaq.push(['_setDomainName', 'npr.org']);
         _gaq.push(['_trackPageview']);
         (function() {
             var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -170,7 +173,6 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     </script>
-
 
     <!-- CHARTBEAT -->
     <script type="text/javascript">
