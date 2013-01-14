@@ -1,12 +1,17 @@
 $(document).ready(function() {
-    var POLLING_INTERVAL = 5000;
-    var PHOTO_CATEGORIES = ['latest', 'npr-picks', 'i-voted-for-you', 'i-didnt-vote-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote']
+    var PHOTO_CATEGORIES = ['latest', 'nprpicks', 'ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
+
+    var MAX_PHOTOS_PER_CATEGORY = 100;
+    var PHOTOS_PER_PAGE = 20;
 
     var photos = {};
-    var photos_in_categories = {};
+    var feed_data = null;
+    var next_photo_index = {};
+    
+    var $photo_container = $("#photo-feed");
 
     _.each(PHOTO_CATEGORIES, function(category) {
-        photos_in_categories[category] = [];
+        next_photo_index[category] = 0;
     });
 
     function ISODateString(d) {
@@ -17,60 +22,74 @@ $(document).ready(function() {
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     }
 
-    function update_backchannel(first_run) {
+    // Paginate: Takes a page number, number of photos per page, and data (array of photos)
+    // paginate() takes care of dealing with array indices.
+    function get_next_photos(category, data) {
+        var start = next_photo_index[category];
+        var end = start + PHOTOS_PER_PAGE;
+        var paginated_photos = data.slice(start, end);
+
+        next_photo_index[category] += PHOTOS_PER_PAGE;
+        return paginated_photos;
+    }
+
+
+    function render_category_feed(category, posts) {
+        var posts_length = Math.min(posts.length, MAX_PHOTOS_PER_CATEGORY);
+        var $photos = $("#photos-" + category);
+        var new_photos = [];
+
+        for (var j = 0; j < posts_length; j++) {
+            var post = posts[j];
+
+            var html = '<img class="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
+            var $el = $(html);
+
+            new_photos.push($el);
+            $el = null;
+
+            photos[post.id] = post;
+        }
+        
+        $photos.append(new_photos);
+    }
+
+    function update_category(category) {
+        var posts = get_next_photos(category, feed_data[category]);
+
+        var $photos = $("#photos-" + category);
+        render_category_feed(category, posts);
+
+        if (next_photo_index[category] >= feed_data[category].length) {
+            $('#tumblrlink-' + category).show();
+            $('#button-' + category).hide();
+        }
+
+        else {
+            $('#button-' + category).show();
+        }
+
+        $photos = null;
+    }
+
+    function update_backchannel() {
         /*
          * Update the backchannel from our tumblr feed.
          */
         $.getJSON('live-data/misterpresident.json?t=' + (new Date()).getTime(), {}, function(data) {
-            for (var i = 0; i < PHOTO_CATEGORIES.length; i++) {
-                var category = PHOTO_CATEGORIES[i];
-                //var template = JST.tumblr_photo;
+            feed_data = data;
 
-                var posts = data[category];
-                var posts_length = posts.length;
-
-                var $photos = $("#photos-" + category);
-
-                for (var j = 0; j < posts_length; j++) {
-                    var post = posts[j];
-
-                    var html = '<img class="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
-                    var $el = $(html);
-
-                    // Old
-                    if (_.indexOf(photos_in_categories[category], post.id) >= 0) {
-                        // Changed
-                        if (photos[post.id] != post) {
-                            $photos.show();
-                            $photos.find(".photo-" + post.id).replaceWith($el);
-                        }
-
-                    // New
-                    } else {
-                        $photos.prepend($el);
-
-                        $el = null;
-                        $el = $photos.find("#photo-" + post.id)
-
-                        if (first_run) {
-                            $el.show();
-                        } else {
-                            $el.slideDown(1000);
-                        }
-
-                        $el = null;
-
-                        photos_in_categories[category].push(post.id);
-                    }
-
-                    photos[post.id] = post;
-                }
-
-                // $posts.find(".post:nth-child(5)").nextAll().remove();
-            }
+            _.each(PHOTO_CATEGORIES, function(category) {
+                update_category(category);
+            });
         });
     }
 
-    update_backchannel(true);
-    setInterval(update_backchannel, POLLING_INTERVAL);
+    $photo_container.on('click', 'button', function(){
+        var category = $(this).attr('id').replace('button-', '');
+
+        update_category(category);
+    });
+
+    update_backchannel();
 });

@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
-import boto
+import gzip
 import json
+import os
+
+import boto
 from tumblr import Api
 
 import app_config
@@ -14,14 +17,14 @@ api = Api(app_config.TUMBLR_BLOG_ID)
 
 posts = list(api.read(max=TUMBLR_MAX_POSTS))
 
-posts.reverse()
+# posts.reverse()
 
 output = {
-    'id-rather-not-say-how-i-voted': [],
-    'i-voted-for-you': [],
-    'i-didnt-vote-for-you': [],
-    'i-didnt-vote': [],
-    'npr-picks': [],
+    'idrathernotsayhowivoted': [],
+    'ivotedforyou': [],
+    'ididntvoteforyou': [],
+    'ididntvote': [],
+    'nprpicks': [],
     'latest': []
 }
 
@@ -35,27 +38,33 @@ for post in posts:
     }
 
     for tag in post['tags']:
-        if tag == 'its-none-of-your-business-how-i-voted':
-            tag = 'id-rather-not-say-how-i-voted'
-
         if len(output[tag]) <= MAX_PER_CATEGORY:
             output[tag].append(simple_post)
 
     if len(output['latest']) <= MAX_PER_CATEGORY:
         output['latest'].append(simple_post)
 
+json_output = json.dumps(output)
+
 with open(TUMBLR_FILENAME, 'w') as f:
-    f.write(json.dumps(output))
+    f.write(json_output)
 
 if app_config.DEPLOYMENT_TARGET:
+    with gzip.open(TUMBLR_FILENAME + '.gz', 'wb') as f:
+        f.write(json_output)
+
     for bucket in app_config.S3_BUCKETS:
         conn = boto.connect_s3()
         bucket = conn.get_bucket(bucket)
         key = boto.s3.key.Key(bucket)
         key.key = '%s/live-data/misterpresident.json' % app_config.DEPLOYED_NAME
         key.set_contents_from_filename(
-            TUMBLR_FILENAME,
+            TUMBLR_FILENAME + '.gz',
             policy='public-read',
-            headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
+            headers={
+                'Cache-Control': 'max-age=5 no-cache no-store must-revalidate',
+                'Content-Encoding': 'gzip'
+            }
         )
 
+    os.remove(TUMBLR_FILENAME + '.gz')

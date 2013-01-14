@@ -1,4 +1,4 @@
-#!/usr/bin/env python    
+#!/usr/bin/env python
 
 from tumblpy import Tumblpy
 from random import choice
@@ -18,15 +18,15 @@ t = Tumblpy(
         oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
         oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
 
-tags = ['i-voted-for-you', 'id-rather-not-say-how-i-voted', 'i-didnt-vote-for-you', 'i-didnt-vote']
+tags = ['ivotedforyou', 'idrathernotsayhowivoted', 'ididntvoteforyou', 'ididntvote']
 
 images = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg']
 
 n = 0
-while n < 5:
+while n < 50:
     tag = choice(tags)
     if n % 5 == 0:
-        tag += ',npr-picks'
+        tag += ',nprpicks'
 
     caption = u"""<p class='intro'>Dear Mr. President,</p>
     <p class='voted' data-vote-type='%s'>%s.</p>
