@@ -1,5 +1,7 @@
-<div class="mr-president-form">
+<div id="mr-president" class="mr-president-form">
     <form id="president-form" action="http://{{ SERVERS[0] }}/dear-mr-president/" method="post" enctype="multipart/form-data">
+        <h2>Dear Mr. President ...</h2>
+        <h4>Tell the President what you want him to do in his second term.</h4>
         <ol>
             <li class="form-vote">
             	<label for="voted">Dear Mr. President,</label>
@@ -57,4 +59,23 @@
         });
     </script>
     <![endif]-->
+    <div id="photo-feed">
+        <h2>Latest</h2>
+        <div id="photos-latest" class="photo-list"></div>
+
+        <h2>NPR's Picks</h2>
+        <div id="photos-npr-picks" class="photo-list"></div>
+
+        <h2>I voted for you</h2>
+        <div id="photos-i-voted-for-you" class="photo-list"></div>
+
+        <h2>I didn't vote for you</h2>
+        <div id="photos-i-didnt-vote-for-you" class="photo-list"></div>
+
+        <h2>I'd rather not say how I voted</h2>
+        <div id="photos-id-rather-not-say-how-i-voted" class="photo-list"></div>
+
+        <h2>I didn't vote</h2>
+        <div id="photos-i-didnt-vote" class="photo-list"></div>
+    </div>
 </div>

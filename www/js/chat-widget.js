@@ -26,6 +26,9 @@
             /*
             * Initializes the live chat widget.
             */
+
+            plugin.$root.html(JST.widget());
+
             plugin.settings = $.extend({}, defaults, options || {});
             plugin.update_live_chat();
             setInterval(plugin.update_live_chat, plugin.settings.update_interval);
@@ -61,8 +64,8 @@
             * the appropriate element on the page.
             */
             var post = posts[0];
-            var template = "<p><span class='heading'>Latest In The Chat:</span> <span class='post'>\""+post.Content+"\"</span> <span class='author'>&mdash; "+post.Creator.Name+"</span></p>";
-            plugin.$root.html(template);
+            var template = JST.widget_text({ post:post });
+            plugin.$root.find('p').html(template);
         };
 
         // Start it up.

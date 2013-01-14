@@ -1,37 +1,61 @@
 /*
 * Prepare the live chat widget.
 */
-$('#live-chat-widget').livechatwidget({
-    chat_id: '74796',
-    chat_token: 'FtP7wRfX',
-    update_interval: 10000
-});
+$(function(){
 
-$('button.live-chat-toggle').on('click', function(){
+    // Constants for the live chat/widget
+    var CHAT_ID = '74796';
+    var CHAT_TOKEN = 'FtP7wRfX';
+    var CHAT_UPDATE_INTERVAL = 10000;
+
+    // Caching some DOM objects
+    var $button = $('button.live-chat-toggle');
+    var $live = $('#live-chat');
+    var $widget = $('#live-chat-widget');
+    var $mrprez = $('#mr-president');
+
     /*
-    * Toggle the live chat window.
-    * Exciting!
+    * Initializes the live chat widget.
     */
-    var $livechat = $('#live-chat');
-    $livechat.toggle();
-    if ($livechat.is(':visible')){
-        /*
-        * If the chat is visible, load up the module and set up the button.
-        */
-        $('button.live-chat-toggle').html('Turn off live chat.');
-        $('#live-chat').livechat({
-            chat_id: '74796',
-            chat_token: 'FtP7wRfX',
-            update_interval: 10000,
-            alert_interval: 500,
-            read_only: false
+    function init_live_widget(){
+        return $widget.livechatwidget({
+            chat_id: CHAT_ID,
+            chat_token: CHAT_TOKEN,
+            update_interval: CHAT_UPDATE_INTERVAL
         });
-    } else {
-        /*
-        * Otherwise, kill the module and set up the button.
-        */
-        $('button.live-chat-toggle').html('Turn on live chat.');
-        $('#live-chat').livechat = null;
     }
+    init_live_widget();
+
+    /*
+    * Toggle all of the things.
+    */
+    $button.on('click', function(){
+
+        $live.toggle();
+        $widget.toggle();
+        $mrprez.toggle();
+
+        if ($live.is(':visible')){
+            /*
+            * If the live chat is alive, set up the live chat JS and unregister the widget.
+            */
+            $button.html('Turn off live chat.');
+            $widget.livechatwidget = null;
+            $live.livechat({
+                chat_id: CHAT_ID,
+                chat_token: CHAT_TOKEN,
+                update_interval: CHAT_UPDATE_INTERVAL,
+                alert_interval: 500,
+                read_only: false
+            });
+        } else {
+            /*
+            * Otherwise, kill the live chat module and set up the widget.
+            */
+            $button.html('Turn on live chat.');
+            $live.livechat = null;
+            init_live_widget();
+        }
+    });
 
 });
