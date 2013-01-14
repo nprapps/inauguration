@@ -34,6 +34,7 @@ for post in posts:
         'url': post['url'],
         'text': post['photo-caption'],
         'photo_url': post['photo-url-100'],
+        'photo_url_250': post['photo-url-250'],
         'timestamp': post['unix-timestamp']
     }
 
