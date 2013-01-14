@@ -2,15 +2,16 @@ $(document).ready(function() {
     var PHOTO_CATEGORIES = ['latest', 'nprpicks', 'ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
 
     var MAX_PHOTOS_PER_CATEGORY = 100;
-    var PHOTOS_PER_PAGE = 1;
+    var PHOTOS_PER_PAGE = 10;
 
     var photos = {};
-    var photos_in_categories = {};
-    var page_state = {};
+    var feed_data = null;
+    var next_photo_index = {};
+    
+    var $photo_container = $("#photo-feed");
 
     _.each(PHOTO_CATEGORIES, function(category) {
-        photos_in_categories[category] = [];
-        page_state[category] = 1;
+        next_photo_index[category] = 0;
     });
 
     function ISODateString(d) {
@@ -23,26 +24,20 @@ $(document).ready(function() {
 
     // Paginate: Takes a page number, number of photos per page, and data (array of photos)
     // paginate() takes care of dealing with array indices.
-    function paginate(page_number, per_page, data) {
-        var start = Math.max(page_number-1, 0);
-        var end = start + per_page;
-        var paginated_photos = [];
+    function get_next_photos(category, data) {
+        var start = next_photo_index[category];
+        var end = start + PHOTOS_PER_PAGE;
+        var paginated_photos = data.slice(start, end);
 
-        paginated_photos = data.splice(start, per_page);
-
-        if (end > data.length) {
-            return false;
-        }
-
-        else {
-            return paginated_photos;
-        }
+        next_photo_index[category] += PHOTOS_PER_PAGE;
+        return paginated_photos;
     }
 
 
-    function update_category_feed(category, posts, first_run) {
+    function render_category_feed(category, posts) {
         var posts_length = Math.min(posts.length, MAX_PHOTOS_PER_CATEGORY);
         var $photos = $("#photos-" + category);
+        var new_photos = [];
 
         for (var j = 0; j < posts_length; j++) {
             var post = posts[j];
@@ -50,66 +45,51 @@ $(document).ready(function() {
             var html = '<img class="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
             var $el = $(html);
 
-            // Old
-            if (_.indexOf(photos_in_categories[category], post.id) >= 0) {
-                // Changed
-                if (photos[post.id] != post) {
-                    $photos.show();
-                    $photos.find(".photo-" + post.id).replaceWith($el);
-                }
-
-            // New
-            } else {
-                $photos.append($el);
-
-                $el = null;
-                $el = $photos.find("#photo-" + post.id)
-
-                if (first_run) {
-                    $el.show();
-                } else {
-                    $el.slideDown(1000);
-                }
-
-                $el = null;
-
-                photos_in_categories[category].push(post.id);
-            }
+            new_photos.push($el);
+            $el = null;
 
             photos[post.id] = post;
         }
+        
+        $photos.append(new_photos);
     }
 
-    function update_backchannel(first_run) {
+    function update_category(category) {
+        var posts = get_next_photos(category, feed_data[category]);
+
+        var $photos = $("#photos-" + category);
+        render_category_feed(category, posts);
+
+        if (next_photo_index[category] >= feed_data[category].length) {
+            $('#tumblrlink-' + category).show();
+            $('#button-' + category).hide();
+        }
+
+        else {
+            $('#button-' + category).show();
+        }
+
+        $photos = null;
+    }
+
+    function update_backchannel() {
         /*
          * Update the backchannel from our tumblr feed.
          */
         $.getJSON('live-data/misterpresident.json?t=' + (new Date()).getTime(), {}, function(data) {
-            for (var i = 0; i < PHOTO_CATEGORIES.length; i++) {
-                var category = PHOTO_CATEGORIES[i];
-                //var template = JST.tumblr_photo;
+            feed_data = data;
 
-                // var posts = paginate(page_state[category], PHOTOS_PER_PAGE, data[category]);
-                var posts = data[category];
-
-                var $photos = $("#photos-" + category);
-                update_category_feed(category, posts, true);
-            }
+            _.each(PHOTO_CATEGORIES, function(category) {
+                update_category(category);
+            });
         });
     }
 
-    var $photo_container = $("#photo-feed");
     $photo_container.on('click', 'button', function(){
-        var tmp_category = $(this).attr('id').replace('button-', '');
-        var new_posts = paginate(page_state[tmp_category], PHOTOS_PER_PAGE, global_data[tmp_category]);
-        if (new_posts) {
-          update_category_feed(tmp_category, new_posts, false);
-        }
-        else {
-          $(this).append('link to tumblr at the end');
-        }
-        page_state[tmp_category] += 1;
+        var category = $(this).attr('id').replace('button-', '');
+
+        update_category(category);
     });
 
-    update_backchannel(true);
+    update_backchannel();
 });
