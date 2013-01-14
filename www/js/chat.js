@@ -290,10 +290,7 @@
 
                 // Updating a post already displayed
                 if ($existing.length > 0) {
-                    console.log(edit_timestamps);
-                    console.log(timestamp);
                     if (post.Id in edit_timestamps && edit_timestamps[post.Id] >= timestamp) {
-                        console.log('skipping');
                         return;
                     }
 
@@ -308,7 +305,7 @@
                         $post = $(post_el);
 
                         if (parseInt($post.data('timestamp'), 10) > post.timestamp) {
-                            if (i == 0 && next_page_index <= posts_on_load.length) {
+                            if (i == 0 && next_page_index < posts_on_load.length) {
                                 return true;
                             }
 
@@ -357,6 +354,8 @@
             plugin.process_edits();
 
             next_page_index += plugin.settings.posts_per_page;
+
+            plugin.$show_more.toggle(next_page_index < posts_on_load.length);
         }
 
         plugin.update_live_chat = function() {
@@ -369,7 +368,6 @@
                 cache: false,
                 success: function(data, status, xhr) {
                     if (first_load) {
-                        console.log('First load');
                         plugin.$root.find('.chat-title').text(data.Title);
                         plugin.$chat_blurb.text(data.Description);
 
@@ -388,7 +386,6 @@
 
                         first_load = false;
                     } else {
-                        console.log('Updating');
                         plugin.render_new_posts(data);
                     }
                 }
