@@ -7,7 +7,7 @@ $(document).ready(function() {
     var photos = {};
     var feed_data = null;
     var next_photo_index = {};
-    
+
     var $photo_container = $("#photo-feed");
 
     _.each(PHOTO_CATEGORIES, function(category) {
@@ -22,8 +22,6 @@ $(document).ready(function() {
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     }
 
-    // Paginate: Takes a page number, number of photos per page, and data (array of photos)
-    // paginate() takes care of dealing with array indices.
     function get_next_photos(category, data) {
         var start = next_photo_index[category];
         var end = start + PHOTOS_PER_PAGE;
@@ -41,8 +39,9 @@ $(document).ready(function() {
 
         for (var j = 0; j < posts_length; j++) {
             var post = posts[j];
+            init_modal(post);
 
-            var html = '<img class="photo-' + post.id + '" src="' + post['photo_url'] + '" />';
+            var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url'] + '" /></a>';
             var $el = $(html);
 
             new_photos.push($el);
@@ -50,8 +49,13 @@ $(document).ready(function() {
 
             photos[post.id] = post;
         }
-        
         $photos.append(new_photos);
+    }
+
+    // init_modal(photo) : takes photo object and initializes modal with appropriate id and photo details
+    function init_modal(photo) {
+      var modal_html = JST.photo_modal({photo: photo});
+      $('body').append(modal_html);
     }
 
     function update_category(category) {
