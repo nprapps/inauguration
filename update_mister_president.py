@@ -2,6 +2,7 @@
 
 import gzip
 import json
+import os
 
 import boto
 from tumblr import Api
@@ -43,17 +44,22 @@ for post in posts:
     if len(output['latest']) <= MAX_PER_CATEGORY:
         output['latest'].append(simple_post)
 
-with gzip.open(TUMBLR_FILENAME, 'wb') as f:
-    f.write(json.dumps(output))
+json_output = json.dumps(output)
+
+with open(TUMBLR_FILENAME, 'w') as f:
+    f.write(json_output)
 
 if app_config.DEPLOYMENT_TARGET:
+    with gzip.open(TUMBLR_FILENAME + '.gz', 'wb') as f:
+        f.write(json_output)
+
     for bucket in app_config.S3_BUCKETS:
         conn = boto.connect_s3()
         bucket = conn.get_bucket(bucket)
         key = boto.s3.key.Key(bucket)
         key.key = '%s/live-data/misterpresident.json' % app_config.DEPLOYED_NAME
         key.set_contents_from_filename(
-            TUMBLR_FILENAME,
+            TUMBLR_FILENAME + '.gz',
             policy='public-read',
             headers={
                 'Cache-Control': 'max-age=5 no-cache no-store must-revalidate',
@@ -61,3 +67,4 @@ if app_config.DEPLOYMENT_TARGET:
             }
         )
 
+    os.remove(TUMBLR_FILENAME + '.gz')
