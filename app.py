@@ -27,6 +27,14 @@ def simple():
     return render_template('index.html', **make_context())
 
 
+@app.route('/test_member_widget.html')
+def test_member_widget():
+    """
+    Look at our member widget in a few different sizes.
+    """
+    return render_template('test_member_widget.html', **make_context())
+
+
 @app.route('/tumblr_form.html')
 def tumblr_form():
     """
