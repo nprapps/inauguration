@@ -26,13 +26,11 @@
             /*
             * Initializes the live chat widget.
             */
-
             plugin.$root.html(JST.widget());
 
             plugin.settings = $.extend({}, defaults, options || {});
             plugin.update_live_chat();
             setInterval(plugin.update_live_chat, plugin.settings.update_interval);
-
         };
 
         plugin.update_live_chat = function() {

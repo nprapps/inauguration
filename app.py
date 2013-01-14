@@ -35,6 +35,14 @@ def tumblr_form():
     return render_template('tumblr_form.html', **make_context())
 
 
+@app.route('/external_widget.html')
+def external_widget():
+    """
+    External widget for iframing in a chat promo.
+    """
+    return render_template('external_widget.html', **make_context())
+
+
 @app.route('/dear-mr-president/', methods=['POST'])
 def _post_to_tumblr():
     """
