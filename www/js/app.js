@@ -4,7 +4,6 @@
 $('#live-chat-widget').livechatwidget({
     chat_id: '74796',
     chat_token: 'FtP7wRfX',
-    update_interval: 10000
 });
 
 $('button.live-chat-toggle').on('click', function(){
