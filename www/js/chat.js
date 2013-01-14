@@ -34,13 +34,14 @@
         var user_url = null;
 
         var posts_on_load = [];
-        var edits_on_load = [];
+        var edits = [];
 
         var post_ids = [];
         var edit_ids = [];
         var delete_ids = [];
 
         var edit_timestamps = {};
+
         var alerts = [];
         var first_load = true;
         var next_page_index = 0;
@@ -200,8 +201,9 @@
                 }
             }
 
-            post.CreatedJSON = parseInt(moment(post.Created).valueOf(), 10);
-            post.Created = moment(post.Created).format('dddd, MMMM Do YYYY, h:mm:ss a');
+            var m = moment(post.Created);
+            post.timestamp = parseInt(m.valueOf(), 10);
+            post.created_string = m.format('dddd, MMMM Do YYYY, h:mm:ss a');
 
             if (post.Type == "TEXT") {
                 return JST.chat_text(post);
@@ -244,7 +246,7 @@
 
             // Handle post deletes
             _.each(data.Deletes, function(post) {
-                if (_.indexOf(delete_ids, post.Id)) {
+                if (_.indexOf(delete_ids, post.Id) >= 0) {
                     return;
                 }
 
@@ -253,19 +255,34 @@
                 plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
             });
 
-            // Handle post edits
             _.each(data.Edits, function(post) {
-                var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
+                var exists = _.indexOf(edit_ids, post.Id);
 
-                if (_.indexOf(edit_ids, post.Id)) {
-                    if (edit_timestamps[post.Id] >= timestamp) {
-                        return;
-                    }
-                } else {
-                    edit_ids.push(post.Id);
+                if (exists >= 0) {
+                    edits[exists] = post;
+
+                    return;
                 }
 
-                edit_timestamps[post.Id] = timestamp;
+                edit_ids.push(post.Id);
+                edits.push(post);
+            });
+
+            plugin.process_edits();
+
+            if (scroll_down) {
+                plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
+            }
+        };
+
+        plugin.process_edits = function() {
+            /*
+             * Process edits, replacing and inserting them as needed.
+             *
+             * NB: For simplicity we do this on every update.
+             */
+            _.each(edits, function(post) {
+                var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
 
                 var html = plugin.render_post(post);
 
@@ -273,16 +290,29 @@
 
                 // Updating a post already displayed
                 if ($existing.length > 0) {
+                    console.log(edit_timestamps);
+                    console.log(timestamp);
+                    if (post.Id in edit_timestamps && edit_timestamps[post.Id] >= timestamp) {
+                        console.log('skipping');
+                        return;
+                    }
+
                     $existing.replaceWith(html);
+                    edit_timestamps[post.Id] = timestamp;
                 // Updating a post never seen before (e.g. on page load)
                 } else {
                     var $posts = plugin.$chat_body.find('.chat-post');
                     var $post = null;
-
+                    
                     var comes_before = _.find($posts, function(post_el, i) {
                         $post = $(post_el);
 
-                        if (parseInt($post.data('timestamp'), 10) > post.CreatedJSON) {
+                        if (parseInt($post.data('timestamp'), 10) > post.timestamp) {
+                            if (i == 0 && next_page_index <= posts_on_load.length) {
+                                return true;
+                            }
+
+                            edit_timestamps[post.Id] = timestamp;
                             $post.before(html);
 
                             return true;
@@ -293,15 +323,12 @@
 
                     // If no place in the order, put at the end
                     if (!comes_before) {
+                        edit_timestamps[post.Id] = timestamp;
                         $post.after(html);
                     }
                 }
             });
-
-            if (scroll_down) {
-                plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
-            }
-        };
+        }
 
         plugin.render_post_page = function() {
             /*
@@ -327,34 +354,7 @@
                 plugin.$chat_body.prepend(new_posts);
             }
 
-            // Handle post edits
-            _.each(edits_on_load, function(post) {
-                var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
-
-                var html = plugin.render_post(post);
-                
-                // TODO -- Ensure edits are rendered on correct page
-
-                /*var $posts = plugin.$chat_body.find('.chat-post');
-                var $post = null;
-
-                var comes_before = _.find($posts, function(post_el, i) {
-                    $post = $(post_el);
-
-                    if (parseInt($post.data('timestamp'), 10) > post.CreatedJSON) {
-                        $post.before(html);
-
-                        return true;
-                    }
-
-                    return false;
-                });
-
-                // If no place in the order, put at the end
-                if (!comes_before) {
-                    $post.after(html);
-                }*/
-            });
+            plugin.process_edits();
 
             next_page_index += plugin.settings.posts_per_page;
         }
@@ -380,13 +380,8 @@
                         posts_on_load = data.Posts;
                         post_ids = _.pluck(posts_on_load, 'Id');
 
-                        edits_on_load = data.Edits;
-
-                        edit_timestamps = _.map(edits_on_load, function(post) {
-                            return parseInt(moment(post.LastModified).valueOf(), 10);
-                        });
-
-                        edit_ids = _.pluck(edits_on_load, 'Id');
+                        edits = data.Edits;
+                        edit_ids = _.pluck(edits, 'Id');
 
                         plugin.render_post_page();
                         plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
