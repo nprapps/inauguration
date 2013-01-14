@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{{ CSS.push('css/bootstrap.css') }}
+{{ CSS.push('css/bootstrap-responsive.css') }}
+{{ CSS.push('less/external-widget.less') }}
+{{ CSS.render('css/external-widget.min.css') }}
+
+{{ JS.push('js/lib/jquery-1.8.3.js') }}
+{{ JS.push('js/lib/modernizr.js') }}
+{{ JS.render('js/app-header.min.js') }}
+</head>
+
+<a href="#">
+    <div class="col">
+        <h3>Inauguration 2013</h3>
+        <div><p>We have coverage of the 2013 inauguration. This will happen in 2013 and we will cover it.</p></div>
+    </div>
+    <div class="col">
+        <h3>Live Audio</h3>
+        <div><p>We have live audio which is live and also audio. This audio will be live. And it will have volume.</p></div>
+    </div>
+    <div class="col">
+        <h3>Live Chat</h3>
+        <div id="live-chat-widget"></div>
+    </div>
+</a>
+
+{{ JS.push('js/lib/html5.js') }}
+{{ JS.push('js/lib/underscore.js') }}
+{{ JS.push('js/chat-widget.js') }}
+{{ JS.push('js/templates.js') }}
+{{ JS.push('js/external-widget.js') }}
+{{ JS.render('js/app-footer.min.js') }}
