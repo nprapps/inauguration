@@ -1,4 +1,4 @@
-<div class="chat-post chat-post-text<%= Highlight %>" data-id="<%= Id %>" data-timestamp="<%= CreatedJSON %>">
+<div class="chat-post chat-post-text<%= Highlight %>" data-id="<%= Id %>" data-timestamp="<%= timestamp %>">
     <div class="chat-post-author-photo">
     	<%if (Creator.Avatar) { %>
 			<img src="<%= Creator.Avatar %>" alt="<%= Creator.Name %>" />
@@ -9,7 +9,7 @@
     <p class="chat-post-info">
     	<span class="chat-post-author"><%= Creator.Name %></span>
     	<span class="bullet" aria-hidden="true">&#8226;</span>
-    	<span class="chat-post-datetime"><%= Created %></span>
+    	<span class="chat-post-datetime"><%= created_string %></span>
     </p>
     <p class="chat-post-content"><%= Content %></p>
 </div>

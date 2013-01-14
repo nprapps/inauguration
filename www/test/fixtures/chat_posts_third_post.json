@@ -7,23 +7,6 @@
 	"IsCommenting": 1,
 	"IsModerated": 1,
 	"Posts": [{
-		"Id": 59888318,
-		"Content": "Test 1",
-		"Creator": {
-			"Id": 22503229,
-			"Name": "onyxfish",
-			"Avatar": ""
-		},
-		"Type": "TEXT",
-		"Created": "\/Date(1356759147000+0000)\/",
-		"LastModified": "\/Date(1356759147000+0000)\/",
-		"IsComment": 1,
-		"IsStuck": 0,
-		"IsDeleted": 0,
-		"IsApproved": 1,
-		"Source": "",
-		"EventId": 74796
-	},{
         "Id": 59888319,
         "Content": "Test 2",
         "Creator": {
@@ -40,7 +23,24 @@
         "IsApproved": 1,
         "Source": "",
         "EventId": 74796
-    }],
+    },{
+		"Id": 59888318,
+		"Content": "Test 1",
+		"Creator": {
+			"Id": 22503229,
+			"Name": "onyxfish",
+			"Avatar": ""
+		},
+		"Type": "TEXT",
+		"Created": "\/Date(1356759147000+0000)\/",
+		"LastModified": "\/Date(1356759147000+0000)\/",
+		"IsComment": 1,
+		"IsStuck": 0,
+		"IsDeleted": 0,
+		"IsApproved": 1,
+		"Source": "",
+		"EventId": 74796
+	}],
 	"Edits": [{
         "Id": 59888320,
         "Content": "Test 3",

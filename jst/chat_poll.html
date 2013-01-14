@@ -1,8 +1,0 @@
-<div class="chat-post chat-post-poll" data-id="<%= Id %>" data-timestamp="<%= CreatedJSON %>">
-    <h6 class="chat-poll-question">Poll: <%= Entities.Question %></h6>
-    <p class="chat-poll">
-    <% _.each(Entities.Answers, function(answer) { %>
-        <label><%= answer.Text %> <input name="poll-<%= Id %>" type="radio"></input></label>
-    <% }); %>
-    </p>
-</div>
