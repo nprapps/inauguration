@@ -21,7 +21,8 @@
             update_interval: 1000,
             alert_interval: 500,
             read_only: false,
-            scribble_host: 'apiv1.scribblelive.com'
+            scribble_host: 'apiv1.scribblelive.com',
+            posts_per_page: 50
         };
 
         var plugin = this;
@@ -32,12 +33,17 @@
         var chat_url = null;
         var user_url = null;
 
+        var posts = [];
+        var edits = [];
+
         var post_ids = [];
-        var delete_ids = [];
         var edit_ids = [];
+        var delete_ids = [];
+
         var edit_timestamps = {};
         var alerts = [];
         var first_load = true;
+        var next_page_index = 0;
 
         plugin.init = function () {
             /*
@@ -208,50 +214,42 @@
             /*
              * Render the latest posts from API data.
              */
-            if (first_load) {
-                plugin.$root.find('.chat-title').text(data.Title);
-                plugin.$chat_blurb.text(data.Description);
-
-                if (data.IsModerated !== 1) {
-                    console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
-                }
-
-                first_load = false;
-            }
-
             var scroll_down = false;
             var new_posts = [];
 
             // Handle normal posts
             _.each(data.Posts, function(post) {
                 // Filter posts we've seen before
-                if (_.contains(post_ids, post.Id)) {
+                if (_.indexOf(post_ids, post.Id) >= 0) {
                     return;
                 }
 
                 try {
-                    post.html = plugin.render_post(post);
+                    var html = plugin.render_post(post);
                 } catch(err) {
                     return;
                 }
 
-                new_posts.push(post);
+                new_posts.push(html);
+
+                posts.push(post);
                 post_ids.push(post.Id);
             });
 
             if (new_posts.length > 0) {
                 new_posts = _.sortBy(new_posts, 'CreatedJSON');
-                plugin.$chat_body.append(_.pluck(new_posts, 'html'));
+                plugin.$chat_body.append(new_posts);
 
                 scroll_down = true;
             }
 
             // Handle post deletes
             _.each(data.Deletes, function(post) {
-                if (_.contains(delete_ids, post.Id)) {
+                if (_.indexOf(delete_ids, post.Id)) {
                     return;
                 }
 
+                deletes.push(post);
                 delete_ids.push(post.Id);
 
                 plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
@@ -261,23 +259,24 @@
             _.each(data.Edits, function(post) {
                 var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
 
-                if (_.contains(edit_ids, post.Id)) {
+                if (_.indexOf(edit_ids, post.Id)) {
                     if (edit_timestamps[post.Id] >= timestamp) {
                         return;
                     }
                 } else {
+                    edits.push(post);
                     edit_ids.push(post.Id);
                 }
 
                 edit_timestamps[post.Id] = timestamp;
 
-                post.html = plugin.render_post(post);
+                var html = plugin.render_post(post);
 
                 var $existing = plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]');
 
                 // Updating a post already displayed
                 if ($existing.length > 0) {
-                    $existing.replaceWith(post.html);
+                    $existing.replaceWith(html);
                 // Updating a post never seen before (e.g. on page load)
                 } else {
                     var $posts = plugin.$chat_body.find('.chat-post');
@@ -287,7 +286,7 @@
                         $post = $(post_el);
 
                         if (parseInt($post.data('timestamp'), 10) > post.CreatedJSON) {
-                            $post.before(post.html);
+                            $post.before(html);
 
                             return true;
                         }
@@ -297,7 +296,7 @@
 
                     // If no place in the order, put at the end
                     if (!comes_before) {
-                        $post.after(post.html);
+                        $post.after(html);
                     }
                 }
             });
@@ -306,6 +305,71 @@
                 plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
             }
         };
+
+        plugin.render_post_page = function() {
+            /*
+             * Render a page of posts from API data.
+             */
+            var scroll_down = false;
+            var new_posts = [];
+
+            var start = next_page_index;
+            var end = next_page_index + plugin.settings.posts_per_page;
+
+            // Handle normal posts
+            _.each(posts.slice(start, end), function(post) {
+                try {
+                    var html = plugin.render_post(post);
+                } catch(err) {
+                    return;
+                }
+
+                new_posts.push(html);
+            });
+
+            if (new_posts.length > 0) {
+                // TODO -- correct sort order
+                new_posts = _.sortBy(new_posts, 'CreatedJSON');
+                plugin.$chat_body.append(new_posts);
+
+                scroll_down = true;
+            }
+
+            // Handle post edits
+            _.each(edits, function(post) {
+                var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
+
+                var html = plugin.render_post(post);
+                
+                // TODO -- Ensure edits are rendered on correct page
+
+                /*var $posts = plugin.$chat_body.find('.chat-post');
+                var $post = null;
+
+                var comes_before = _.find($posts, function(post_el, i) {
+                    $post = $(post_el);
+
+                    if (parseInt($post.data('timestamp'), 10) > post.CreatedJSON) {
+                        $post.before(html);
+
+                        return true;
+                    }
+
+                    return false;
+                });
+
+                // If no place in the order, put at the end
+                if (!comes_before) {
+                    $post.after(html);
+                }*/
+            });
+
+            if (scroll_down) {
+                plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
+            }
+
+            next_page_index += plugin.settings.posts_per_page;
+        }
 
         plugin.update_live_chat = function() {
             /*
@@ -316,7 +380,33 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(data, status, xhr) {
-                    plugin.render_new_posts(data);
+                    if (first_load) {
+                        console.log('First load');
+                        plugin.$root.find('.chat-title').text(data.Title);
+                        plugin.$chat_blurb.text(data.Description);
+
+                        if (data.IsModerated !== 1) {
+                            console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
+                        }
+
+                        posts = data.Posts;
+                        post_ids = _.pluck(posts, 'Id');
+
+                        edits = data.Edits;
+
+                        edit_timestamps = _.map(edits, function(post) {
+                            return parseInt(moment(post.LastModified).valueOf(), 10);
+                        });
+
+                        edit_ids = _.pluck(edits, 'Id');
+
+                        plugin.render_post_page();
+
+                        first_load = false;
+                    } else {
+                        console.log('Updating');
+                        plugin.render_new_posts(data);
+                    }
                 }
             });
         };
