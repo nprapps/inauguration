@@ -33,8 +33,8 @@
         var chat_url = null;
         var user_url = null;
 
-        var posts = [];
-        var edits = [];
+        var posts_on_load = [];
+        var edits_on_load = [];
 
         var post_ids = [];
         var edit_ids = [];
@@ -62,6 +62,7 @@
             plugin.$chat_blurb = plugin.$root.find('.chat-blurb');
             plugin.$chat_body = plugin.$root.find('.chat-body');
             plugin.$alerts = plugin.$root.find('.chat-alerts');
+            plugin.$show_more = plugin.$root.find('.chat-show-more');
 
             plugin.$editor = plugin.$root.find('.chat-editor');
             plugin.$comment = plugin.$editor.find('.chat-content');
@@ -92,6 +93,7 @@
             plugin.$npr_login_button.on('click', plugin.npr_login_click);
             plugin.$clear.on('click', plugin.clear_click);
             plugin.$comment_button.on('click', plugin.comment_click);
+            plugin.$show_more.on('click', plugin.show_more_click);
 
             // Initialize the user and the chat data.
             if (!plugin.settings.read_only) {
@@ -230,14 +232,11 @@
                     return;
                 }
 
-                new_posts.push(html);
-
-                posts.push(post);
+                new_posts.unshift(html);
                 post_ids.push(post.Id);
             });
 
             if (new_posts.length > 0) {
-                new_posts = _.sortBy(new_posts, 'CreatedJSON');
                 plugin.$chat_body.append(new_posts);
 
                 scroll_down = true;
@@ -249,7 +248,6 @@
                     return;
                 }
 
-                deletes.push(post);
                 delete_ids.push(post.Id);
 
                 plugin.$chat_body.find('.chat-post[data-id="' + post.Id + '"]').remove();
@@ -264,7 +262,6 @@
                         return;
                     }
                 } else {
-                    edits.push(post);
                     edit_ids.push(post.Id);
                 }
 
@@ -310,33 +307,28 @@
             /*
              * Render a page of posts from API data.
              */
-            var scroll_down = false;
             var new_posts = [];
 
             var start = next_page_index;
             var end = next_page_index + plugin.settings.posts_per_page;
 
             // Handle normal posts
-            _.each(posts.slice(start, end), function(post) {
+            _.each(posts_on_load.slice(start, end), function(post) {
                 try {
                     var html = plugin.render_post(post);
                 } catch(err) {
                     return;
                 }
 
-                new_posts.push(html);
+                new_posts.unshift(html);
             });
 
             if (new_posts.length > 0) {
-                // TODO -- correct sort order
-                new_posts = _.sortBy(new_posts, 'CreatedJSON');
-                plugin.$chat_body.append(new_posts);
-
-                scroll_down = true;
+                plugin.$chat_body.prepend(new_posts);
             }
 
             // Handle post edits
-            _.each(edits, function(post) {
+            _.each(edits_on_load, function(post) {
                 var timestamp = parseInt(moment(post.LastModified).valueOf(), 10);
 
                 var html = plugin.render_post(post);
@@ -364,10 +356,6 @@
                 }*/
             });
 
-            if (scroll_down) {
-                plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
-            }
-
             next_page_index += plugin.settings.posts_per_page;
         }
 
@@ -389,18 +377,19 @@
                             console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
                         }
 
-                        posts = data.Posts;
-                        post_ids = _.pluck(posts, 'Id');
+                        posts_on_load = data.Posts;
+                        post_ids = _.pluck(posts_on_load, 'Id');
 
-                        edits = data.Edits;
+                        edits_on_load = data.Edits;
 
-                        edit_timestamps = _.map(edits, function(post) {
+                        edit_timestamps = _.map(edits_on_load, function(post) {
                             return parseInt(moment(post.LastModified).valueOf(), 10);
                         });
 
-                        edit_ids = _.pluck(edits, 'Id');
+                        edit_ids = _.pluck(edits_on_load, 'Id');
 
                         plugin.render_post_page();
+                        plugin.$chat_body.scrollTop(plugin.$chat_body[0].scrollHeight);
 
                         first_load = false;
                     } else {
@@ -556,6 +545,10 @@
 
         plugin.comment_click = function() {
             plugin.post_comment({ content: plugin.$comment.val() });
+        };
+
+        plugin.show_more_click = function() {
+            plugin.render_post_page();
         };
 
         plugin.init();
