@@ -4,7 +4,7 @@
 
         <meta charset="utf-8">
         <meta name="description" content="{block:IndexPage}{block:Description}{MetaDescription}{/block:Description}{/block:IndexPage}{block:PermalinkPage}{block:PostSummary}{PostSummary}{/block:PostSummary}{/block:PermalinkPage}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
         <meta name="font:Body" content="'Helvetica Neue', Helvetica, Arial, sans-serif"/>
         <meta name="if:Two column posts" content="1"/>
@@ -129,6 +129,14 @@
             	width: 100%;
             }
 
+            #dmp-form .legal {
+                margin: 30px auto 0;
+                font-size: 12px;
+                color: white;
+                font-style: italic;
+                width: 70%;
+                max-width: 940px;
+            }
 
             img { max-width: 100% }
             .post .top.media img { width: 100%; }
@@ -912,6 +920,18 @@
     	<meta property="og:image" content="https://pbs.twimg.com/media/BAMzZIHCIAAA3Er.jpg" />
     	<meta property="og:site_name" content="NPR.org" />
     	<meta property="fb:app_id" content="138837436154588" />
+        
+        <!-- GOOGLE ANALYTICS -->
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-5828686-4']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
 
     </head>
     <body class="{block:IndexPage}index-page{/block:IndexPage}{block:PermalinkPage}permalink-page{/block:PermalinkPage}">
@@ -970,8 +990,10 @@
 					</div>
 					<iframe class="dmp-iframe" src="http://apps.npr.org/inauguration/tumblr_form.html" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 				</div>
+                <div class="legal">
+                    By submitting an image, you certify that you created, or have ownership of the work. You retain the copyright in the image, but grant to NPR a non-exclusive, perpetual right to use the image, without payment and without further notice, on NPR's website, and in any other current or future NPR services (including websites, mobile services, applications and publications, anywhere in the world that NPR  may offer these services). This right includes the right to copy, transmit, display, distribute, create derivative works of, and/or adapt the image. NPR also has the right to distribute and/or sublicense the image to its Member Stations, end users and other third parties in connection with NPR's distribution and/or sublicensing of related content. You grant NPR the right to use your name in a credit for the image and you agree that you have provided NPR accurate credit information.
+                </div>
 			</section>
-
 
             <ul id="posts">
                 <!-- START POSTS -->
@@ -1518,19 +1540,6 @@
 				$dmp.trigger('click');
 			}
       	});
-		</script>        
-
-
-		<!-- GOOGLE ANALYTICS -->
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-5828686-4']);
-			_gaq.push(['_trackPageview']);
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
 		</script>
 	
 	
