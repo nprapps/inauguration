@@ -66,6 +66,7 @@
             plugin.$show_more = plugin.$root.find('.chat-show-more');
 
             plugin.$editor = plugin.$root.find('.chat-editor');
+            plugin.$username = plugin.$editor.find('.chat-username');
             plugin.$comment = plugin.$editor.find('.chat-content');
             plugin.$comment_button = plugin.$editor.find('.chat-post');
             plugin.$logout = plugin.$editor.find('.chat-logout');
@@ -431,7 +432,8 @@
             var visible = (auth !== undefined && auth !== null);
 
             if (visible) {
-                plugin.$editor.find('h4 span').text(auth.Name);
+                plugin.$username.text(auth.Name);
+
                 if (reauthenticate === true) {
                     if (plugin.validate_scribble_auth() === false) {
                         plugin.scribble_auth_user({ auth_route: 'anonymous', username: $.totalStorage(SCRIBBLE_AUTH_KEY).Name });
