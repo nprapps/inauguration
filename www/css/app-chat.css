@@ -82,6 +82,69 @@
 .chat-body .chat-show-more {
   display: none;
 }
+.chat-user-entry {
+  background-color: #ebebeb;
+  border-top: 1px solid #ddd;
+  width: 848px;
+  /* 870 - 22 */
+
+  padding: 11px 22px 5px 22px;
+  margin-left: -11px;
+  border-radius: 4px 4px 0 0;
+}
+.chat-user-entry.affix {
+  bottom: 0;
+}
+.chat-user-entry h4 {
+  font: normal 18px/44px Arial, Helvetica, sans-serif;
+  color: #666;
+  float: left;
+  margin-right: 33px;
+}
+.chat-user-entry .form-inline {
+  float: left;
+  width: auto;
+}
+.chat-user-entry .form-inline:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+.chat-user-entry .form-inline label {
+  font-weight: bold;
+  font-size: 13px;
+  float: left;
+  margin-right: 11px;
+  line-height: 44px;
+}
+.chat-user-entry .form-inline .social.btn-group {
+  float: left;
+  margin-right: 22px;
+}
+.chat-user-entry .form-inline .social.btn-group .btn {
+  margin-left: 1px;
+  border-radius: 0;
+}
+.chat-user-entry .form-inline .social.btn-group .btn:first-child {
+  margin-left: 0;
+}
+.chat-user-entry .form-inline .social.btn-group .disabled {
+  background-color: #ccc;
+}
+.chat-user-entry .form-inline .register-npr {
+  float: left;
+  font-size: 12px;
+  line-height: 44px;
+}
+.chat-user-entry .form-inline .chat-npr-login {
+  clear: both;
+}
+.chat-user-entry .form-inline input[type='text'],
+.chat-user-entry .form-inline input[type='password'] {
+  width: 150px;
+}
 .chat-schedule {
   padding-top: 22px;
 }

@@ -311,6 +311,10 @@ def generate_new_oauth_tokens():
     outputs.generate_new_oauth_tokens()
 
 
+def dump_tumblr_json():
+    outputs.dump_tumblr_json()
+
+
 def deploy_radio(path):
     """
     Deploys an radio status file to radio.json
