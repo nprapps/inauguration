@@ -1,10 +1,10 @@
 <html>
     <head>
-        <title>{Title}{block:SearchPage} ({lang:Search results for SearchQuery}){/block:SearchPage}{block:PermalinkPage}{block:PostSummary} — {PostSummary}{/block:PostSummary}{/block:PermalinkPage}</title>
+        <title>{Title}{block:SearchPage} ({lang:Search results for SearchQuery}){/block:SearchPage}{block:PermalinkPage}{block:PostSummary} — {PostSummary}{/block:PostSummary}{/block:PermalinkPage} : NPR</title>
 
         <meta charset="utf-8">
         <meta name="description" content="{block:IndexPage}{block:Description}{MetaDescription}{/block:Description}{/block:IndexPage}{block:PermalinkPage}{block:PostSummary}{PostSummary}{/block:PostSummary}{/block:PermalinkPage}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
         <meta name="font:Body" content="'Helvetica Neue', Helvetica, Arial, sans-serif"/>
         <meta name="if:Two column posts" content="1"/>
@@ -113,6 +113,7 @@
             	font-weight: bold;
             	font-size: 20px;
             	line-height: 88px;
+            	padding-right: 10px;
             }
             #dmp-form .hdr h3 span {
             	background: url('http://apps.npr.org/inauguration/img/btn-share.png') no-repeat 50% 50%;
@@ -128,6 +129,14 @@
             	width: 100%;
             }
 
+            #dmp-form .legal {
+                margin: 30px auto 0;
+                font-size: 12px;
+                color: white;
+                font-style: italic;
+                width: 70%;
+                max-width: 940px;
+            }
 
             img { max-width: 100% }
             .post .top.media img { width: 100%; }
@@ -152,13 +161,13 @@
 
             #posts {
                 color: #4C4C4C;
-                margin: 0 auto;
                 position: relative;
+                padding: 0 30px;
                 z-index: 1;
             }
             #posts .post {
                 list-style-type: none;
-                margin: 30px;
+                margin: 30px 0;
             }
             #posts .post .wrap {
                 padding: 30px;
@@ -169,6 +178,7 @@
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.04) inset;
                 /* box shadow from: http://matthamm.com/box-shadow-curl.html */
             }
+			#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
             
 
 {block:IfDisqusShortname}
@@ -255,9 +265,21 @@
                 top: 1px;
             }
 
+			#posts .post .media { 
+				width: 50%; 
+				float: left;
+			}
+			#posts .post .caption_and_post_info.isphoto { 
+				width: 50%; 
+				float: right; 
+				margin-top: 0;
+			}
+			#posts .post .caption_and_post_info.isphoto .cont,
+			#posts .post .caption_and_post_info.isphoto .post_info { 
+				margin-left: 30px;
+			}
             #posts .post .caption_and_post_info.after_top_part {
                 border-top: 0;
-                margin: 30px auto auto auto;
                 padding-top: 0;
             }
 
@@ -839,7 +861,7 @@
             
 
             @media (min-width: 980px) {
-            	#header #blog_info, #posts, 
+            	#header #blog_info, #posts .post, 
             	#dmp-form .wrap,
             	#footer .pagination-index { 
             		margin-left: auto; margin-right: auto;
@@ -851,13 +873,14 @@
 				#nav .site-links-2 { display: none; }
 			}
 			@media (min-width: 768px) {
-				#posts .post .media { width: 50%; float: left; }
-				#posts .post .caption_and_post_info.isphoto { width: 50%; float: right; margin-top: 0; }
-				#posts .post .caption_and_post_info.isphoto .cont,
-				#posts .post .caption_and_post_info.isphoto .post_info { margin-left: 30px; }
-				#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 			}
 			@media (max-width: 767px) {
+				#posts .post .media { width: auto; float: none; }
+				#posts .post .caption_and_post_info.isphoto { width: auto; float: none; margin-top: 30px; }
+				#posts .post .caption_and_post_info.isphoto .cont,
+				#posts .post .caption_and_post_info.isphoto .post_info { margin-left: 0; }
+				#posts .post .wrap:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+
 				#nav .site-links { margin-left: 20px; }
 				#dmp-form .hdr h3 { line-height: 26px; padding-top: 18px; }
 				#dmp-form .hdr h3 span { margin-top: -18px; }
@@ -868,11 +891,11 @@
 				#nav .site-links li { display: none; }
 				#nav .site-links .npr { display: block; }
 				#blog_info h1 { font-size: 36px; }
-				#posts .post { margin-left: 10px; margin-right: 10px; }
+				#posts { padding-left: 10px; padding-right: 10px; }
 				#posts .post .wrap { padding: 15px; }
 				#dmp-form { padding-left: 10px; padding-right: 10px; }
 				#dmp-form .hdr { height: 64px; }
-				#dmp-form .hdr h3 { font-size: 13px; line-height: 19px; padding-top: 13px; padding-right: 10px; }
+				#dmp-form .hdr h3 { font-size: 13px; line-height: 19px; padding-top: 13px; }
 				#dmp-form .hdr h3 span { width: 64px; height: 64px; margin-right: 15px; background-position: 50% 50%; margin-top: -13px; background-image: url('http://apps.npr.org/inauguration/img/btn-share-small.png') }
 				#dmp-form .dmp-iframe { height: 725px; }
 				#footer { padding-left: 10px; margin-left: 0; margin-right: 0; }
@@ -897,6 +920,18 @@
     	<meta property="og:image" content="https://pbs.twimg.com/media/BAMzZIHCIAAA3Er.jpg" />
     	<meta property="og:site_name" content="NPR.org" />
     	<meta property="fb:app_id" content="138837436154588" />
+        
+        <!-- GOOGLE ANALYTICS -->
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-5828686-4']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
 
         <!-- GOOGLE ANALYTICS -->
         <script type="text/javascript">
@@ -920,7 +955,6 @@
 				<li class="listen"><a href="http://www.npr.org/listen/">Listen</a></li>
 			</ul>
 			<ul class="social-links">
-			<!--TODO: FIX SOCIAL LINKS -->
 				<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear%20Mr.%20President%2C%20Please%20don't%20forget%20______.%20Send%20your%20postcard.%20%23inauguration%20http%3A%2F%2Ft.co%2F2icgw7d3" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Navbar', 'Dear Mr. President']);">Share This Page On Twitter</a></li>
 				<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?u=http://inauguration2013.tumblr.com/" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Navbar', 'Dear Mr. President']);">Like This Page On Facebook</a></li>
 			</ul>
@@ -967,8 +1001,10 @@
 					</div>
 					<iframe class="dmp-iframe" src="http://apps.npr.org/inauguration/tumblr_form.html" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 				</div>
+                <div class="legal">
+                    By submitting an image, you certify that you created, or have ownership of the work. You retain the copyright in the image, but grant to NPR a non-exclusive, perpetual right to use the image, without payment and without further notice, on NPR's website, and in any other current or future NPR services (including websites, mobile services, applications and publications, anywhere in the world that NPR  may offer these services). This right includes the right to copy, transmit, display, distribute, create derivative works of, and/or adapt the image. NPR also has the right to distribute and/or sublicense the image to its Member Stations, end users and other third parties in connection with NPR's distribution and/or sublicensing of related content. You grant NPR the right to use your name in a credit for the image and you agree that you have provided NPR accurate credit information.
+                </div>
 			</section>
-
 
             <ul id="posts">
                 <!-- START POSTS -->
@@ -1258,8 +1294,8 @@
 
 								<ul class="post_info social">
 									<li class="share">Share This Postcard</li>
-									<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President...&amp;u={Permalink}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Post', 'Dear Mr President']);" title="Like This Page On Facebook"><span></span>Facebook</a></li>
-									<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President...+%23inauguration&amp;url={Permalink}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Post', 'Dear Mr President']);" title="Share This Page On Twitter"><span></span>Twitter</a></li>
+									<li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President%2C+Please+don%27t+forget...&amp;u={Permalink}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Post', 'Dear Mr President']);" title="Like This Page On Facebook"><span></span>Facebook</a></li>
+									<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President%2C+Please+don%27t+forget...+%23inauguration&amp;url={Permalink}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Post', 'Dear Mr President']);" title="Share This Page On Twitter"><span></span>Twitter</a></li>
 								</ul>
 
                                 {block:PostNotes}
@@ -1502,7 +1538,6 @@
         </script>
         {/block:IfUseEndlessScrolling}
         
-        
         <!-- SHARE DROPDOWN SCRIPT -->
 		<script type="text/javascript">
 		$(document).ready(function(){
@@ -1515,10 +1550,7 @@
 				$dmp.trigger('click');
 			}
       	});
-		</script>        
-
-
-	
+		</script>	
 	
 		<!-- CHARTBEAT -->
 		<script type="text/javascript">
