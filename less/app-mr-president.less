@@ -1,7 +1,8 @@
 #mr-president-modal {
-	top: 5%; left: 5%; 
-	width: 90%; height: 90%;
+	top: 5%; left: 10%; 
+	width: 80%; height: 90%;
 	margin: 0;
+	overflow: auto;
 	
 	.modal-header {
 		padding: 22px;
@@ -14,7 +15,7 @@
 	.modal-body {
 		max-height: none;
 		padding: 0;
-		overflow: auto;
+		overflow: visible;
 		background-color: #ebebeb;
 	}
 }
@@ -22,7 +23,7 @@
 .mr-president-form {
 	form {
 		margin: 0;
-		padding: 0;
+		padding: 0 0 20px 0;
 	}
 	ul, ol {
 		margin: 0;
@@ -142,5 +143,10 @@
 
 
 @media (max-width: 480px) {
+	#mr-president-modal { 
+		top: 5%; left: 5%; width: 90%; height: 90%;
+		
+		.modal-header h3 { font-size: 16px; }
+	}
 	.mr-president-form input[type='file'] { font-size: 12px; }
 }
