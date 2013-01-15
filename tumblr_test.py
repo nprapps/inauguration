@@ -6,6 +6,7 @@ from random import choice
 import os
 import app_config
 
+
 def clean(string):
     """
     Formats a string all pretty.
@@ -20,10 +21,10 @@ t = Tumblpy(
 
 tags = ['ivotedforyou', 'idrathernotsayhowivoted', 'ididntvoteforyou', 'ididntvote']
 
-images = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg']
+images = ['data/images/1.png', 'data/images/2.png', 'data/images/3.png', 'data/images/4.png']
 
 n = 0
-while n < 50:
+while n < 15:
     tag = choice(tags)
     if n % 5 == 0:
         tag += ',nprpicks'
@@ -31,7 +32,7 @@ while n < 50:
     caption = u"""<p class='intro'>Dear Mr. President,</p>
     <p class='voted' data-vote-type='%s'>%s.</p>
     <p class='message'>This is a test post.</p>
-    <p class='signature-name'>Signed,<br/>John from Chicago</p>""" % (
+    <p class='signature-name'>Signed,<br/>Test from Test, Test</p>""" % (
         tag,
         clean(tag),
     )

@@ -31,18 +31,18 @@ def configure_targets(deployment_target):
     if deployment_target == 'dev':
         DEBUG = True
 
+    TUMBLR_KEY = 'Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH'
+
     if deployment_target == 'production':
         S3_BUCKETS = PRODUCTION_S3_BUCKETS
         SERVERS = PRODUCTION_SERVERS
         TUMBLR_URL = 'inauguration2013.tumblr.com'
         TUMBLR_BLOG_ID = 'inauguration2013'
-        TUMBLR_KEY = 'Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH'
     else:
         S3_BUCKETS = STAGING_S3_BUCKETS
         SERVERS = STAGING_SERVERS
-        TUMBLR_URL = 'inaugurationtest.tumblr.com'
-        TUMBLR_BLOG_ID = 'inaugurationtest'
-        TUMBLR_KEY = 'BY8IUMsmErCgSIkC44VqNIrs31QXPogKzv3L3ScyUEsEzY51GI'
+        TUMBLR_URL = 'testinauguration2013.tumblr.com'
+        TUMBLR_BLOG_ID = 'testinauguration2013'
 
 # Configure targets on import
 configure_targets(DEPLOYMENT_TARGET)
