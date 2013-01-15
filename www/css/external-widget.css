@@ -75,7 +75,7 @@ p {
   float: left;
 }
 #live-chat-widget {
-  padding-top: 11px;
+  margin-bottom: 11px;
 }
 #live-chat-widget span {
   display: block;
