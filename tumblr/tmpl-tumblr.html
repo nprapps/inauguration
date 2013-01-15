@@ -301,6 +301,12 @@
                 font-size: 14px;
             }
             
+            .post .caption p.footnote {
+                font-style: italic;
+                color: #666;
+                font-size: 12px;
+            }
+            
             .content_source {
                 margin-bottom: 20px;
             }
@@ -568,18 +574,11 @@
             }
 
             .post_info .notecount {
-                color: #4c4c4c;
                 padding: 0 2px 0 5px;
                 display: inline-block;
+                opacity: .7;
             }
 
-            .post_info .notecount:hover {
-                background: rgba(0,0,0,.08);
-            }
-
-            .post_info .notecount:active {
-                background: rgba(0,0,0,.1);
-            }
 
             /* Baselines */
             .tag {
@@ -609,9 +608,8 @@
             }
 
             ol.notes {
-                color: #4C4C4C;
+                color: #ccc;
                 font-size: 13px;
-                text-shadow: 0px 1px 0px rgba(255,255,255,.7);
                 text-align: left;
                 list-style-type: none;
                 border-top: solid 1px #E6E6E6;
@@ -620,7 +618,7 @@
             }
 
             ol.notes li.note {
-                border-bottom: solid 1px #E6E6E6;
+                border-bottom: solid 1px #aaa;
                 padding: 9px 0 10px 0;
             }
 
@@ -633,13 +631,12 @@
             }
 
             ol.notes a {
-                color: #4C4C4C;
+                color: #bbb;
                 text-decoration: underline;
             }
-
-                ol.notes a:hover {
-                    color: #4C4C4C;
-                }
+			ol.notes a:hover {
+				color: #fff;
+			}
 
             ol.notes li.note blockquote {
                 border-color: #eee;
@@ -1298,28 +1295,29 @@
 									<li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President%2C+Please+don%27t+forget...+%23inauguration&amp;url={Permalink}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Post', 'Dear Mr President']);" title="Share This Page On Twitter"><span></span>Twitter</a></li>
 								</ul>
 
-                                {block:PostNotes}
-                                    <section class="post_notes">
-                                        <a name="notes">
-                                            {PostNotes}
-                                        </a>
-                                    </section>
-                                {/block:PostNotes}
-
-                                {block:IfDisqusShortname}{block:IndexPage}
-                                   <section class="caption group">
-                                        <a class="disquscomments" href="{Permalink}#disqus_thread">{NoteCount} Comments</a>
-                                    </section>
-                                {/block:IndexPage}{/block:IfDisqusShortname}
-                                {block:IfDisqusShortname}{block:Permalink}
-                                    <div id="disqus_thread"></div>
-                                    <script type="text/javascript" src="http://disqus.com/forums/{text:Disqus Shortname}/embed.js"></script>
-                                    <noscript><a href="http://{text:Disqus Shortname}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
-                                {/block:Permalink}{/block:IfDisqusShortname}
-
                                 </section>
                                 
                         </div> <!-- end .wrap -->
+
+						{block:PostNotes}
+							<section class="post_notes">
+								<a name="notes">
+									{PostNotes}
+								</a>
+							</section>
+						{/block:PostNotes}
+
+						{block:IfDisqusShortname}{block:IndexPage}
+						   <section class="caption group">
+								<a class="disquscomments" href="{Permalink}#disqus_thread">{NoteCount} Comments</a>
+							</section>
+						{/block:IndexPage}{/block:IfDisqusShortname}
+						{block:IfDisqusShortname}{block:Permalink}
+							<div id="disqus_thread"></div>
+							<script type="text/javascript" src="http://disqus.com/forums/{text:Disqus Shortname}/embed.js"></script>
+							<noscript><a href="http://{text:Disqus Shortname}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+						{/block:Permalink}{/block:IfDisqusShortname}
+
                     </li>
 
                 {/block:Posts}
