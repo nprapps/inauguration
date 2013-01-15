@@ -51,30 +51,33 @@
 			<div class="chat-alerts"></div>
 			
 			
-			<div class="chat-user-entry">
+			<div class="chat-user-entry" data-spy="affix">
 				<div class="chat-login">
 					<h4>Have your say!</h4>
 					<div class="form-inline">
-						<a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a><br/>
+						
+						<label for="social">Sign In:</label>
 						<div class="social btn-group">
 							<button class="btn btn-mini npr">NPR</button>
 							<button class="btn btn-mini oauth" data-service="facebook">Facebook</button>
 							<button class="btn btn-mini oauth" data-service="google">Google</button>
 							<button class="btn btn-mini anon">Anonymous</button>
 						</div>
+						
+						<p class="register-npr"><a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a></p>
 				
 						<div class="chat-anonymous-login">
-							<label>Chat name
+							<label>Chat name:
 								<input type="text" class="chat-anonymous-username"></input>
 							</label>
 							<button class="btn btn-mini btn-info">Login</button>
 						</div>
 				
 						<div class="chat-npr-login">
-							<label>NPR username
+							<label>E-mail address:
 								<input type="text" class="chat-npr-username"></input>
 							</label>
-							<label class="npr">NPR password
+							<label class="npr">Password:
 								<input type="password" class="chat-npr-password"></input>
 							</label>
 							<button class="btn btn-mini btn-info">Login</button>
