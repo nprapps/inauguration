@@ -1,17 +1,122 @@
-#live-chat div {
-  width: 100%;
-  background-color: #eee;
-  margin: 4px 0;
-}
-#live-chat div:after {
-  content: ".";
+#live-chat {
   clear: both;
-  display: block;
-  width: 100%;
-  text-indent: -9999px;
 }
-#live-chat p.chat-post-author-photo {
-  display: block;
+.chat-body-wrap {
   float: left;
-  padding: 10px;
+}
+.chat-schedule-wrap {
+  float: right;
+}
+.chat-login,
+.chat-anonymous-login,
+.chat-npr-login,
+.chat-editor {
+  display: none;
+}
+.chat-body {
+  height: 500px;
+  overflow-y: scroll;
+}
+.chat-body .chat-post {
+  padding: 15px 0;
+  border-top: 1px solid #dee2e7;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.chat-body .chat-post:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+.chat-body .chat-post.highlighted {
+  background-color: #FBF1CD;
+  padding-left: 15px;
+}
+.chat-body .chat-post.highlighted p {
+  margin-left: 65px;
+}
+.chat-body .chat-post-author-photo {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+}
+.chat-body .chat-post-author-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+}
+.chat-body p {
+  margin: 0 0 0 61px;
+  font-size: 14px;
+  color: #444;
+}
+.chat-body p.chat-post-info {
+  color: #777;
+  line-height: 16px;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.chat-body p.chat-post-info .chat-post-author {
+  font-weight: bold;
+  color: #444;
+}
+.chat-body p.chat-post-info .chat-post-datetime {
+  font-size: 95%;
+}
+.chat-body p.chat-post-info .bullet {
+  padding: 0 3px;
+  font-size: 75%;
+  color: #ccc;
+  line-height: 1.4;
+}
+.chat-body p.chat-post-content {
+  margin-bottom: 0;
+  line-height: 22px;
+}
+.chat-body .chat-show-more {
+  display: none;
+}
+.chat-schedule {
+  padding-top: 22px;
+}
+.chat-schedule h3 {
+  font: normal 18px/1.2 Arial, Helvetica, sans-serif;
+  color: #666;
+  margin: 0 0 11px 0;
+}
+.chat-schedule h5 {
+  font: bold 14px/1.2 Arial, Helvetica, sans-serif;
+  color: #999;
+  margin: 0 0 11px 0;
+  border-top: 2px solid #ebebeb;
+  padding-top: 22px;
+}
+.chat-schedule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px 0;
+}
+.chat-schedule ul > li {
+  margin: 0 0 11px 0;
+}
+.chat-schedule a {
+  font-weight: bold;
+}
+@media (min-width: 1200px) {
+  
+}
+@media (max-width: 979px) {
+  
+}
+@media (max-width: 767px) {
+  
+}
+@media (max-width: 480px) {
+  
 }
