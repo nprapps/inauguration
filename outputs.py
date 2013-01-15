@@ -2,11 +2,11 @@
 
 import gzip
 import json
-import oauth
 import os
 import urlparse
 
 import boto
+import oauth2 as oauth
 from random import choice
 from tumblr import Api
 from tumblpy import Tumblpy
