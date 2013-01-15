@@ -53,13 +53,7 @@
 		padding: 0;
 		list-style: none;
 	}
-	li:after {
-		visibility: hidden;
-		display: block;
-		content: "";
-		clear: both;
-		height: 0;
-    }
+	li:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 	ol > li {
 		padding: 10px 20px;
 		background-color: #f1f1f1;
@@ -141,9 +135,6 @@
 
 
 #photo-feed {
-	border-top: 2px solid #ebebeb;
-	margin-top: 22px;
-	padding-top: 22px;
 
     h2 { 
     	font: normal 22px Arial, Helvetica, sans-serif;
@@ -153,13 +144,31 @@
     	clear: both;
     }
 
-    .photo-list img {
-        float: left;
-        margin-left: 20px;
-    }
+	.photo-section {
+		border-top: 2px solid #ebebeb;
+		padding: 20px 0;
+
+		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+	}
+	.photo-list {
+	
+		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+		img { 
+			float: left; 
+			margin-left: 20px;
+			border: 1px solid #e0e0e0;
+			
+			&:hover { 
+				-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+				-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); 
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                opacity: .7;
+			}
+		}
+		a:first-child img { margin-left: 0; }
+	}
 
     button { display: none; }
-
     .tumblrlink { display: none; }
 
     .photo.post {
