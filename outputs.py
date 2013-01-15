@@ -143,7 +143,7 @@ def dump_tumblr_json():
             oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
 
     limit = 10
-    pages = range(0, 19)
+    pages = range(0, 20)
 
     for page in pages:
         offset = page * limit
@@ -168,7 +168,7 @@ def update_mr_president_posts():
     new_text = u'<p class="footnote">What do <em>you</em> want President Obama to remember in his second term? Share your message at <a href="http://inauguration2013.tumblr.com/">NPR\'s Dear Mr. President</a>.</p>'
 
     limit = 10
-    pages = range(0, 19)
+    pages = range(0, 20)
 
     for page in pages:
         offset = page * limit
