@@ -13,14 +13,27 @@
 {% block top_content %}
     <h1>Inauguration 2013</h1>
     {% include '_radio.html' %}
-    <div id="live-chat-widget"></div>
+	<div id="live-chat-widget"></div>
 {% endblock %}
 
 {% block main_content %}
-	<div class="container toggles">
-		<div class="row">
-			<div class="span12">
-				<button class="live-chat-toggle">Turn on live chat.</button>
+	<div id="toggles">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<ul>
+						<li id="mr-president-toggle" class="selected">
+							<span>
+								<h3>Send A Postcard To The President</h3>
+							</span>
+						</li>
+						<li id="chat-toggle">
+							<span>
+								<h3>LIVE NOW: Inauguration Chat</h3>
+							</span>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
