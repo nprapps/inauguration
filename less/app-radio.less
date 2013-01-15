@@ -1,3 +1,7 @@
+// Global variables
+@img-root: "../img";
+
+
 #radio-topper {
 	background-color: #484e58;
 	color: #ddd;
@@ -5,7 +9,7 @@
 	h1 {
 		padding-top: 44px;
 		font: normal 54px Arial, Helvetica, sans-serif;
-		margin: 0 0 11px 0;
+		margin: 0 0 22px 0;
 		color: #fff;
 	}
 }
@@ -13,39 +17,51 @@
 
 #radio {
 	color: #FFF;
-	background: #272727; background: rgba(10,10,10,.8);
-	border-width: 1px; border-style: solid; border-color: #333; border-color: rgba(51,51,51,.8);
-	padding:4px 0 0 0; margin: 0 0 15px 10px;
+	background: #2c313a;
+	padding: 11px; margin: 0 0 11px 0;
 	font-family:Arial,sans-serif;
 	display:none;
+	-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
+	border-top: 1px solid #0a0b0d;
+	border-bottom: 1px solid #595d65;
+	
+	#jwplayer_wrapper { float:left; margin: 0 10px 4px 4px; }
+	#radio-htmlstream { display:none; height: 0; }
+	#radio-htmlcontrol { display:none; background-image: url('@{img-root}/playButtonOver.png'); height:41px; width:41px; float:left; margin: 0 10px 4px 4px; }
+	&.playing #radio-htmlcontrol { background-image: url('@{img-root}/pauseButtonOver.png')}
+	
+	#radio-feedback {
+		background-repeat: no-repeat;
+		background-image: url('@{img-root}/eq-none.gif');
+		background-color: #2f343e;
+		background-position: 5px;
+		padding:4px 0 0 55px;
+		height:14px;
+		clear:left;
+		font-size:12px;
+		color:#999;
+		line-height:11px;
+		margin-top: 9px;
+	}
+	&.playing #radio-feedback { background-image: url('@{img-root}/eq2.gif'); background-repeat: no-repeat; background-position: 5px; }
+	#radio-feedback #radio-feedback-message { display:none; }
+	&.playing #radio-feedback #radio-feedback-message { display:inline; }
+
+	#radio-feedback #radio-feedback-buffering { display:none; }
+	&.buffering #radio-feedback #radio-feedback-buffering { display:inline; }
+	
+	#radio-title { font-size:12px; line-height:18px; color:#999; }
+	#radio-prompt { font-size:16px; line-height:22px; font-weight:bold; }
 }
-#radio #jwplayer_wrapper { float:left; margin: 0 10px 4px 4px; }
-#radio #radio-htmlstream { display:none; height: 0; }
-#radio #radio-htmlcontrol { display:none; background-image: url(../img/playButtonOver.png); height:41px; width:41px; float:left; margin: 0 10px 4px 4px; }
-#radio.playing #radio-htmlcontrol { background-image: url(../img/pauseButtonOver.png)}
-#radio #radio-feedback {
-	background-repeat: no-repeat;
-	background-image: url(../img/eq-none.gif);
-	background-color: #222;
-	background-color: rgba(51,51,51,.8);
-	background-position: 5px;
-	padding:4px 0 0 55px;
-	height:14px;
-	clear:left;
-	font-size:12px;
-	color:#666;
-	line-height:11px;
+
+
+#comingsoon { 
+	position:relative; background: url('@{img-root}/coming-soon-bg-wide.png') no-repeat right bottom; height:62px; margin:55px 0 15px -12px; float:left; display:none;
+	
+	b { position:absolute; top:0; left:0; display:block; width:12px; height:6px; overflow:hidden; background: url('@{img-root}/coming-soon-upper-tab.png') no-repeat right bottom; }
+	.message { font:bold 12px Arial; text-transform:uppercase; color:#FFF; padding:20px 35px 0 30px; }
 }
-#radio.playing #radio-feedback { background-image: url(../img/eq2.gif); background-repeat: no-repeat; background-position: 5px; }
-#radio #radio-feedback #radio-feedback-message { display:none; }
-#radio.playing #radio-feedback #radio-feedback-message { display:inline; }
-#radio #radio-feedback #radio-feedback-buffering { display:none; }
-#radio.buffering #radio-feedback #radio-feedback-buffering { display:inline; }
-#radio #radio-title { font-size:12px; line-height:18px; color:#999; }
-#radio #radio-prompt { font-size:16px; line-height:22px; font-weight:bold; }
-#comingsoon { position:relative; background: url('../img/coming-soon-bg-wide.png') no-repeat right bottom; height:62px; margin:55px 0 15px -12px; float:left; display:none; }
-#comingsoon b { position:absolute; top:0; left:0; display:block; width:12px; height:6px; overflow:hidden; background: url('../img/coming-soon-upper-tab.png') no-repeat right bottom; }
-#comingsoon .message { font:bold 12px Arial; text-transform:uppercase; color:#FFF; padding:20px 35px 0 30px; }
+
 
 body.audio #radio { display:block; }
 body.no-audio #radio { display:none; }
