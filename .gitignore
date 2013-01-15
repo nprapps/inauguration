@@ -42,6 +42,8 @@ www/js/app-header.min.js
 www/js/app-footer.min.js
 www/js/templates.js
 www/js/tables.min.js
+www/js/external-app-footer.min.js
+www/js/external-app-header.min.js
 
 www/tumblr_form.html
 www/live-data/*.json
