@@ -148,7 +148,6 @@ def update_mr_president_posts():
 
     for post in posts['posts']:
         caption = post['caption']
-        caption = caption.replace('<p></p>', '')
         caption += '<p class="footnote">What do <em>you</em> want President Obama to remember in his second term? Share your message at <a href="http://inauguration2013.tumblr.com/">NPR\'s Dear Mr. President</a>.</p>'
 
         post = t.post('post/edit', blog_url=app_config.TUMBLR_URL, params={'id': post['id'], 'caption': caption})
