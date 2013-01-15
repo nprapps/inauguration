@@ -1,11 +1,22 @@
 #mr-president {
-	.btn.modal-btn {
+	.modal-btn {
 		display: block;
+		background-color: #7598c9;
+		line-height: 44px;
+		color: #fff;
 		font-weight: bold;
-		font-size: 18px;
-		height: auto;
-		line-height: 22px;
-		padding: 11px;
+		font-size: 16px;
+		
+		&:hover { opacity: .7; }
+		span {
+			width: 44px;
+			height: 44px;
+			float: left;
+			display: block;
+			margin-right: 11px;
+			background: url('../img/btn-share-tiny.gif') no-repeat center center;
+			border-right: 1px solid #fff;
+		}
 	}
 	.prompt {
 		font-size: 16px;
