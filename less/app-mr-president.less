@@ -1,0 +1,129 @@
+.mr-president-form {
+	max-width: 600px;
+	margin: 0 auto;
+	padding-top: 10px;
+
+	form {
+		margin: 0;
+		padding: 0;
+	}
+	ul, ol {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li:after {
+		visibility: hidden;
+		display: block;
+		content: "";
+		clear: both;
+		height: 0;
+    }
+	ol > li {
+		padding: 10px 20px;
+		background-color: #f1f1f1;
+		border-bottom: 2px solid #fff;
+	}
+	ol > li.form-submit,
+	ol > li.form-photo {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+	ul > li {
+		padding: 0;
+		margin: 0 0 5px 0;
+	}
+	ul > li:hover {
+		background-color: #eee;
+	}
+	label {
+		font-weight: bold;
+		font-size: 17px;
+		display: block;
+		margin-bottom: 5px;
+	}
+	label.instructions {
+		font-weight: normal;
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	li.form-photo label.header {
+		margin-bottom: 15px;
+	}
+	li.form-photo label.instructions {
+		margin-bottom: 15px;
+	}
+	textarea {
+		width: 95%;
+		padding: 2%;
+		height: 100px;
+		font: 13px/1.5 Arial, Helvetica, sans-serif;
+		color: #111;
+	}
+	input {
+		font: 13px/1.5 Arial, Helvetica, sans-serif;
+		color: #111;
+	}
+	input[type='text'] {
+		padding: 5px 10px;
+	}
+	input[type='radio'] {
+		margin-right: 10px;
+		margin-top: -6px;
+	}
+	input[type='file'] {
+		font-size: 16px;
+	}
+	img.sample-photo {
+		float: right;
+		margin-left: 10px;
+		width: 30%;
+		max-width: 138px;
+	}
+	button[type='submit'] {
+		background: none;
+		background-color: #7598c9;
+		border: none;
+		line-height: 45px;
+		height: 45px;
+		color: #fff;
+		padding: 0 20px;
+		font-size: 12px;
+		cursor: pointer;
+		text-shadow: none;
+		border-radius: 0;
+	}
+	button[type='submit']:hover {
+		opacity: 0.7;
+	}
+}
+
+
+#photo-feed {
+    h2 { 
+    	font: normal 22px Arial, Helvetica, sans-serif;
+    	color: #666;
+    	text-transform: capitalize;
+    	margin: 0 0 11px 0;
+    	clear: both;
+    }
+
+    .photo-list img {
+        float: left;
+        margin-left: 20px;
+    }
+
+    button { display: none; }
+
+    .tumblrlink { display: none; }
+
+    .photo.post {
+      clear: both;
+      margin-bottom: 20px;
+    }
+}
+
+
+@media (max-width: 480px) {
+	.mr-president-form input[type='file'] { font-size: 12px; }
+}
