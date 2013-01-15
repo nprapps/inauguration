@@ -57,4 +57,17 @@
         });
     </script>
     <![endif]-->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#president-form').submit(function(e) {
+                var btn = $('.form-submit button');
+                
+                btn.text('Sending, please wait...');
+                btn.attr('disabled', 'disabled');
+
+                return true;
+            });
+        });
+    </script>
 </div>
