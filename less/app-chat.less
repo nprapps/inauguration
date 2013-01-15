@@ -1,3 +1,5 @@
+
+
 #live-chat { clear: both; }
 
 .chat-body-wrap { float: left; }
@@ -63,7 +65,77 @@
 }
 
 .chat-user-entry {
+	background-color: #ebebeb;
+	border-top: 1px solid #ddd;
+	width: 848px; /* 870 - 22 */
+	padding: 11px 22px 5px 22px;
+	margin-left: -11px;
+	border-radius: 4px 4px 0 0;
 	
+	&.affix { bottom: 0; }
+	h4 { 
+		font: normal 18px/44px Arial, Helvetica, sans-serif;
+		color: #666;
+		float: left;
+		margin-right: 33px;
+	}
+	label {
+		font-weight: bold;
+		font-size: 13px;
+		float: left;
+		margin-right: 11px;
+		line-height: 44px;
+	}
+	.form-inline { 
+		float: left;
+		width: auto;
+
+		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+		.social.btn-group {
+			float: left;
+			margin-right: 22px;
+			
+			.btn { margin-left: 1px; border-radius: 0; }
+			.btn:first-child { margin-left: 0; }
+			.disabled { background-color: #ccc; }
+		}
+		.register-npr {
+			float: left;
+			font-size: 12px;
+			line-height: 44px;
+		}
+		.chat-npr-login { clear: both; }
+		input[type='text'], input[type='password'] {
+			width: 150px;
+		}
+	}
+	
+	.chat-editor {
+		textarea { 
+			width: 500px; 
+			height: 33px; 
+			margin-right: 22px;
+		}
+		.chat-input {
+			line-height: 44px;
+		}
+		.chat-user-info {
+			font-size: 12px;
+			color: #666;
+		}
+		.chat-username {
+			font-weight: bold;
+			color: #444;
+		}
+		.btn.chat-logout {
+			height: auto;
+			background: none;
+			color: #4774cc;
+			padding: 0; margin: 0;
+			font-size: inherit;
+			line-height: inherit;
+		}
+	}
 }
 
 .chat-schedule {

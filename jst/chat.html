@@ -51,30 +51,33 @@
 			<div class="chat-alerts"></div>
 			
 			
-			<div class="chat-user-entry">
+			<div class="chat-user-entry" data-spy="affix">
 				<div class="chat-login">
 					<h4>Have your say!</h4>
 					<div class="form-inline">
-						<a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a><br/>
+						
+						<label for="social">Sign In:</label>
 						<div class="social btn-group">
 							<button class="btn btn-mini npr">NPR</button>
 							<button class="btn btn-mini oauth" data-service="facebook">Facebook</button>
 							<button class="btn btn-mini oauth" data-service="google">Google</button>
 							<button class="btn btn-mini anon">Anonymous</button>
 						</div>
+						
+						<p class="register-npr"><a href="http://www.npr.org/templates/reg/" target="_blank">Register with NPR</a></p>
 				
 						<div class="chat-anonymous-login">
-							<label>Chat name
+							<label>Chat name:
 								<input type="text" class="chat-anonymous-username"></input>
 							</label>
 							<button class="btn btn-mini btn-info">Login</button>
 						</div>
 				
 						<div class="chat-npr-login">
-							<label>NPR username
+							<label>E-mail address:
 								<input type="text" class="chat-npr-username"></input>
 							</label>
-							<label class="npr">NPR password
+							<label class="npr">Password:
 								<input type="password" class="chat-npr-password"></input>
 							</label>
 							<button class="btn btn-mini btn-info">Login</button>
@@ -83,12 +86,12 @@
 				</div>
 				
 				<div class="chat-editor">
-					<h4>Type your comment below, <span class="chat-username"></span>.</h4>
-					<textarea class="chat-content"></textarea>
-					<br/>
-					<button class="btn btn-mini btn-success chat-post">Post comment</button>
-					<button class="btn btn-mini btn-warning chat-logout">Logout</button>
-					<button class="btn btn-mini btn-danger chat-clear">Clear text</button>
+					<p class="chat-input">
+						<label for="chat-content">Your comment:</label>
+						<textarea name="chat-content" class="chat-content"></textarea>
+						<button class="btn btn-mini chat-post">Post comment</button>
+					</p>
+					<p class="chat-user-info">You are signed in as <span class="chat-username"></span>. <button class="btn btn-mini chat-logout">Logout</button></p>
 				</div>
 			</div>
 

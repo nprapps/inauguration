@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from glob import glob
-import json
 import os
 
 from fabric.api import *
@@ -9,21 +8,23 @@ from fabric.api import *
 import app
 import app_config
 from etc import github
+import outputs
 
 """
 Base configuration
 """
 env.project_name = app_config.PROJECT_NAME
 env.deployed_name = app_config.DEPLOYED_NAME
-env.deploy_to_servers = True 
+env.deploy_to_servers = True
 env.repo_url = 'git@github.com:nprapps/%(project_name)s.git' % env
-env.alt_repo_url = None #'git@bitbucket.org:nprapps/%(project_name)s.git' % env
+env.alt_repo_url = None  # 'git@bitbucket.org:nprapps/%(project_name)s.git' % env
 env.user = 'ubuntu'
 env.python = 'python2.7'
 env.path = '/home/%(user)s/apps/%(project_name)s' % env
 env.repo_path = '%(path)s/repository' % env
 env.virtualenv_path = '%(path)s/virtualenv' % env
 env.forward_agent = True
+
 
 """
 Environments
@@ -33,10 +34,12 @@ def production():
     env.s3_buckets = app_config.PRODUCTION_S3_BUCKETS
     env.hosts = app_config.PRODUCTION_SERVERS
 
+
 def staging():
     env.settings = 'staging'
     env.s3_buckets = app_config.STAGING_S3_BUCKETS
     env.hosts = app_config.STAGING_SERVERS
+
 
 """
 Branches
@@ -47,17 +50,20 @@ def stable():
     """
     env.branch = 'stable'
 
+
 def master():
     """
     Work on development branch.
     """
     env.branch = 'master'
 
+
 def branch(branch_name):
     """
     Work on any specified branch.
     """
     env.branch = branch_name
+
 
 def _confirm_branch():
     """
@@ -67,6 +73,7 @@ def _confirm_branch():
         answer = prompt("You are trying to deploy the '%(branch)s' branch to production.\nYou should really only deploy a stable branch.\nDo you know what you're doing?" % env, default="Not at all")
         if answer not in ('y','Y','yes','Yes','buzz off','screw you'):
             exit()
+
 
 """
 Template-specific functions
@@ -141,6 +148,7 @@ def render():
     # Reset faked-out settings
     app_config.configure_targets(app_config.DEPLOYMENT_TARGET)
 
+
 """
 Setup
 """
@@ -157,6 +165,7 @@ def setup():
     checkout_latest()
     install_requirements()
 
+
 def setup_directories():
     """
     Create server directories.
@@ -164,6 +173,7 @@ def setup_directories():
     require('settings', provided_by=[production, staging])
 
     run('mkdir -p %(path)s' % env)
+
 
 def setup_virtualenv():
     """
@@ -173,6 +183,7 @@ def setup_virtualenv():
 
     run('virtualenv -p %(python)s --no-site-packages %(virtualenv_path)s' % env)
     run('source %(virtualenv_path)s/bin/activate' % env)
+
 
 def clone_repo():
     """
@@ -184,6 +195,7 @@ def clone_repo():
 
     if env.get('alt_repo_url', None):
         run('git remote add bitbucket %(alt_repo_url)s' % env)
+
 
 def checkout_latest(remote='origin'):
     """
@@ -205,6 +217,7 @@ def install_requirements():
 
     run('%(virtualenv_path)s/bin/pip install -U -r %(repo_path)s/requirements.txt' % env)
 
+
 def bootstrap_issues():
     """
     Bootstraps Github issues with default configuration.
@@ -213,6 +226,7 @@ def bootstrap_issues():
     github.delete_existing_labels(auth)
     github.create_default_labels(auth)
     github.create_default_tickets(auth)
+
 
 """
 Deployment
@@ -227,11 +241,13 @@ def _deploy_to_s3():
         env.s3_bucket = bucket
         local(s3cmd % ('s3://%(s3_bucket)s/%(deployed_name)s/' % env))
 
+
 def _gzip_www():
     """
     Gzips everything in www and puts it all in gzip
     """
     local('python gzip_www.py')
+
 
 def deploy(remote='origin'):
     require('settings', provided_by=[production, staging])
@@ -244,6 +260,7 @@ def deploy(remote='origin'):
 
     if env.get('deploy_to_servers', False):
         checkout_latest(remote)
+
 
 """
 Destruction
@@ -265,43 +282,34 @@ def shiva_the_destroyer():
         if env.get('deploy_to_servers', False):
             run('rm -rf %(path)s' % env)
 
+
 """
 App-specific functions
 """
-def update_backchannel():
+def write_mr_president_json():
     """
-    Update data for the backchannel from Tumblr
+    Writes out the tumblr json for Dear Mr. President.
     """
-    import boto
-    from tumblr import Api
+    outputs.write_mr_president_json()
 
-    TUMBLR_FILENAME = 'www/live-data/backchannel.json'
-    TUMBLR_BLOG_ID = 'nprbackchannel'
-    TUMBLR_MAX_POSTS = 10
 
-    api = Api(TUMBLR_BLOG_ID)
+def update_mr_president_posts():
+    """
+    Updates tumblr posts for Dear Mr. President.
+    """
+    outputs.update_mr_president_posts()
 
-    posts = list(api.read(max=TUMBLR_MAX_POSTS))
 
-    posts.reverse()
+def write_mr_president_test_posts():
+    """
+    Writes some test posts for Dear Mr. President.
+    """
+    outputs.write_mr_president_test_posts()
 
-    with open(TUMBLR_FILENAME, 'w') as f:
-        f.write(json.dumps(posts))
 
-    if 'settings' in env:
-        for bucket in env.s3_buckets:
-            conn = boto.connect_s3()
-            bucket = conn.get_bucket(bucket)
-            key = boto.s3.key.Key(bucket)
-            key.key = '%s/live-data/backchannel.json' % env.deployed_name
-            key.set_contents_from_filename(
-                TUMBLR_FILENAME,
-                policy='public-read',
-                headers={'Cache-Control': 'max-age=5 no-cache no-store must-revalidate'}
-            )
+def generate_new_oauth_tokens():
+    outputs.generate_new_oauth_tokens()
 
-def update_mister_president():
-    local('python update_mister_president.py')
 
 def deploy_radio(path):
     """
@@ -312,11 +320,13 @@ def deploy_radio(path):
     for bucket in env.s3_buckets:
         local('s3cmd -P --add-header=Cache-control:max-age=5 put ' + path + ' s3://' + bucket + '/%(deployed_name)s/live-data/radio.json' % env)
 
+
 def radio_off():
     """
     Shortcut to deploy_radio:data/radio-off.json
     """
     deploy_radio('data/radio-off.json')
+
 
 def radio_pregame():
     """
@@ -324,11 +334,13 @@ def radio_pregame():
     """
     deploy_radio('data/radio-pregame.json')
 
+
 def radio_live():
     """
     Shortcut to deploy_radio:data/radio-live.json
     """
     deploy_radio('data/radio-live.json')
+
 
 def local_cron():
     """
