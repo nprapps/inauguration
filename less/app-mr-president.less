@@ -144,7 +144,6 @@
 	}
 }
 
-
 #photo-feed {
 
     h2 {
@@ -161,6 +160,14 @@
 
             &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
     }
+
+    .wrapper {
+      height: 100px;
+      width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+
     .photo-list {
             &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
             img {
@@ -200,6 +207,7 @@
       .photo-list {
         width: 500%;
       }
+    }
 
     #mr-president-modal {
             top: 5%; left: 5%; width: 90%; height: 90%;
