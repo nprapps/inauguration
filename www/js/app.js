@@ -64,5 +64,5 @@ $(function(){
 			read_only: false
 		});
     });
-    $live_tab.trigger('click');
+//    $live_tab.trigger('click');
 });
