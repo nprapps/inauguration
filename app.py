@@ -78,10 +78,7 @@ def _post_to_tumblr():
         value = re.sub(r'\r\n|\r|\n', '\n', value)
         return value.replace('\n', '<br />')
 
-    caption = u"""<p class='intro'>Dear Mr. President,</p>
-    <p class='voted' data-vote-type='%s'>%s.</p>
-    <p class='message'>%s</p>
-    <p class='signature-name'>Signed,<br/>%s from %s</p>""" % (
+    caption = u"<p class='intro'>Dear Mr. President,</p><p class='voted' data-vote-type='%s'>%s.</p><p class='message'>%s</p><p class='signature-name'>Signed,<br/>%s from %s</p><p class='footnote'>What do <em>you</em> want President Obama to remember in his second term? Share your message at <a href='http://inauguration2013.tumblr.com/'>NPR's Dear Mr. President</a>.</p>" % (
         request.form['voted'],
         clean(request.form['voted']),
         strip_breaks(strip_html(request.form['message'])),
