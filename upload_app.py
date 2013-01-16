@@ -61,7 +61,7 @@ def _post_to_tumblr():
             'data': request.files['image']
         })
     except:
-        return 'Sorry, we\'re over capacity. Please try again later.'
+        return 'Sorry, we\'re probably over capacity. Please try again later.'
 
     return redirect(u"http://%s/%s#posts" % (app_config.TUMBLR_URL, tumblr_post['id']), code=301)
 
