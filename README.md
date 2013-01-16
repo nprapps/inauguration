@@ -113,8 +113,6 @@ Cron jobs live as bash scripts inside ``/cron/`` in the repository root.
 Output functions
 -----------------
 * ``fab write_mr_president_json`` writes a JSON cache of Tumblr postcards to ``/www/live-data/`` and uploads it to S3. Replaces ``update_mr_president.py`` from the main repository.
-* ``fab generate_new_oauth_tokens`` generates new OAuth tokens for our Tumblr account.
-
-**WARNING:** This will invalidate the old tokens and you'll need to update the token exports in ``/etc/init/inauguration.conf``. Replaces ``oauth.py`` from the main repository.
+* ``fab generate_new_oauth_tokens`` generates new OAuth tokens for our Tumblr account. **WARNING:** This will invalidate the old tokens and you'll need to update the token exports in ``/etc/init/inauguration.conf``. Replaces ``oauth.py`` from the main repository.
 * ``fab write_mr_president_test_posts`` writes test postcards to our Tumblr blog. Choose the number by setting the constant. This will also add random tags to the postcards. Replaces ``test_tumblr.py`` from the main repository.
 * ``fab dump_tumblr_json`` will roll through pages of the Tumblr API and dump JSON for the posts to files in ``/data/backups/`` for reconstitution. We do not have a script to reconstitute from this dump yet.
