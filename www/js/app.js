@@ -18,7 +18,7 @@ $(function(){
     /*
     * Initializes the live chat widget.
     */
-    function init_live_widget(){
+    function init_live_widget() {
         return $widget.livechatwidget({
             chat_id: CHAT_ID,
             chat_token: CHAT_TOKEN,
@@ -41,9 +41,10 @@ $(function(){
 		/*
 		* Kill the live chat module and set up the widget.
 		*/
-		$live.livechat = null;
+		$live.removeData('livechat');
 		init_live_widget();
     });
+
     $live_tab.on('click', function() {
     	$live.show();
     	$widget.hide();
@@ -55,7 +56,8 @@ $(function(){
 		/*
 		* If the live chat is alive, set up the live chat JS and unregister the widget.
 		*/
-		$widget.livechatwidget = null;
+		$widget.removeData('livechatwidget');
+
 		$live.livechat({
 			chat_id: CHAT_ID,
 			chat_token: CHAT_TOKEN,
@@ -64,5 +66,6 @@ $(function(){
 			read_only: false
 		});
     });
+
     $live_tab.trigger('click');
 });
