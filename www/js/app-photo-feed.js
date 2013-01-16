@@ -41,8 +41,17 @@ $(document).ready(function() {
             var post = posts[j];
             init_modal(post);
 
-            var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url'] + '" /></a>';
-            var $el = $(html);
+            if ($(window).width() <= 480) {
+                // Mobile, pull small img size
+                var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url'] + '" /></a>';
+                var $el = $(html);
+            }
+
+            else {
+                // Desktop, pull larger img size
+                var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url_250'] + '" /></a>';
+                var $el = $(html);
+            }
 
             new_photos.push($el);
             $el = null;
