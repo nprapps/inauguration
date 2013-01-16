@@ -69,7 +69,6 @@ $(function(){
 
         window.location.hash = '#chat';
     });
-
     if (window.location.hash == '#chat') {
         $live_tab.trigger('click');
     } else {
