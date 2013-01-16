@@ -50,9 +50,9 @@ $(document).ready(function() {
             photos[post.id] = post;
         }
 
-        var spinner = '<img class="load-more-spinner" data-category="' + category + '" style="width:100px; height:100px; background-color:pink;" />';
+        var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
         $photos.find('.load-more-spinner').remove();
-        
+
         $photos.append(new_photos);
         var photos_width = $photos.find('a').length * 122;
 
