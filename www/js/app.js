@@ -14,22 +14,10 @@ $(function(){
     var $widget = $('#live-chat-widget');
     var $mrprez = $('#mr-president');
     var $mrpres_tab = $('#mr-president-toggle');
-    
-    /*
-    * Initializes the live chat widget.
-    */
-    function init_live_widget() {
-        return $widget.livechatwidget({
-            chat_id: CHAT_ID,
-            chat_token: CHAT_TOKEN,
-            update_interval: CHAT_UPDATE_INTERVAL
-        });
-    }
-    init_live_widget();
 
-    /*
-    * Toggle all of the things.
-    */
+    var livechat = null;
+    var livechatwidget = null;
+    
     $mrpres_tab.on('click', function() {
     	$live.hide();
     	$widget.show();
@@ -38,11 +26,21 @@ $(function(){
     	$(this).addClass('selected');
     	$live_tab.removeClass('selected');
 
-		/*
-		* Kill the live chat module and set up the widget.
-		*/
-		$live.removeData('livechat');
-		init_live_widget();
+        if (livechat) {
+            livechat.pause(true);
+        }
+
+        if (livechatwidget) {
+            livechatwidget.pause(false);
+        } else {
+            $widget.livechatwidget({
+                chat_id: CHAT_ID,
+                chat_token: CHAT_TOKEN,
+                update_interval: CHAT_UPDATE_INTERVAL
+            });
+
+            livechatwidget = $widget.data('livechatwidget');
+        }
     });
 
     $live_tab.on('click', function() {
@@ -53,18 +51,23 @@ $(function(){
     	$(this).addClass('selected');
     	$mrpres_tab.removeClass('selected');
 
-		/*
-		* If the live chat is alive, set up the live chat JS and unregister the widget.
-		*/
-		$widget.removeData('livechatwidget');
+        if (livechatwidget) {
+            livechatwidget.pause(true);
+        }
 
-		$live.livechat({
-			chat_id: CHAT_ID,
-			chat_token: CHAT_TOKEN,
-			update_interval: CHAT_UPDATE_INTERVAL,
-			alert_interval: 500,
-			read_only: false
-		});
+        if (livechat) {
+            livechat.pause(false);
+        } else {
+            $live.livechat({
+                chat_id: CHAT_ID,
+                chat_token: CHAT_TOKEN,
+                update_interval: CHAT_UPDATE_INTERVAL,
+                alert_interval: 500,
+                read_only: false
+            });
+
+            livechat = $live.data('livechat');
+        }
     });
 
     $live_tab.trigger('click');

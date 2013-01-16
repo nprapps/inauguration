@@ -46,6 +46,9 @@
         var first_load = true;
         var next_page_index = 0;
 
+        var update_timer = null;
+        var alert_timer = null;
+
         plugin.init = function () {
             /*
              * Initialize the plugin.
@@ -103,9 +106,17 @@
             }
 
             plugin.update_live_chat();
+            plugin.pause(false);
+        };
 
-            setInterval(plugin.update_live_chat, plugin.settings.update_interval);
-            setInterval(plugin.update_alerts, plugin.settings.alert_interval);
+        plugin.pause = function(paused) {
+            if (paused) {
+                clearInterval(plugin.update_timer);
+                clearInterval(plugin.alert_timer);
+            } else {
+                plugin.update_timer = setInterval(plugin.update_live_chat, plugin.settings.update_interval);
+                plugin.alert_timer = setInterval(plugin.update_alerts, plugin.settings.alert_interval);
+            }
         };
 
         plugin.clear_fields = function() {

@@ -18,9 +18,12 @@
             chat_token: null,
             update_interval: 1000
         };
+        
         var plugin = this;
         plugin.settings = {};
         plugin.$root = $(element);
+
+        var update_timer = null;
 
         plugin.init = function () {
             /*
@@ -30,7 +33,15 @@
 
             plugin.settings = $.extend({}, defaults, options || {});
             plugin.update_live_chat();
-            setInterval(plugin.update_live_chat, plugin.settings.update_interval);
+            plugin.pause(false);
+        };
+
+        plugin.pause = function(paused) {
+            if (paused) {
+                clearInterval(plugin.update_timer);
+            } else {
+                plugin.update_timer = setInterval(plugin.update_live_chat, plugin.settings.update_interval);
+            }
         };
 
         plugin.update_live_chat = function() {
