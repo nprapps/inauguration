@@ -293,11 +293,15 @@ def write_mr_president_json():
     outputs.write_mr_president_json()
 
 
-def update_mr_president_posts():
-    """
-    Updates tumblr posts for Dear Mr. President.
-    """
-    outputs.update_mr_president_posts()
+##
+## One-time use. Don't use this.
+##
+
+# def update_mr_president_posts():
+#     """
+#     Updates tumblr posts for Dear Mr. President.
+#     """
+#     outputs.update_mr_president_posts()
 
 
 def write_mr_president_test_posts():
