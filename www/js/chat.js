@@ -2,7 +2,7 @@
  * A jQuery-ized Scribble Live plugin.
  *
  * Depends on jQuery, Underscore, auth.js,
- * chat.less and the JST chat templates.
+ * app-chat.less and the JST chat templates.
  */
 
 (function($) {

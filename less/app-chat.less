@@ -1,5 +1,3 @@
-
-
 #live-chat { clear: both; }
 
 .chat-body-wrap { float: left; }
@@ -67,10 +65,16 @@
 .chat-user-entry {
 	background-color: #ebebeb;
 	border-top: 1px solid #ddd;
-	width: 848px; /* 870 - 22 */
-	padding: 11px 22px 5px 22px;
-	margin-left: -11px;
+	width: 100%;
+	left: 0;
 	border-radius: 4px 4px 0 0;
+	
+	.chat-login,
+	.chat-editor {
+		padding: 11px 22px;
+		width: 960px;
+		margin: 0 auto;
+	}
 	
 	&.affix { bottom: 0; }
 	h4 { 
@@ -112,7 +116,7 @@
 	
 	.chat-editor {
 		textarea { 
-			width: 500px; 
+			width: 400px; 
 			height: 33px; 
 			margin-right: 22px;
 		}
@@ -161,10 +165,26 @@
 
 // Media queries
 @media (min-width: 1200px) {
+	.chat-user-entry {
+		.chat-login, .chat-editor { width: 1170px; }
+		.chat-editor textarea {  width: 500px; }
+		.chat-user-info { float: right; margin-top: -45px; }
+	}
 }
 @media (max-width: 979px) {
+	.chat-user-entry {
+		.chat-login, .chat-editor { width: 724px; }
+		.chat-editor textarea {  width: 250px; }
+	}
 }
 @media (max-width: 767px) {
+	.chat-user-entry {
+		.chat-login, .chat-editor { width: auto; }
+		.chat-user-entry .chat-editor textarea {  width: 40%; }
+	}
 }
 @media (max-width: 480px) {
+	.chat-user-entry {
+		.chat-editor textarea {  clear: left; width: 50%; }
+	}
 }
