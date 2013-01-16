@@ -69,6 +69,5 @@ $(function(){
             livechat = $live.data('livechat');
         }
     });
-
-    $live_tab.trigger('click');
+//    $live_tab.trigger('click');
 });
