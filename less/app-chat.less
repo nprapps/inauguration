@@ -67,11 +67,10 @@
 	border-top: 1px solid #ddd;
 	width: 100%;
 	left: 0;
-	border-radius: 4px 4px 0 0;
 	
 	.chat-login,
 	.chat-editor {
-		padding: 11px 22px;
+		padding: 11px 0;
 		width: 960px;
 		margin: 0 auto;
 	}
@@ -83,6 +82,7 @@
 		float: left;
 		margin-right: 33px;
 	}
+	p { margin: 0; }
 	label {
 		font-weight: bold;
 		font-size: 13px;
@@ -116,9 +116,9 @@
 	
 	.chat-editor {
 		textarea { 
-			width: 400px; 
+			width: 490px; 
 			height: 33px; 
-			margin-right: 22px;
+			margin-right: 11px;
 		}
 		.chat-input {
 			line-height: 44px;
@@ -126,10 +126,15 @@
 		.chat-user-info {
 			font-size: 12px;
 			color: #666;
+			float: right; 
+			margin-top: -40px;
 		}
 		.chat-username {
 			font-weight: bold;
 			color: #444;
+		}
+		.btn.chat-post {
+			margin-top: -11px;
 		}
 		.btn.chat-logout {
 			height: auto;
@@ -167,8 +172,7 @@
 @media (min-width: 1200px) {
 	.chat-user-entry {
 		.chat-login, .chat-editor { width: 1170px; }
-		.chat-editor textarea {  width: 500px; }
-		.chat-user-info { float: right; margin-top: -45px; }
+		.chat-editor textarea {  width: 650px; }
 	}
 }
 @media (max-width: 979px) {
@@ -179,12 +183,13 @@
 }
 @media (max-width: 767px) {
 	.chat-user-entry {
+		label { float: none; line-height: 1.2; }
 		.chat-login, .chat-editor { width: auto; }
-		.chat-user-entry .chat-editor textarea {  width: 40%; }
+		.chat-editor {
+			textarea { clear: left; width: 70%; }
+			.chat-user-info { clear: both; float: none; margin-top: 0; }
+		}
 	}
 }
 @media (max-width: 480px) {
-	.chat-user-entry {
-		.chat-editor textarea {  clear: left; width: 50%; }
-	}
 }
