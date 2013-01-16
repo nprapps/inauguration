@@ -1,4 +1,5 @@
 #!/bin/bash
 
 source source /home/ubuntu/apps/inauguration/virtualenv/bin/activate
-fab write_mr_president_json && echo "+" >> /tmp/mr_president_cron.log
+fab write_mr_president_json
+echo "+" >> /tmp/mr_president_cron.log
