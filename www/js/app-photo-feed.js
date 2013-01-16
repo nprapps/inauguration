@@ -58,6 +58,7 @@ $(document).ready(function() {
     }
 
     function resize_photo_feed(category) {
+        console.log('resize');
         var $photo_feed = $('#photos-' + category);
         var photos_width = $photo_feed.find('a').length * 122;
         var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
@@ -117,7 +118,8 @@ $(document).ready(function() {
             });
         }).then(function() {
             _.each(PHOTO_CATEGORIES, function(category) {
-              $(window).resize(function () { resize_photo_feed(category) });
+              var lazy_resize_photo_feed = _.debounce(function () { resize_photo_feed(category) }, 300);
+              $(window).resize(lazy_resize_photo_feed);
             });
         });
     }
