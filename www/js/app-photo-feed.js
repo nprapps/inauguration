@@ -49,7 +49,29 @@ $(document).ready(function() {
 
             photos[post.id] = post;
         }
+
+        var spinner = '<img class="load-more-spinner" data-category="' + category + '" style="width:100px; height:100px; background-color:pink;" />';
+        $photos.find('.load-more-spinner').remove();
+        
         $photos.append(new_photos);
+        var photos_width = $photos.find('a').length * 122;
+
+        if (next_photo_index[category] < feed_data[category].length) {
+            $photos.append(spinner);
+            photos_width += 122; // spinner size
+        }
+
+        $photos.css('width', photos_width + 'px');
+    }
+
+    function fetch_next() {
+        var spinners = $('.load-more-spinner');
+        spinners.each(function (i, spinner) {
+            if ($(spinner).offset().left < $(window).width()) {
+                var category = $(spinner).attr('data-category');
+                update_category(category);
+            }
+        });
     }
 
     // init_modal(photo) : takes photo object and initializes modal with appropriate id and photo details
@@ -66,11 +88,6 @@ $(document).ready(function() {
 
         if (next_photo_index[category] >= feed_data[category].length) {
             $('#tumblrlink-' + category).show();
-            $('#button-' + category).hide();
-        }
-
-        else {
-            $('#button-' + category).show();
         }
 
         $photos = null;
@@ -89,11 +106,8 @@ $(document).ready(function() {
         });
     }
 
-    $photo_container.on('click', 'button', function(){
-        var category = $(this).attr('id').replace('button-', '');
-
-        update_category(category);
-    });
+    var lazy_fetch_next = _.debounce(fetch_next, 300);
+    $('#photo-feed .wrapper').scroll(lazy_fetch_next);
 
     update_backchannel();
 });
