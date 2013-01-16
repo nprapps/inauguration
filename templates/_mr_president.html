@@ -73,7 +73,7 @@
                 var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
                 var version = parseInt(v[1]);
     
-                if (version[0] < 6) {
+                if (version < 6) {
                     $('.mr-president-form').html('<p>Sorry, iOS versions older than 6 are not supported.');
                 }
             }
