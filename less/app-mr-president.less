@@ -6,7 +6,7 @@
 		color: #fff;
 		font-weight: bold;
 		font-size: 16px;
-		
+
 		&:hover { opacity: .7; }
 		span {
 			width: 44px;
@@ -27,16 +27,16 @@
 }
 
 #mr-president-modal {
-	top: 5%; left: 10%; 
+	top: 5%; left: 10%;
 	width: 80%; height: 90%;
 	margin: 0;
 	overflow: auto;
 	background-color: #f1f1f1;
-	
+
 	.modal-header {
 		padding: 22px;
 		border-bottom: 2px solid #fff;
-	
+
 		h3 {
 			font: normal 24px/1.2 Arial, Helvetica, sans-serif;
 			color: #666;
@@ -47,7 +47,7 @@
 		padding: 0;
 		overflow: visible;
 	}
-	
+
 	.legalese {
 		font-size: 11px; color: #666;
 		padding: 20px;
@@ -144,10 +144,9 @@
 	}
 }
 
-
 #photo-feed {
 
-    h2 { 
+    h2 {
     	font: normal 22px Arial, Helvetica, sans-serif;
     	color: #666;
     	text-transform: capitalize;
@@ -155,29 +154,39 @@
     	clear: both;
     }
 
-	.photo-section {
-		border-top: 2px solid #ebebeb;
-		padding: 20px 0;
+    .photo-section {
+            border-top: 2px solid #ebebeb;
+            padding: 20px 0;
 
-		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
-	}
-	.photo-list {
-	
-		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
-		img { 
-			float: left; 
-			margin-left: 20px;
-			border: 1px solid #e0e0e0;
-			
-			&:hover { 
-				-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-				-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); 
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-                opacity: .7;
-			}
-		}
-		a:first-child img { margin-left: 0; }
-	}
+            &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+    }
+
+    .wrapper {
+      height: 100px;
+      width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+
+    .photo-list {
+            &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+
+            .load-more-spinner { border: none; }
+
+            img {
+                    float: left;
+                    margin-left: 20px;
+                    border: 1px solid #e0e0e0;
+
+                    &:hover {
+                            -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                            -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            opacity: .7;
+                    }
+            }
+            a:first-child img { margin-left: 0; }
+    }
 
     button { display: none; }
     .tumblrlink { display: none; }
@@ -190,10 +199,18 @@
 
 
 @media (max-width: 480px) {
-	#mr-president-modal { 
-		top: 5%; left: 5%; width: 90%; height: 90%;
-		
-		.modal-header h3 { font-size: 16px; }
-	}
-	.mr-president-form input[type='file'] { font-size: 12px; }
+    #photo-feed {
+      .wrapper {
+        height: 100px;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+      }
+    }
+
+    #mr-president-modal {
+            top: 5%; left: 5%; width: 90%; height: 90%;
+            .modal-header h3 { font-size: 16px; }
+    }
+    .mr-president-form input[type='file'] { font-size: 12px; }
 }
