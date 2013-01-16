@@ -6,4 +6,7 @@
 <div class="modal-body">
     <img src="<%= photo.photo_url_250 %>" />
     <%= photo.text %>
+
+    <a href="javascript:;" class="navigate" data-photo="<%= previous %>">&laquo; Previous</a>
+    <a href="javascript:;" class="navigate" data-photo="<%= next %>">Next &raquo;</a>
 </div>
