@@ -16,7 +16,8 @@
             scribble_host: 'apiv1.scribblelive.com',
             chat_id: null,
             chat_token: null,
-            update_interval: 1000
+            update_interval: 1000,
+            max_text_length: 80 
         };
         
         var plugin = this;
@@ -87,7 +88,13 @@
             * Renders the newest post and writes it to
             * the appropriate element on the page.
             */
-            var template = JST.widget_text({ post:post });
+            if (post.Content.length > plugin.settings.max_text_length) {
+                post.Content = $.trim(post.Content.slice(0, plugin.settings.max_text_length)) + '&hellip;';
+            }
+
+            console.log(post.Content.length);
+
+            var template = JST.widget_text({ post: post });
             plugin.$post.html(template);
         };
 
