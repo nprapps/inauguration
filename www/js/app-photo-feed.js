@@ -58,7 +58,6 @@ $(document).ready(function() {
     }
 
     function resize_photo_feed(category) {
-        console.log('resize');
         var $photo_feed = $('#photos-' + category);
         var photos_width = $photo_feed.find('a').length * 122;
         var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
