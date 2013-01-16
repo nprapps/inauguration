@@ -41,8 +41,8 @@ def configure_targets(deployment_target):
     else:
         S3_BUCKETS = STAGING_S3_BUCKETS
         SERVERS = STAGING_SERVERS
-        TUMBLR_URL = 'testinauguration2013.tumblr.com'
-        TUMBLR_BLOG_ID = 'testinauguration2013'
+        TUMBLR_URL = 'inauguration2013.tumblr.com'
+        TUMBLR_BLOG_ID = 'inauguration2013'
 
 # Configure targets on import
 configure_targets(DEPLOYMENT_TARGET)
