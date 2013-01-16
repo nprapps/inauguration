@@ -1,8 +1,4 @@
-/*
-* Prepare the live chat widget.
-*/
 $(function(){
-
     // Constants for the live chat/widget
     var CHAT_ID = '74796';
     var CHAT_TOKEN = 'FtP7wRfX';
@@ -41,6 +37,8 @@ $(function(){
 
             livechatwidget = $widget.data('livechatwidget');
         }
+
+        window.location.hash = '';
     });
 
     $live_tab.on('click', function() {
@@ -68,6 +66,12 @@ $(function(){
 
             livechat = $live.data('livechat');
         }
+
+        window.location.hash = '#chat';
     });
-//    $live_tab.trigger('click');
+    if (window.location.hash == '#chat') {
+        $live_tab.trigger('click');
+    } else {
+        $mrpres_tab.trigger('click');
+    }
 });

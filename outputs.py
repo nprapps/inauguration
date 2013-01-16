@@ -152,45 +152,48 @@ def dump_tumblr_json():
         with open('data/backups/tumblr_prod_%s.json' % page, 'w') as f:
             f.write(json.dumps(posts))
 
+##
+## One-time use. Don't use this.
+##
 
-def update_mr_president_posts():
-    """
-    Runs through the Dear Mr. President posts and updates the captions.
-    """
-    t = Tumblpy(
-            app_key=app_config.TUMBLR_KEY,
-            app_secret=os.environ['TUMBLR_APP_SECRET'],
-            oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
-            oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
+# def update_mr_president_posts():
+#     """
+#     Runs through the Dear Mr. President posts and updates the captions.
+#     """
+#     t = Tumblpy(
+#             app_key=app_config.TUMBLR_KEY,
+#             app_secret=os.environ['TUMBLR_APP_SECRET'],
+#             oauth_token=os.environ['TUMBLR_OAUTH_TOKEN'],
+#             oauth_token_secret=os.environ['TUMBLR_OAUTH_TOKEN_SECRET'])
 
-    unique_posts = set([])
+#     unique_posts = set([])
 
-    new_text = u'<p class="footnote">What do <em>you</em> want President Obama to remember in his second term? Share your message at <a href="http://inauguration2013.tumblr.com/">NPR\'s Dear Mr. President</a>.</p>'
+#     new_text = u'<p class="footnote">What do <em>you</em> want President Obama to remember in his second term? Share your message at <a href="http://inauguration2013.tumblr.com/">NPR\'s Dear Mr. President</a>.</p>'
 
-    limit = 10
-    pages = range(0, 20)
+#     limit = 10
+#     pages = range(0, 20)
 
-    for page in pages:
-        offset = page * limit
-        posts = t.get('posts', blog_url=app_config.TUMBLR_URL, params={'limit': limit, 'offset': offset})
+#     for page in pages:
+#         offset = page * limit
+#         posts = t.get('posts', blog_url=app_config.TUMBLR_URL, params={'limit': limit, 'offset': offset})
 
-        for post in posts['posts']:
-            unique_posts.add(post['id'])
+#         for post in posts['posts']:
+#             unique_posts.add(post['id'])
 
-    if len(unique_posts) > 0:
-        print 'There are %s posts to check!\n' % len(unique_posts)
-        for post in unique_posts:
-            p = t.get('posts', blog_url=app_config.TUMBLR_URL, params={'id': int(post)})
+#     if len(unique_posts) > 0:
+#         print 'There are %s posts to check!\n' % len(unique_posts)
+#         for post in unique_posts:
+#             p = t.get('posts', blog_url=app_config.TUMBLR_URL, params={'id': int(post)})
 
-            caption = p['posts'][0]['caption']
-            if u'<p class="footnote">' in caption:
-                print '.'
-            else:
-                caption += new_text
-                u = t.post('post/edit', blog_url=app_config.TUMBLR_URL, params={'id': int(post), 'caption': caption})
-                print u['id']
-    else:
-        print 'No posts ... something wrong!'
+#             caption = p['posts'][0]['caption']
+#             if u'<p class="footnote">' in caption:
+#                 print '.'
+#             else:
+#                 caption += new_text
+#                 u = t.post('post/edit', blog_url=app_config.TUMBLR_URL, params={'id': int(post), 'caption': caption})
+#                 print u['id']
+#     else:
+#         print 'No posts ... something wrong!'
 
 
 def write_mr_president_json():
