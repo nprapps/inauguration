@@ -25,6 +25,7 @@
 
         var chat_url = null;
         var update_timer = null;
+        var paused = false;
 
         plugin.init = function () {
             /*
@@ -39,14 +40,15 @@
             plugin.$post = plugin.$root.find('p'); 
 
             plugin.update_live_chat();
-            plugin.pause(false);
         };
 
-        plugin.pause = function(paused) {
-            if (paused) {
+        plugin.pause = function(new_paused) {
+            plugin.paused = new_paused;
+
+            if (plugin.paused) {
                 clearInterval(plugin.update_timer);
             } else {
-                plugin.update_timer = setInterval(plugin.update_live_chat, plugin.settings.update_interval);
+                plugin.update_live_chat();
             }
         };
 
@@ -72,6 +74,10 @@
                             break;
                         }
                     }
+                }
+            }).then(function() {
+                if (!plugin.paused) {
+                    plugin.update_timer = setTimeout(plugin.update_live_chat, plugin.settings.update_interval);
                 }
             });
         };
