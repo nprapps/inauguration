@@ -18,9 +18,14 @@
             chat_token: null,
             update_interval: 1000
         };
+        
         var plugin = this;
         plugin.settings = {};
         plugin.$root = $(element);
+
+        var chat_url = null;
+        var update_timer = null;
+        var paused = false;
 
         plugin.init = function () {
             /*
@@ -29,8 +34,22 @@
             plugin.$root.html(JST.widget());
 
             plugin.settings = $.extend({}, defaults, options || {});
+
+            chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
+
+            plugin.$post = plugin.$root.find('p'); 
+
             plugin.update_live_chat();
-            setInterval(plugin.update_live_chat, plugin.settings.update_interval);
+        };
+
+        plugin.pause = function(new_paused) {
+            plugin.paused = new_paused;
+
+            if (plugin.paused) {
+                clearInterval(plugin.update_timer);
+            } else {
+                plugin.update_live_chat();
+            }
         };
 
         plugin.update_live_chat = function() {
@@ -41,29 +60,35 @@
             * Saves no state.
             */
             $.ajax({
-                url: 'http://'+plugin.settings.scribble_host+'/event/'+plugin.settings.chat_id+'/page/0?format=json&Token='+plugin.settings.chat_token+'&Type=TEXT',
+                url: chat_url + '&Max=10&Order=desc',
                 dataType: 'jsonp',
                 cache: false,
-                success: function(response) {
-                    var posts = [];
-                    _.each(response.Posts, function(post){
+                success: function(data) {
+                    var posts_length = data.Posts.length;
+
+                    for (i = 0; i < posts_length; i++) {
+                        var post = data.Posts[i];
+
                         if (post.Type === 'TEXT') {
-                            posts.push(post);
+                            plugin.render_post(post);
+                            break;
                         }
-                    });
-                    plugin.render_post(posts);
+                    }
+                }
+            }).then(function() {
+                if (!plugin.paused) {
+                    plugin.update_timer = setTimeout(plugin.update_live_chat, plugin.settings.update_interval);
                 }
             });
         };
 
-        plugin.render_post = function(posts) {
+        plugin.render_post = function(post) {
             /*
             * Renders the newest post and writes it to
             * the appropriate element on the page.
             */
-            var post = posts[0];
             var template = JST.widget_text({ post:post });
-            plugin.$root.find('p').html(template);
+            plugin.$post.html(template);
         };
 
         // Start it up.

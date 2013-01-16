@@ -46,6 +46,10 @@
         var first_load = true;
         var next_page_index = 0;
 
+        var update_timer = null;
+        var alert_timer = null;
+        var paused = false;
+
         plugin.init = function () {
             /*
              * Initialize the plugin.
@@ -103,9 +107,19 @@
             }
 
             plugin.update_live_chat();
+            plugin.pause(false);
+        };
 
-            setInterval(plugin.update_live_chat, plugin.settings.update_interval);
-            setInterval(plugin.update_alerts, plugin.settings.alert_interval);
+        plugin.pause = function(new_paused) {
+            plugin.paused = new_paused;
+
+            if (plugin.paused) {
+                clearTimeout(plugin.update_timer);
+                clearTimeout(plugin.alert_timer);
+            } else {
+                plugin.update_live_chat();
+                plugin.update_alerts();
+            }
         };
 
         plugin.clear_fields = function() {
@@ -167,7 +181,6 @@
             /*
             * Adds and expires alerts.
             */
-
             // Expires old alerts with each pass.
             var now = parseInt(moment().valueOf(), 10);
             _.each($('div.alert'), function(alert_div, index, list) {
@@ -184,6 +197,10 @@
                 alert_html = JST.alert({ alert: alert });
                 plugin.$alerts.append(alert_html);
             });
+            
+            if (!plugin.paused) {
+                plugin.alerts_timer = setTimeout(plugin.update_alerts, plugin.settings.alert_interval);
+            }
         };
 
         plugin.render_post = function(post) {
@@ -395,6 +412,10 @@
                     } else {
                         plugin.render_new_posts(data);
                     }
+                }
+            }).then(function() {
+                if (!plugin.paused) {
+                    plugin.update_timer = setTimeout(plugin.update_live_chat, plugin.settings.update_interval);
                 }
             });
         };
