@@ -41,8 +41,17 @@ $(document).ready(function() {
             var post = posts[j];
             init_modal(post);
 
-            var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url'] + '" /></a>';
-            var $el = $(html);
+            if ($(window).width() <= 480) {
+                // Mobile, pull small img size
+                var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url'] + '" /></a>';
+                var $el = $(html);
+            }
+
+            else {
+                // Desktop, pull larger img size
+                var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url_250'] + '" /></a>';
+                var $el = $(html);
+            }
 
             new_photos.push($el);
             $el = null;
@@ -50,18 +59,30 @@ $(document).ready(function() {
             photos[post.id] = post;
         }
 
-        var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
         $photos.find('.load-more-spinner').remove();
 
         $photos.append(new_photos);
-        var photos_width = $photos.find('a').length * 122;
+
+        resize_photo_feed(category);
+    }
+
+    function resize_photo_feed(category) {
+        var $photo_feed = $('#photos-' + category);
+        var photos_width = $photo_feed.find('a').length * 122;
+        var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
 
         if (next_photo_index[category] < feed_data[category].length) {
-            $photos.append(spinner);
+            $photo_feed.append(spinner);
             photos_width += 122; // spinner size
         }
 
-        $photos.css('width', photos_width + 'px');
+        if ($(window).width() <= 480) {
+            $photo_feed.css('width', photos_width + 'px');
+        }
+
+        else {
+            $photo_feed.css('width', "100%");
+        }
     }
 
     function fetch_next() {
@@ -102,6 +123,11 @@ $(document).ready(function() {
 
             _.each(PHOTO_CATEGORIES, function(category) {
                 update_category(category);
+            });
+        }).then(function() {
+            _.each(PHOTO_CATEGORIES, function(category) {
+              var lazy_resize_photo_feed = _.debounce(function () { resize_photo_feed(category) }, 300);
+              $(window).resize(lazy_resize_photo_feed);
             });
         });
     }

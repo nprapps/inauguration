@@ -49,6 +49,7 @@
         var update_timer = null;
         var alert_timer = null;
         var paused = false;
+        var is_live = false;
 
         plugin.init = function () {
             /*
@@ -68,6 +69,7 @@
             plugin.$chat_body = plugin.$root.find('.chat-body');
             plugin.$alerts = plugin.$root.find('.chat-alerts');
             plugin.$show_more = plugin.$root.find('.chat-show-more');
+            plugin.$chat_form = plugin.$root.find('.chat-user-entry');
 
             plugin.$editor = plugin.$root.find('.chat-editor');
             plugin.$username = plugin.$editor.find('.chat-username');
@@ -108,6 +110,7 @@
 
             plugin.update_live_chat();
             plugin.pause(false);
+
         };
 
         plugin.pause = function(new_paused) {
@@ -197,7 +200,7 @@
                 alert_html = JST.alert({ alert: alert });
                 plugin.$alerts.append(alert_html);
             });
-            
+
             if (!plugin.paused) {
                 plugin.alerts_timer = setTimeout(plugin.update_alerts, plugin.settings.alert_interval);
             }
@@ -324,12 +327,12 @@
                 } else {
                     var $posts = plugin.$chat_body.find('.chat-post');
                     var $post = null;
-                    
+
                     var comes_before = _.find($posts, function(post_el, i) {
                         $post = $(post_el);
 
                         if (parseInt($post.data('timestamp'), 10) > post.timestamp) {
-                            if (i == 0 && next_page_index < posts_on_load.length) {
+                            if (i === 0 && next_page_index < posts_on_load.length) {
                                 return true;
                             }
 
@@ -349,14 +352,13 @@
                     }
                 }
             });
-        }
+        };
 
         plugin.render_post_page = function() {
             /*
              * Render a page of posts from API data.
              */
             var new_posts = [];
-
             var start = next_page_index;
             var end = next_page_index + plugin.settings.posts_per_page;
 
@@ -380,7 +382,7 @@
             next_page_index += plugin.settings.posts_per_page;
 
             plugin.$show_more.toggle(next_page_index < posts_on_load.length);
-        }
+        };
 
         plugin.update_live_chat = function() {
             /*
@@ -391,11 +393,18 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(data, status, xhr) {
+
+                    if (parseInt(data.IsLive, 10) === 1) {
+                        plugin.$chat_form.show();
+                    } else {
+                        plugin.$chat_form.hide();
+                    }
+
                     if (first_load) {
                         plugin.$root.find('.chat-title').text(data.Title);
                         plugin.$chat_blurb.text(data.Description);
 
-                        if (data.IsModerated !== 1) {
+                        if (parseInt(data.IsModerated, 10) !== 1) {
                             console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
                         }
 
