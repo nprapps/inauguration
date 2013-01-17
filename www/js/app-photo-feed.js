@@ -63,18 +63,32 @@ $(document).ready(function() {
         var $photo_feed = $('#photos-' + category);
         var photos_width = $photo_feed.find('a').length * 122;
         var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
+        var tumblr_link = $('#tumblrlink-' + category);
 
 
         if ($(window).width() <= 480) {
+            // Mobile photo view, keep tumblr link within $photos div
+
+            tumblr_link.hide();
+
             if (next_photo_index[category] < feed_data[category].length) {
                 $photo_feed.append(spinner);
                 photos_width += 122; // spinner size
             }
 
             $photo_feed.css('width', photos_width + 'px');
+
+            if (next_photo_index[category] >= feed_data[category].length) {
+                $('#tumblrlink-' + category).show();
+            }
         }
 
         else {
+            // Desktop photo grid view, remove tumblr link from $photos div and append it
+            tumblr_link.remove();
+            $photo_feed.append(tumblr_link);
+            $(tumblr_link).show();
+
             $photo_feed.find('.load-more-spinner').remove();
             $photo_feed.css('width', "100%");
         }
@@ -95,10 +109,6 @@ $(document).ready(function() {
 
         var $photos = $("#photos-" + category);
         render_category_feed(category, posts);
-
-        if (next_photo_index[category] >= feed_data[category].length) {
-            $('#tumblrlink-' + category).show();
-        }
 
         $photos = null;
     }
@@ -128,7 +138,7 @@ $(document).ready(function() {
 
     function init() {
         /*
-         * Fetch the tumblr feed and render them. 
+         * Fetch the tumblr feed and render them.
          */
         $.getJSON('live-data/misterpresident.json?t=' + (new Date()).getTime(), {}, function(data) {
             feed_data = data;
@@ -142,7 +152,7 @@ $(document).ready(function() {
               $(window).resize(lazy_resize_photo_feed);
             });
         });
-    
+
         $photo_container.delegate('.photo-link', 'click', render_modal);
         $photo_modal.delegate('.navigate', 'click', modal_link_clicked);
 
