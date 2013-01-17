@@ -143,7 +143,7 @@
             plugin.toggle_user_context();
         };
 
-        function encode_entities(str) {
+        function strip_tags(str) {
             return str.replace(/(<([^>]+)>)/ig, '');
         }
 
@@ -599,7 +599,7 @@
         };
 
         plugin.comment_click = function() {
-            var safe_comment = encode_entities(plugin.$comment.val());
+            var safe_comment = strip_tags(plugin.$comment.val());
             plugin.post_comment(safe_comment);
         };
 
