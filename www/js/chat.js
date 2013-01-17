@@ -143,12 +143,16 @@
             plugin.toggle_user_context();
         };
 
-        function _send_comment(data) {
+        function strip_tags(str) {
+            return str.replace(/(<([^>]+)>)/ig, '');
+        }
+
+        function _send_comment(text) {
             /*
              * Handles comment ajax.
              */
             var auth = $.totalStorage(SCRIBBLE_AUTH_KEY);
-            var content_param = '&Content=' + encodeURIComponent(data.content);
+            var content_param = '&Content=' + encodeURIComponent(text);
             var auth_param = '&Auth=' + auth.Auth;
 
             $.ajax({
@@ -157,11 +161,12 @@
                 cache: false,
                 success: function(response) {
                     plugin.$comment.val('');
+
                     if (response.Code === 202) {
                         alerts.push({
                             klass: 'alert-info',
                             title: 'Awaiting moderation!',
-                            text: 'Your comment is awaiting moderation.<br/>You said, "'+ data.content +'"'
+                            text: 'Your comment is awaiting moderation.<br/>You said, "'+ text +'"'
                         });
                     }
                 }
@@ -226,7 +231,7 @@
 
             var m = moment(post.Created);
             post.timestamp = parseInt(m.valueOf(), 10);
-            post.created_string = m.format('dddd, MMMM Do, YYYY - h:mm');
+            post.created_string = m.format('h:mm');
 
             if (m.hours() < 12) {
                 post.created_string += ' a.m.';
@@ -594,7 +599,8 @@
         };
 
         plugin.comment_click = function() {
-            plugin.post_comment({ content: plugin.$comment.val() });
+            var safe_comment = strip_tags(plugin.$comment.val());
+            plugin.post_comment(safe_comment);
         };
 
         plugin.init();
