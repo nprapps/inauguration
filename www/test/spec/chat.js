@@ -100,8 +100,8 @@ describe('$.livechat', function() {
             this.livechat.render_new_posts(getJSONFixture('chat_posts_second_post.json'));
 
             expect(this.livechat.$chat_body.find('.chat-post').length).toBe(2);
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 1');
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 2');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 1');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 2');
         });
 
         it('should insert an edited post in the middle', function() {
@@ -110,18 +110,18 @@ describe('$.livechat', function() {
             this.livechat.render_new_posts(getJSONFixture('chat_posts_third_post.json'));
 
             expect(this.livechat.$chat_body.find('.chat-post').length).toBe(3);
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 1');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(3) .chat-post-content')).text()).toBe('Test 1');
             expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 3');
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(3) .chat-post-content')).text()).toBe('Test 2');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 2');
         });
 
         it('should insert edited posts on first load', function() {
             this.livechat.render_new_posts(getJSONFixture('chat_posts_third_post.json'));
 
             expect(this.livechat.$chat_body.find('.chat-post').length).toBe(3);
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 1');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(3) .chat-post-content')).text()).toBe('Test 1');
             expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 3');
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(3) .chat-post-content')).text()).toBe('Test 2');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 2');
         });
 
         it('should delete an existing post', function() {
@@ -131,16 +131,16 @@ describe('$.livechat', function() {
             this.livechat.render_new_posts(getJSONFixture('chat_posts_delete_post.json'));
 
             expect(this.livechat.$chat_body.find('.chat-post').length).toBe(2);
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 1');
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 3');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 1');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 3');
         });
 
         it('should not render deleted posts on first load', function() {
             this.livechat.render_new_posts(getJSONFixture('chat_posts_delete_post.json'));
 
             expect(this.livechat.$chat_body.find('.chat-post').length).toBe(2);
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 1');
-            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 3');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(2) .chat-post-content')).text()).toBe('Test 1');
+            expect($(this.livechat.$chat_body.find('.chat-post:nth-child(1) .chat-post-content')).text()).toBe('Test 3');
         });
     });
 });
