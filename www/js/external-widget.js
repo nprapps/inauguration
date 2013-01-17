@@ -7,4 +7,7 @@ $(function(){
         chat_token: 'FtP7wRfX',
         update_interval: 10000
     });
+    if($(window).width() < 500) {
+        $('body').addClass('skinny');
+    }
 });
