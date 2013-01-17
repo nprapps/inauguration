@@ -1,6 +1,6 @@
 $(function(){
     // Constants for the live chat/widget
-    var CHAT_ID = '74796';
+    var CHAT_ID = '78788';
     var CHAT_TOKEN = 'FtP7wRfX';
     var CHAT_UPDATE_INTERVAL = 5000;
 
@@ -13,12 +13,12 @@ $(function(){
 
     var livechat = null;
     var livechatwidget = null;
-    
+
     $mrpres_tab.on('click', function() {
     	$live.hide();
     	$widget.show();
     	$mrprez.show();
-    	
+
     	$(this).addClass('selected');
     	$live_tab.removeClass('selected');
 
