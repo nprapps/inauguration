@@ -528,11 +528,21 @@
                 type: 'POST',
                 crossDomain: true,
                 cache: false,
+                timeout: 2500,
                 data: { auth: b64_payload, platform: 'CRMAPP' },
                 success: function(response) {
+                    console.log('success');
                     $.totalStorage(OAUTH_KEY, response.user_data);
                     plugin.scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
                     plugin.toggle_user_context(OAUTH_KEY, true);
+                }, error: function(xhr, textStatus, error) {
+                    console.log('error');
+                    alerts.push({
+                        klass: 'alert-error',
+                        title: 'Login failed!',
+                        text: 'Your username or password may be incorrect. Please try again.'
+                    });
+                    plugin.update_alerts();
                 }
             });
         };
