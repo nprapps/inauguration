@@ -26,6 +26,7 @@
 
         var chat_url = null;
         var update_timer = null;
+        var last_post_timestamp = null;
         var paused = false;
 
         plugin.init = function () {
@@ -71,7 +72,17 @@
                         var post = data.Posts[i];
 
                         if (post.Type === 'TEXT') {
+                            var m = moment(post.Created);
+                            var timestamp = parseInt(m.valueOf(), 10);
+
+                            if (last_post_timestamp && last_post_timestamp > timestamp) {
+                                break;
+                            }
+
                             plugin.render_post(post);
+
+                            last_post_timestamp = timestamp;
+
                             break;
                         }
                     }
@@ -91,8 +102,6 @@
             if (post.Content.length > plugin.settings.max_text_length) {
                 post.Content = $.trim(post.Content.slice(0, plugin.settings.max_text_length)) + '&hellip;';
             }
-
-            console.log(post.Content.length);
 
             var template = JST.widget_text({ post: post });
             plugin.$post.html(template);
