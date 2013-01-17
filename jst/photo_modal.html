@@ -1,12 +1,17 @@
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-    <h3>Let's rap.</h3>
-</div>
+<div class="modal-wrap">
 
-<div class="modal-body">
-    <img src="<%= photo.photo_url_250 %>" />
-    <%= photo.text %>
+	<div class="modal-body">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		<div class="modal-photo"><img src="<%= photo.photo_url_250 %>" class="photo" /></div>
+	
+		<div class="modal-caption">
+			<%= photo.text %>
+		</div>
+	</div>
+	
+	<div class="modal-nav">
+		<a href="javascript:;" class="navigate nav-back" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
+		<a href="javascript:;" class="navigate nav-next" data-photo="<%= next %>"><span>Next &rsaquo;</span></a>
+	</div>
 
-    <a href="javascript:;" class="navigate" data-photo="<%= previous %>">&laquo; Previous</a>
-    <a href="javascript:;" class="navigate" data-photo="<%= next %>">Next &raquo;</a>
 </div>
