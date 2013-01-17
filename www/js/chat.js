@@ -22,7 +22,7 @@
             alert_interval: 500,
             read_only: false,
             scribble_host: 'apiv1.scribblelive.com',
-            posts_per_page: 50
+            posts_per_page: 1000
         };
 
         var plugin = this;
@@ -108,7 +108,6 @@
                 plugin.toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
             }
 
-            plugin.update_live_chat();
             plugin.pause(false);
 
         };
@@ -261,12 +260,12 @@
                     return;
                 }
 
-                new_posts.unshift(html);
+                new_posts.push(html);
                 post_ids.push(post.Id);
             });
 
             if (new_posts.length > 0) {
-                plugin.$chat_body.append(new_posts);
+                plugin.$chat_body.prepend(new_posts);
 
                 scroll_down = true;
             }
@@ -331,11 +330,7 @@
                     var comes_before = _.find($posts, function(post_el, i) {
                         $post = $(post_el);
 
-                        if (parseInt($post.data('timestamp'), 10) > post.timestamp) {
-                            if (i === 0 && next_page_index < posts_on_load.length) {
-                                return true;
-                            }
-
+                        if (post.timestamp > parseInt($post.data('timestamp'), 10)) {
                             edit_timestamps[post.Id] = timestamp;
                             $post.before(html);
 
@@ -346,7 +341,7 @@
                     });
 
                     // If no place in the order, put at the end
-                    if (!comes_before) {
+                    if (!comes_before && next_page_index >= posts_on_load.length) {
                         edit_timestamps[post.Id] = timestamp;
                         $post.after(html);
                     }
@@ -370,11 +365,11 @@
                     return;
                 }
 
-                new_posts.unshift(html);
+                new_posts.push(html);
             });
 
             if (new_posts.length > 0) {
-                plugin.$chat_body.prepend(new_posts);
+                plugin.$chat_body.append(new_posts);
             }
 
             plugin.process_edits();
@@ -393,7 +388,6 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(data, status, xhr) {
-
                     if (parseInt(data.IsLive, 10) === 1) {
                         plugin.$chat_form.show();
                     } else {
