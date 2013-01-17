@@ -35,9 +35,11 @@ www/index.html
 www/simple.html
 www/table.html
 www/map.html
+www/test_member_widget.html
 www/css/app.css
 www/css/app.min.css
 www/css/tables.min.css
+www/css/external-widget.css
 www/js/app-header.min.js
 www/js/app-footer.min.js
 www/js/templates.js
