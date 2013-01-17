@@ -92,3 +92,16 @@ p {
   color: #444;
   font-weight: bold;
 }
+body.skinny .col {
+  display: block;
+  width: auto;
+  padding: 0 0 0;
+  margin: 0 10px 22px;
+  border-left: none;
+}
+body.skinny .col .wrap {
+  padding: 0;
+}
+body.skinny .col .wrap h2 {
+  margin-bottom: 6px;
+}
