@@ -148,7 +148,7 @@
              * Handles comment ajax.
              */
             var auth = $.totalStorage(SCRIBBLE_AUTH_KEY);
-            var content_param = '&Content=' + data.content;
+            var content_param = '&Content=' + encodeURIComponent(data.content);
             var auth_param = '&Auth=' + auth.Auth;
 
             $.ajax({
