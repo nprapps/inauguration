@@ -170,19 +170,25 @@
 
             .load-more-spinner { border: none; }
 
-            img {
-                    float: left;
-                    margin-left: 20px;
-                    border: 1px solid #e0e0e0;
+            .tile {
+                // margin-right: 10px;
+                margin-bottom: 10px;
 
-                    &:hover {
-                            -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-                            -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-                            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-                            opacity: .7;
-                    }
+                display: inline-block;
+                height: 180px;
+                width: 18%;
+                margin-right: 2%;
+                background-size: cover;
+                -moz-background-size: cover;
+                float: left;
+
+                &:hover {
+                    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                    opacity: .7;
+                }
             }
-            a:first-child img { margin-left: 0; }
     }
 
     button { display: none; }
@@ -194,6 +200,22 @@
     }
 }
 
+@media (max-width: 979px) {
+    #photo-feed {
+        .photo-list .tile {
+            height: 130px;
+        }
+    }
+}
+
+
+@media (max-width: 767px) {
+    #photo-feed {
+        .photo-list .tile {
+            height: 95px;
+        }
+    }
+}
 
 @media (max-width: 480px) {
     #photo-feed {
@@ -201,14 +223,17 @@
         height: 100px;
         width: 100%;
         overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
         overflow-y: hidden;
       }
 
-      img {
-        height: 100px;
-        width: auto;
-      }
+      .photo-list {
+          .tile {
+            height: 100px;
+            width: 120px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+          }
+        }
     }
 
     #mr-president-modal {
