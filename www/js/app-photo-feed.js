@@ -8,7 +8,8 @@ $(document).ready(function() {
     var feed_data = null;
     var next_photo_index = {};
 
-    var $photo_container = $("#photo-feed");
+    var $photo_container = $('#photo-feed');
+    var $photo_modal = $('#photo-modal');
 
     _.each(PHOTO_CATEGORIES, function(category) {
         next_photo_index[category] = 0;
@@ -39,19 +40,21 @@ $(document).ready(function() {
 
         for (var j = 0; j < posts_length; j++) {
             var post = posts[j];
-            init_modal(post);
+
+            var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">'; 
 
             if ($(window).width() <= 480) {
                 // Mobile, pull small img size
-                var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url'] + '" /></a>';
-                var $el = $(html);
+                html += '<img src="' + post['photo_url'] + '" />';
             }
 
             else {
                 // Desktop, pull larger img size
-                var html = '<a href="#imgmodal-' + post.id +'" data-toggle="modal"><img class="photo-' + post.id + '" src="' + post['photo_url_250'] + '" /></a>';
-                var $el = $(html);
+                html += '<img src="' + post['photo_url_250'] + '" />';
             }
+                
+            html += '</a>';
+            var $el = $(html);
 
             new_photos.push($el);
             $el = null;
@@ -95,12 +98,6 @@ $(document).ready(function() {
         });
     }
 
-    // init_modal(photo) : takes photo object and initializes modal with appropriate id and photo details
-    function init_modal(photo) {
-      var modal_html = JST.photo_modal({photo: photo});
-      $('body').append(modal_html);
-    }
-
     function update_category(category) {
         var posts = get_next_photos(category, feed_data[category]);
 
@@ -114,9 +111,32 @@ $(document).ready(function() {
         $photos = null;
     }
 
-    function update_backchannel() {
+    function render_modal() {
         /*
-         * Update the backchannel from our tumblr feed.
+         * Render the photo modal.
+         */
+        var photo_id = $(this).data('photo');
+        var data = {
+            'photo': photos[photo_id],
+            'previous': $(this).prev('.photo-link').data('photo'),
+            'next': $(this).next('.photo-link').data('photo')
+        };
+
+        var modal_html = JST.photo_modal(data);
+        $photo_modal.html(modal_html);
+
+        $photo_modal.modal('show');
+    }
+
+    function modal_link_clicked() {
+        var photo_id = $(this).data('photo');
+
+        render_modal.call($('.photo-link[data-photo="' + photo_id + '"]'));
+    }
+
+    function init() {
+        /*
+         * Fetch the tumblr feed and render them. 
          */
         $.getJSON('live-data/misterpresident.json?t=' + (new Date()).getTime(), {}, function(data) {
             feed_data = data;
@@ -130,10 +150,13 @@ $(document).ready(function() {
               $(window).resize(lazy_resize_photo_feed);
             });
         });
+    
+        $photo_container.delegate('.photo-link', 'click', render_modal);
+        $photo_modal.delegate('.navigate', 'click', modal_link_clicked);
+
+        var lazy_fetch_next = _.debounce(fetch_next, 300);
+        $('#photo-feed .wrapper').scroll(lazy_fetch_next);
     }
 
-    var lazy_fetch_next = _.debounce(fetch_next, 300);
-    $('#photo-feed .wrapper').scroll(lazy_fetch_next);
-
-    update_backchannel();
+    init();
 });

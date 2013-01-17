@@ -32,7 +32,8 @@ $(function(){
             $widget.livechatwidget({
                 chat_id: CHAT_ID,
                 chat_token: CHAT_TOKEN,
-                update_interval: CHAT_UPDATE_INTERVAL
+                update_interval: CHAT_UPDATE_INTERVAL,
+                max_text_length: 200
             });
 
             livechatwidget = $widget.data('livechatwidget');
