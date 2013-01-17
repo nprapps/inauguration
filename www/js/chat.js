@@ -64,8 +64,8 @@
             plugin.$root.html(JST.chat());
 
             // Cache element references
-            plugin.$chat_title = plugin.$root.find('.chat-title');
-            plugin.$chat_blurb = plugin.$root.find('.chat-blurb');
+            // plugin.$chat_title = plugin.$root.find('.chat-title');
+            // plugin.$chat_blurb = plugin.$root.find('.chat-blurb');
             plugin.$chat_body = plugin.$root.find('.chat-body');
             plugin.$alerts = plugin.$root.find('.chat-alerts');
             plugin.$show_more = plugin.$root.find('.chat-show-more');
@@ -401,8 +401,8 @@
                     }
 
                     if (first_load) {
-                        plugin.$root.find('.chat-title').text(data.Title);
-                        plugin.$chat_blurb.text(data.Description);
+                        // plugin.$root.find('.chat-title').text(data.Title);
+                        // plugin.$chat_blurb.text(data.Description);
 
                         if (parseInt(data.IsModerated, 10) !== 1) {
                             console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
