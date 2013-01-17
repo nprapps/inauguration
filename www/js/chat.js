@@ -22,7 +22,7 @@
             alert_interval: 500,
             read_only: false,
             scribble_host: 'apiv1.scribblelive.com',
-            posts_per_page: 1000
+            posts_per_page: 50 
         };
 
         var plugin = this;
@@ -68,8 +68,8 @@
             // plugin.$chat_blurb = plugin.$root.find('.chat-blurb');
             plugin.$chat_body = plugin.$root.find('.chat-body');
             plugin.$alerts = plugin.$root.find('.chat-alerts');
-            plugin.$show_more = plugin.$root.find('.chat-show-more');
             plugin.$chat_form = plugin.$root.find('.chat-user-entry');
+            plugin.$spinner = plugin.$root.find('.chat-spinner');
 
             plugin.$editor = plugin.$root.find('.chat-editor');
             plugin.$username = plugin.$editor.find('.chat-username');
@@ -101,7 +101,6 @@
             plugin.$npr_login_button.on('click', plugin.npr_login_click);
             plugin.$clear.on('click', plugin.clear_click);
             plugin.$comment_button.on('click', plugin.comment_click);
-            plugin.$show_more.on('click', plugin.show_more_click);
 
             // Initialize the user and the chat data.
             if (!plugin.settings.read_only) {
@@ -109,7 +108,7 @@
             }
 
             plugin.pause(false);
-
+        
         };
 
         plugin.pause = function(new_paused) {
@@ -118,9 +117,13 @@
             if (plugin.paused) {
                 clearTimeout(plugin.update_timer);
                 clearTimeout(plugin.alert_timer);
+
+                $(window).off('scroll', plugin.debounce_scrolled);
             } else {
                 plugin.update_live_chat();
                 plugin.update_alerts();
+
+                $(window).on('scroll', plugin.debounce_scrolled);
             }
         };
 
@@ -369,16 +372,29 @@
             });
 
             if (new_posts.length > 0) {
-                plugin.$chat_body.append(new_posts);
+                plugin.$spinner.before(new_posts);
             }
 
             plugin.process_edits();
 
             next_page_index += plugin.settings.posts_per_page;
 
-            plugin.$show_more.toggle(next_page_index < posts_on_load.length);
+            if (next_page_index >= posts_on_load.length) {
+                plugin.$spinner.remove();
+                plugin.$spinner = null;
+            }
         };
 
+        plugin.scrolled = function() {
+            var $window = $(window);
+
+            if (plugin.$spinner && plugin.$spinner.offset().top < $window.scrollTop() + $window.height()) {
+                plugin.render_post_page();
+            }
+        };
+
+        plugin.debounce_scrolled = _.debounce(plugin.scrolled, 300);
+        
         plugin.update_live_chat = function() {
             /*
              * Fetch latest posts and render them.
@@ -569,10 +585,6 @@
 
         plugin.comment_click = function() {
             plugin.post_comment({ content: plugin.$comment.val() });
-        };
-
-        plugin.show_more_click = function() {
-            plugin.render_post_page();
         };
 
         plugin.init();
