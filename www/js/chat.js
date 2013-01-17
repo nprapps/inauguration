@@ -399,7 +399,7 @@
         };
 
         plugin.debounce_scrolled = _.debounce(plugin.scrolled, 300);
-        
+
         plugin.update_live_chat = function() {
             /*
              * Fetch latest posts and render them.
@@ -411,8 +411,12 @@
                 success: function(data, status, xhr) {
                     if (parseInt(data.IsLive, 10) === 1) {
                         plugin.$chat_form.show();
+                        $('#chat-toggle .live').show();
+                        $('#chat-toggle .pregame').hide();
                     } else {
                         plugin.$chat_form.hide();
+                        $('#chat-toggle .pregame').show();
+                        $('#chat-toggle .live').hide();
                     }
 
                     if (first_load) {
