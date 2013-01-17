@@ -231,7 +231,7 @@
 
             var m = moment(post.Created);
             post.timestamp = parseInt(m.valueOf(), 10);
-            post.created_string = m.format('dddd, MMMM Do, YYYY - h:mm');
+            post.created_string = m.format('h:mm');
 
             if (m.hours() < 12) {
                 post.created_string += ' a.m.';
