@@ -63,14 +63,12 @@ describe('$.livechat', function() {
             update_interval: 100,
             scribble_host: window.location.host 
         }).data('livechat');
-
-        xhr_requests = [];
-
-        this.timers.tick(150);
+        
         expect(xhr_requests.length).toBe(1);
+        xhr_requests[0].respond(200, {}, JSON.stringify(getJSONFixture('chat_posts_base.json')));
 
         this.timers.tick(150);
-        expect(xhr_requests.length).toBe(3);
+        expect(xhr_requests.length).toBe(2);
     });
 
     describe('update_live_chat', function() {

@@ -108,7 +108,6 @@
                 plugin.toggle_user_context($.totalStorage(SCRIBBLE_AUTH_KEY), false);
             }
 
-            plugin.update_live_chat();
             plugin.pause(false);
 
         };
