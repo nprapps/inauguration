@@ -201,8 +201,8 @@
 }
 
 @media (max-width: 979px) {
-    .photo-list {
-        .tile {
+    #photo-feed {
+        .photo-list .tile {
             height: 130px;
         }
     }
@@ -210,9 +210,9 @@
 
 
 @media (max-width: 767px) {
-    .photo-list {
-        .tile {
-            height: 130px;
+    #photo-feed {
+        .photo-list .tile {
+            height: 95px;
         }
     }
 }
@@ -226,10 +226,14 @@
         overflow-y: hidden;
       }
 
-      img {
-        height: 100px;
-        width: auto;
-      }
+      .photo-list {
+          .tile {
+            height: 100px;
+            width: 120px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+          }
+        }
     }
 
     #mr-president-modal {

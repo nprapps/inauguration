@@ -42,16 +42,7 @@ $(document).ready(function() {
             var post = posts[j];
 
             var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">';
-
-            if ($(window).width() <= 480) {
-                // Mobile, pull small img size
-                html += '<img src="' + post['photo_url'] + '" />';
-            }
-
-            else {
-                // Desktop, pull larger img size
-                html += '<div class="tile" style="background:url(' + post['photo_url_250'] + ') center center no-repeat" />';
-            }
+            html += '<div class="tile" style="background:url(' + post['photo_url_250'] + ') center center no-repeat" />';
             html += '</a>';
             var $el = $(html);
 
@@ -84,6 +75,7 @@ $(document).ready(function() {
         }
 
         else {
+            $photo_feed.find('.load-more-spinner').remove();
             $photo_feed.css('width', "100%");
         }
     }
