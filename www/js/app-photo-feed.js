@@ -41,7 +41,7 @@ $(document).ready(function() {
         for (var j = 0; j < posts_length; j++) {
             var post = posts[j];
 
-            var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">'; 
+            var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">';
 
             if ($(window).width() <= 480) {
                 // Mobile, pull small img size
@@ -50,9 +50,8 @@ $(document).ready(function() {
 
             else {
                 // Desktop, pull larger img size
-                html += '<img src="' + post['photo_url_250'] + '" />';
+                html += '<div class="tile" style="background:url(' + post['photo_url_250'] + ') center center no-repeat" />';
             }
-                
             html += '</a>';
             var $el = $(html);
 
@@ -74,12 +73,13 @@ $(document).ready(function() {
         var photos_width = $photo_feed.find('a').length * 122;
         var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
 
-        if (next_photo_index[category] < feed_data[category].length) {
-            $photo_feed.append(spinner);
-            photos_width += 122; // spinner size
-        }
 
         if ($(window).width() <= 480) {
+            if (next_photo_index[category] < feed_data[category].length) {
+                $photo_feed.append(spinner);
+                photos_width += 122; // spinner size
+            }
+
             $photo_feed.css('width', photos_width + 'px');
         }
 
