@@ -28,14 +28,8 @@ try {
 	nprInaugurationHeight = '600';
 }
 
-try {
-	if (nprInaugurationAudio) {}
-} catch (err) {
-	nprInaugurationAudio = true;
-}
-
 document.write(
 '<script type="text/javascript">window.vsitag = {"imp":"inauguration2013"};</script>',
 '<script type="text/javascript" language="javascript" src="http://www.npr.org/include/javascript/zigi.js"></script>',
-'<iframe src="http://apps.npr.org/inauguration/external_widget.html?station=' + window.station + '&amp;hasAudio=' + nprInaugurationAudio + '" width="' + nprInaugurationWidth + '" height="' + nprInaugurationHeight + '" scrolling="auto" marginheight="0" marginwidth="0" frameborder="0" style="border: 1px solid #CCC;" ></iframe>',
+'<iframe src="http://apps.npr.org/inauguration/external_widget.html?station=' + window.station + '" width="' + nprInaugurationWidth + '" height="' + nprInaugurationHeight + '" scrolling="auto" marginheight="0" marginwidth="0" frameborder="0" style="border: 1px solid #CCC;" ></iframe>',
 '');
