@@ -17,9 +17,9 @@
             chat_id: null,
             chat_token: null,
             update_interval: 1000,
-            max_text_length: 80 
+            max_text_length: 80
         };
-        
+
         var plugin = this;
         plugin.settings = {};
         plugin.$root = $(element);
@@ -39,7 +39,7 @@
 
             chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
 
-            plugin.$post = plugin.$root.find('p'); 
+            plugin.$post = plugin.$root.find('p');
 
             plugin.update_live_chat();
         };

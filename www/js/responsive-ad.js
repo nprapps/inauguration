@@ -101,7 +101,7 @@ DFP.getParameterFromQueryString = function(strParamName) {
         }
     }
     return strReturn;
-}
+};
 
 DFP.queryParameters = {sc: DFP.getParameterFromQueryString('sc'), ft: DFP.getParameterFromQueryString('ft')};
 
@@ -135,7 +135,7 @@ DFP.renderLocation = function(deviceEnv) {
 
         var orient = '';
         if (NPR.Devices.isOnPhone() || NPR.Devices.isOnTablet()) {
-            if (window.orientation == 0 || window.orientation == 180) {
+            if (window.orientation === 0 || window.orientation == 180) {
                 orient = 'portrait';
             } else if (window.orientation == 90 || window.orientation == -90) {
                 orient = 'landscape';
@@ -154,8 +154,7 @@ DFP.renderLocation = function(deviceEnv) {
             + ';orient=' + orient
             + ';" type="text/javascript" language="javascript"></scr' + 'ipt>' + sponsorshiptext;
 
-		//console.log(toRender);
-		document.write(toRender);
+        document.write(toRender);
 
         if (NPR.Devices.isOnPhone()) {
             $(document).ready(function() {
@@ -163,7 +162,7 @@ DFP.renderLocation = function(deviceEnv) {
             });
         }
     }
-}
+};
 
 DFP.render88 = function(deviceEnv) {
     DFP.target = 'http://' + NPR.serverVars.DFPserver + '/adj/' + NPR.serverVars.DFPnetwork + '.' + NPR.serverVars.DFPsite + NPR.serverVars.DFPtarget;
@@ -176,13 +175,13 @@ DFP.render88 = function(deviceEnv) {
         + ';" type="text/javascript" language="javascript"></scr' + 'ipt>';
 
     document.write(toRender);
-}
+};
 
 DFP.hideAdsOnOrientationChange = function() {
     if (window.orientation == 90 || window.orientation == -90) {
         $('#adhesion').remove();
     }
-}
+};
 
 DFP.shouldRenderForDevice = function(deviceEnv) {
     if (!deviceEnv) {
@@ -200,12 +199,12 @@ DFP.shouldRenderForDevice = function(deviceEnv) {
                 } else if (!NPR.Devices.isOnTablet() && winWidth > 1024) {
                     shouldRender = true;
                 }
-                
+
                 break;
             case 'mobile':
                 if ((NPR.Devices.isOnPhone() || NPR.Devices.isOnTablet()) && winWidth >= 300 && winWidth <= 1024) {
                     // block ads from ever showing on small-screen mobile devices
-                    if (winWidth >= 480 || winOrientation == 0 || winOrientation == 180) {
+                    if (winWidth >= 480 || winOrientation === 0 || winOrientation == 180) {
 //                        if (document.cookie.indexOf('sponsorcap') === -1) {
                             shouldRender = true;
 //                            DFP.setCookieVal();
@@ -218,14 +217,13 @@ DFP.shouldRenderForDevice = function(deviceEnv) {
             default:
                 break;
         }
-		//console.log(deviceEnv + ' shouldRender: ' + shouldRender);
         return shouldRender;
     }
-}
+};
 
 DFP.setCookieVal = function() {
     var date = new Date();
     date.setTime(date.getTime()+(60*1000));
     var expires = "; expires="+date.toGMTString();
     document.cookie = "sponsorcap=true"+expires+"; path=/";
-}
+};

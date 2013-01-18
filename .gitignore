@@ -46,6 +46,7 @@ www/js/templates.js
 www/js/tables.min.js
 www/js/external-app-footer.min.js
 www/js/external-app-header.min.js
+www/js/hp-app-footer.min.js
 
 www/tumblr_form.html
 www/live-data/*.json
@@ -54,3 +55,4 @@ www/css/app-chat.css
 www/css/app-mr-president.css
 www/css/external-widget.min.css
 www/external_widget.html
+www/test_member_widget.html

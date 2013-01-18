@@ -1,6 +1,6 @@
 $(function(){
     // Constants for the live chat/widget
-    var CHAT_ID = '78788';
+    var CHAT_ID = '78919';
     var CHAT_TOKEN = 'FtP7wRfX';
     var CHAT_UPDATE_INTERVAL = 5000;
 
@@ -15,12 +15,12 @@ $(function(){
     var livechatwidget = null;
 
     $mrpres_tab.on('click', function() {
-    	$live.hide();
-    	$widget.show();
-    	$mrprez.show();
+        $live.hide();
+        $widget.show();
+        $mrprez.show();
 
-    	$(this).addClass('selected');
-    	$live_tab.removeClass('selected');
+        $(this).addClass('selected');
+        $live_tab.removeClass('selected');
 
         if (livechat) {
             livechat.pause(true);
@@ -43,12 +43,12 @@ $(function(){
     });
 
     $live_tab.on('click', function() {
-    	$live.show();
-    	$widget.hide();
-    	$mrprez.hide();
+        $live.show();
+        $widget.hide();
+        $mrprez.hide();
 
-    	$(this).addClass('selected');
-    	$mrpres_tab.removeClass('selected');
+        $(this).addClass('selected');
+        $mrpres_tab.removeClass('selected');
 
         if (livechatwidget) {
             livechatwidget.pause(true);
