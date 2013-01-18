@@ -39,13 +39,13 @@ $(document).ready(function() {
 
         if ($(window).width() <= 480) {
             var $slide = $slides.find('.slide');
-            
+
             if ($slide.length === 0) {
                 $slides.append(JST.photo_slide({
                     'category': category,
                     'slide': posts[0].id
                 }));
-            
+
                 var $slide = $slides.find('.slide');
                 
                 var lazy_fetch_next = _.debounce(fetch_next, 300);
