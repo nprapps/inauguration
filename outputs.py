@@ -230,8 +230,9 @@ def write_mr_president_json():
         }
 
         for tag in post['tags']:
-            if len(output[tag]) <= MAX_PER_CATEGORY:
-                output[tag].append(simple_post)
+            if tag in output:
+                if len(output[tag]) <= MAX_PER_CATEGORY:
+                    output[tag].append(simple_post)
 
         if len(output['latest']) <= MAX_PER_CATEGORY:
             output['latest'].append(simple_post)
