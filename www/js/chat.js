@@ -22,7 +22,7 @@
             alert_interval: 500,
             read_only: false,
             scribble_host: 'apiv1.scribblelive.com',
-            posts_per_page: 50 
+            posts_per_page: 50
         };
 
         var plugin = this;
@@ -108,7 +108,7 @@
             }
 
             plugin.pause(false);
-        
+
         };
 
         plugin.pause = function(new_paused) {
@@ -423,10 +423,6 @@
                         // plugin.$root.find('.chat-title').text(data.Title);
                         // plugin.$chat_blurb.text(data.Description);
 
-                        if (parseInt(data.IsModerated, 10) !== 1) {
-                            console.log('WARNING: Loading unmoderated chat! (This isn\'t supported.)');
-                        }
-
                         posts_on_load = data.Posts;
                         post_ids = _.pluck(posts_on_load, 'Id');
 
@@ -540,18 +536,9 @@
                 timeout: 2500,
                 data: { auth: b64_payload, platform: 'CRMAPP' },
                 success: function(response) {
-                    console.log('success');
                     $.totalStorage(OAUTH_KEY, response.user_data);
                     plugin.scribble_auth_user({ auth_route: 'anonymous', username: response.user_data.nick_name });
                     plugin.toggle_user_context(OAUTH_KEY, true);
-                }, error: function(xhr, textStatus, error) {
-                    console.log('error');
-                    alerts.push({
-                        klass: 'alert-error',
-                        title: 'Login failed!',
-                        text: 'Your username or password may be incorrect. Please try again.'
-                    });
-                    plugin.update_alerts();
                 }
             });
         };
