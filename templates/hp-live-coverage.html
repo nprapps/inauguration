@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Inauguration 2013 : NPR</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <base target="_top" />
+
+    {{ CSS.push('less/hp.less') }}
+    {{ CSS.render('css/hp.min.css') }}
+
+	{{ JS.push('js/lib/jquery-1.8.3.js') }}
+	{{ JS.render('js/hp-app-header.min.js') }}
+
+    <base target="_top" />
+</head>
+<body>
+
+<div id="hpContent">
+
+	<div id="live">
+		<h3><a href="http://apps.npr.org/inauguration/">Live Coverage</a></h3>
+		<p>Listen to our broadcast from the Capitol and join us in a live chat.</p>
+		<h4>On The Air</h4>
+		<p id="on-air">
+			<a href="http://apps.npr.org/inauguration/">
+			<strong>Live Special Coverage</strong><br />
+			<span>from NPR News</span>
+			</a>
+		</p>
+	</div>
+
+	<div id="chat-update">
+		<h4>Latest In The Chat</h4>
+		<div id="live-chat-widget"></div>
+	</div>
+
+	<div id="schedule">
+		<h4>Coming Up</h4>
+		<ul>
+			<li><strong>11:30 a.m. ET</strong><br />
+				Swearing-in ceremony and inaugural address</li>
+			<li><strong>2:35 p.m. ET (approx)</strong><br />
+				Inaugural Parade</li>
+		</ul>
+		<p class="more"><a href="http://apps.npr.org/inauguration/">Join Us</a></p>
+	</div>
+
+</div>
+    
+{{ JS.push('js/lib/underscore.js') }}
+{{ JS.push('js/lib/moment.js') }}
+{{ JS.push('js/templates.js') }}
+{{ JS.push('js/chat-widget.js') }}
+{{ JS.push('js/external-widget.js') }}
+{{ JS.render('js/hp-app-footer.min.js') }}
+
+</body>
+</html>

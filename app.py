@@ -44,6 +44,15 @@ def external_widget():
     """
     return render_template('external_widget.html', **make_context())
 
+
+@app.route('/hp-live-coverage.html')
+def hp_live_coverage():
+    """
+    External widget for homepage use during live coverage.
+    """
+    return render_template('hp-live-coverage.html', **make_context())
+
+
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
 def _less(filename):
