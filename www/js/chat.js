@@ -162,13 +162,13 @@
                 success: function(response) {
                     plugin.$comment.val('');
 
-                    if (response.Code === 202) {
+                    _.once(function () {
                         alerts.push({
-                            klass: 'alert-info',
-                            title: 'Awaiting moderation!',
-                            text: 'Your comment is awaiting moderation.<br/>You said, "'+ text +'"'
+                          klass: 'alert-info',
+                          title: 'Awaiting moderation!',
+                          text: 'Your comment is awaiting moderation.'
                         });
-                    }
+                    });
                 }
             });
         }
