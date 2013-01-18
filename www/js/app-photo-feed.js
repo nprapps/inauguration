@@ -144,7 +144,6 @@ $(document).ready(function() {
     function fetch_next() {
         var spinners = $('.load-more-spinner');
         spinners.each(function (i, spinner) {
-            console.log($(spinner).offset().left)
             if ($(spinner).offset().left < $(window).width()) {
                 var category = $(spinner).attr('data-category');
                 update_category(category);
