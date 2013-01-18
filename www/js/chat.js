@@ -412,10 +412,12 @@
                         plugin.$chat_form.show();
                         $('#chat-toggle .live').show();
                         $('#chat-toggle .pregame').hide();
+                        $('#live-chat-widget-wrapper').hide();
                     } else {
                         plugin.$chat_form.hide();
                         $('#chat-toggle .pregame').show();
                         $('#chat-toggle .live').hide();
+                        $('#live-chat-widget-wrapper').hide();
                     }
 
                     if (first_load) {

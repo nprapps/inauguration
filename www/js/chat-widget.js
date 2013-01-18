@@ -66,6 +66,17 @@
                 dataType: 'jsonp',
                 cache: false,
                 success: function(data) {
+                    
+                    if (parseInt(data.IsLive, 10) === 1) {
+                        $('#chat-toggle .live').show();
+                        $('#chat-toggle .pregame').hide();
+                        $('#live-chat-widget-wrapper').show();
+                    } else {
+                        $('#chat-toggle .pregame').show();
+                        $('#chat-toggle .live').hide();
+                        $('#live-chat-widget-wrapper').hide();
+                    }
+                    
                     var posts_length = data.Posts.length;
 
                     for (i = 0; i < posts_length; i++) {
