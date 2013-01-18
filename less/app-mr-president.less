@@ -213,9 +213,11 @@
                 }
             }
     }
-    
+
     button { display: none; }
     .tumblrlink {
+        &:before { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+
     	display: none;
     	a {
     		display: inline-block;
