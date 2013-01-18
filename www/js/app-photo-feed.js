@@ -126,9 +126,6 @@ $(document).ready(function() {
 
         else {
             // Desktop photo grid view, remove tumblr link from $photos div and append it
-            $tumblrlink.remove();
-            $photo_feed.append($tumblrlink);
-            $tumblrlink.show();
 
             $photo_feed.find('.load-more-spinner').remove();
             //$photo_feed.css('width', "100%");
@@ -211,14 +208,17 @@ $(document).ready(function() {
         var category = $slide.parent().data('category');
         var $next_slide = $slide.next('.slide');
         var $prev_slide = $slide.prev('.slide');
+        var $tumblrlink = $slide.find('.tumblrlink').remove();
 
         $slide.find('.previous-photos').toggle($prev_slide.length > 0);
-        
+
         // Another slide or more to render?
         if ($next_slide.length > 0 || next_photo_index[category] < feed_data[category].length) {
             $slide.find('.next-photos').show();
         } else {
             $slide.find('.next-photos').hide();
+            $slide.append($tumblrlink);
+            $tumblrlink.show();
         }
     }
 
@@ -227,7 +227,7 @@ $(document).ready(function() {
         var $slides = $slide.parent();
         var $section = $slides.parent();
         var category = $slides.data('category');
-        
+
         var $next_slide = $slide.next('.slide');
 
         if ($next_slide.length === 0) {
@@ -252,7 +252,7 @@ $(document).ready(function() {
         var $slides = $slide.parent();
         var $section = $slides.parent();
         var category = $slides.data('category');
-        
+
         var $prev_slide = $slide.prev('.slide');
 
         $.smoothScroll({
