@@ -98,8 +98,9 @@ p.more a {
   margin: 0 -10px 18px -15px;
 }
 #hpMrPresident {
-  width: 624px;
-  padding-left: 15px;
+  border-top: 1px dotted #CCC;
+  padding-top: 18px;
+  margin-left: 15px;
 }
 #hpMrPresident:after {
   visibility: hidden;
