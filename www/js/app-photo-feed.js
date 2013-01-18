@@ -2,7 +2,7 @@ $(document).ready(function() {
     var PHOTO_CATEGORIES = ['ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
 
     var MAX_PHOTOS_PER_CATEGORY = 100;
-    var PHOTOS_PER_PAGE = 20;
+    var PHOTOS_PER_PAGE = 12;
 
     var photos = {};
     var feed_data = null;
@@ -47,7 +47,7 @@ $(document).ready(function() {
                 }));
 
                 var $slide = $slides.find('.slide');
-                
+
                 var lazy_fetch_next = _.debounce(fetch_next, 300);
                 $slide.scroll(lazy_fetch_next);
             }
