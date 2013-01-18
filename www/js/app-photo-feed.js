@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var PHOTO_CATEGORIES = ['latest', 'nprpicks', 'ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
+    var PHOTO_CATEGORIES = ['ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
 
     var MAX_PHOTOS_PER_CATEGORY = 100;
     var PHOTOS_PER_PAGE = 20;
