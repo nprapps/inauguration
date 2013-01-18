@@ -6,6 +6,27 @@ a { color: #000; text-decoration: none; font-weight: bold; }
 a:hover, a:active { color: #36c; text-decoration: underline; }
 
 #hpContent { width: 138px; padding-left: 15px; }
+#hpMrPresident { 
+	width: 624px; padding-left: 15px;
+	
+	&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+	.col { 
+		width: 138px; margin-left: 24px; float: left;
+
+		&:first-child { margin-left: 0; }
+		&.img a { 
+			display: block; 
+			width: 138px; height: 103px; 
+			background-image: url('../img/hp-promo-mr-president.jpg'); 
+			background-repeat: no-repeat; 
+
+			&:hover { opacity: 0.7; }
+			&.img1 { background-position: 0 0;  }
+			&.img2 { background-position: -162px 0; }
+			&.img3 { background-position: -324px 0; }
+		}
+	}
+}
 
 h3 {
 	font-size: 16px;

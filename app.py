@@ -53,6 +53,14 @@ def hp_live_coverage():
     return render_template('hp-live-coverage.html', **make_context())
 
 
+@app.route('/hp-mr-president.html')
+def hp_mr_president():
+    """
+    External widget for homepage use during live coverage.
+    """
+    return render_template('hp-mr-president.html', **make_context())
+
+
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
 def _less(filename):
