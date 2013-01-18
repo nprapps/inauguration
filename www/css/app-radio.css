@@ -101,7 +101,7 @@
   background: url('../img/coming-soon-upper-tab.png') no-repeat right bottom;
 }
 #comingsoon .message {
-  font: bold 12px Arial;
+  font: bold 12px Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   color: #FFF;
   padding: 20px 35px 0 30px;
@@ -141,7 +141,13 @@ body.no-audio.comingsoon #comingsoon {
   margin-top: 0;
 }
 body.no-audio.comingsoon #comingsoon .message {
-  padding-top: 22px;
+  padding-top: 27px;
+}
+body.no-audio.comingsoon.pregame #comingsoon {
+  margin-top: 0;
+}
+body.no-audio.comingsoon.pregame #comingsoon .message {
+  padding-top: 21px;
 }
 @media (max-width: 767px) {
   #radio-topper {
@@ -150,9 +156,29 @@ body.no-audio.comingsoon #comingsoon .message {
     padding-right: 20px;
     padding-left: 20px;
   }
+  #radio-topper h1 {
+    font-size: 44px;
+    padding-top: 66px;
+  }
+  #radio {
+    margin-bottom: 0;
+  }
+  #comingsoon {
+    margin-left: -20px;
+  }
+  #comingsoon b {
+    display: none;
+  }
+  #comingsoon .message {
+    padding-left: 20px;
+  }
 }
 @media (max-width: 480px) {
   #radio-topper h1 {
     font-size: 40px;
+    padding-top: 33px;
+  }
+  #mr-president h2 {
+    font-size: 30px;
   }
 }
