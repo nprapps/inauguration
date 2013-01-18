@@ -162,13 +162,14 @@
                 success: function(response) {
                     plugin.$comment.val('');
 
-                    _.once(function () {
+                    var alert_once = _.once(function () {
                         alerts.push({
                           klass: 'alert-info',
                           title: 'Awaiting moderation!',
                           text: 'Your comment is awaiting moderation.'
                         });
                     });
+                    alert_once();
                 }
             });
         }
@@ -201,6 +202,7 @@
             });
 
             // Adds any new alerts with each pass.
+            console.log(alerts);
             _.each(alerts, function(alert, index, list) {
                 alerts.splice(alert);
                 alert.expires = parseInt(moment().add('seconds', 3).valueOf(), 10);
