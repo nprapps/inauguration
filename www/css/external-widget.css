@@ -78,6 +78,9 @@ p {
   background: url('../img/playButtonOver.png') no-repeat center center;
   float: left;
 }
+#live-chat-widget-wrapper {
+  display: none;
+}
 #live-chat-widget {
   margin-bottom: 11px;
 }
