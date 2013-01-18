@@ -67,6 +67,7 @@
 {% endblock %}
 
 {% block extra_foot_js %}
+    {{ JS.push('js/lib/jquery.smooth-scroll.js') }}
     {{ JS.push('js/auth.js') }}
     {{ JS.push('js/app-radio.js') }}
     {{ JS.push('js/app-photo-feed.js') }}

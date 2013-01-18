@@ -35,7 +35,49 @@ $(document).ready(function() {
 
     function render_category_feed(category, posts) {
         var posts_length = Math.min(posts.length, MAX_PHOTOS_PER_CATEGORY);
-        var $photos = $("#photos-" + category);
+        var $slides = $("#photos-" + category);
+
+        if ($(window).width() <= 480) {
+            var $slide = $slides.find('.slide');
+            
+            if ($slide.length === 0) {
+                $slides.append(JST.photo_slide({
+                    'category': category,
+                    'slide': posts[0].id
+                }));
+            
+                var $slide = $slides.find('.slide');
+                
+                var lazy_fetch_next = _.debounce(fetch_next, 300);
+                $slide.scroll(lazy_fetch_next);
+            }
+
+            var $photos = $slide.find(".photo-list");
+        } else {
+            var width = $('#photo-feed').width();
+
+            $slides.css({
+                'z-index': '999',
+                'width': '10000px',
+                'overflow': 'hidden'
+            });
+
+            $slides.append(JST.photo_slide({
+                'category': category,
+                'slide': posts[0].id
+            }));
+            var $slide = $slides.find('.slide').last();
+
+            $slide.css({
+                'position': 'relative',
+                'overflow': 'hidden',
+                'float': 'left',
+                'width': width + 'px'
+            });
+
+            var $photos = $slide.find(".photo-list");
+        }
+
         var new_photos = [];
 
         for (var j = 0; j < posts_length; j++) {
@@ -60,16 +102,15 @@ $(document).ready(function() {
     }
 
     function resize_photo_feed(category) {
-        var $photo_feed = $('#photos-' + category);
+        var $photo_feed = $('#photos-' + category).find('.photo-list');
         var photos_width = $photo_feed.find('a').length * 122;
         var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
-        var tumblr_link = $('#tumblrlink-' + category);
-
+        var $tumblrlink = $photo_feed.find('.tumblrlink');
 
         if ($(window).width() <= 480) {
             // Mobile photo view, keep tumblr link within $photos div
 
-            tumblr_link.hide();
+            $tumblrlink.hide();
 
             if (next_photo_index[category] < feed_data[category].length) {
                 $photo_feed.append(spinner);
@@ -79,18 +120,24 @@ $(document).ready(function() {
             $photo_feed.css('width', photos_width + 'px');
 
             if (next_photo_index[category] >= feed_data[category].length) {
-                $('#tumblrlink-' + category).show();
+                $tumblrlink.show();
             }
         }
 
         else {
             // Desktop photo grid view, remove tumblr link from $photos div and append it
-            tumblr_link.remove();
-            $photo_feed.append(tumblr_link);
-            $(tumblr_link).show();
+            $tumblrlink.remove();
+            $photo_feed.append($tumblrlink);
+            $tumblrlink.show();
 
             $photo_feed.find('.load-more-spinner').remove();
-            $photo_feed.css('width', "100%");
+            //$photo_feed.css('width', "100%");
+
+            var width = $('#photo-feed').width();
+
+            $('.photo-section').width(width + 'px');
+            //$('.slides').width(width + 'px');
+            $('.slide').width(width + 'px');
         }
     }
 
@@ -107,10 +154,7 @@ $(document).ready(function() {
     function update_category(category) {
         var posts = get_next_photos(category, feed_data[category]);
 
-        var $photos = $("#photos-" + category);
         render_category_feed(category, posts);
-
-        $photos = null;
     }
 
     function render_modal() {
@@ -145,7 +189,13 @@ $(document).ready(function() {
 
             _.each(PHOTO_CATEGORIES, function(category) {
                 update_category(category);
+        
+                var $slides = $("#photos-" + category);
+                var $slide = $slides.find('.slide');
+
+                update_page_links($slide);
             });
+
         }).then(function() {
             _.each(PHOTO_CATEGORIES, function(category) {
               var lazy_resize_photo_feed = _.debounce(function () { resize_photo_feed(category) }, 300);
@@ -155,10 +205,66 @@ $(document).ready(function() {
 
         $photo_container.delegate('.photo-link', 'click', render_modal);
         $photo_modal.delegate('.navigate', 'click', modal_link_clicked);
-
-        var lazy_fetch_next = _.debounce(fetch_next, 300);
-        $('#photo-feed .wrapper').scroll(lazy_fetch_next);
     }
+
+    function update_page_links($slide) {
+        var category = $slide.parent().data('category');
+        var $next_slide = $slide.next('.slide');
+        var $prev_slide = $slide.prev('.slide');
+
+        $slide.find('.previous-photos').toggle($prev_slide.length > 0);
+        
+        // Another slide or more to render?
+        if ($next_slide.length > 0 || next_photo_index[category] < feed_data[category].length) {
+            $slide.find('.next-photos').show();
+        } else {
+            $slide.find('.next-photos').hide();
+        }
+    }
+
+    $photo_container.on('click', '.next-photos', function() {
+        var $slide = $(this).parent();
+        var $slides = $slide.parent();
+        var $section = $slides.parent();
+        var category = $slides.data('category');
+        
+        var $next_slide = $slide.next('.slide');
+
+        if ($next_slide.length === 0) {
+            update_category(category);
+
+            $next_slide = $slide.next('.slide');
+        }
+
+        $.smoothScroll({
+            direction: 'left',
+            scrollElement: $section,
+            scrollTarget: '#' + $next_slide.attr('id')
+        });
+
+        update_page_links($next_slide);
+
+        return false;
+    });
+
+    $photo_container.on('click', '.previous-photos', function() {
+        var $slide = $(this).parent();
+        var $slides = $slide.parent();
+        var $section = $slides.parent();
+        var category = $slides.data('category');
+        
+        var $prev_slide = $slide.prev('.slide');
+
+        $.smoothScroll({
+            direction: 'left',
+            scrollElement: $section,
+            scrollTarget: '#' + $prev_slide.attr('id')
+        });
+
+        update_page_links($prev_slide);
+
+        return false;
+    });
 
     init();
 });
