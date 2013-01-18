@@ -33,6 +33,7 @@ gzip
 node_modules
 www/index.html
 www/simple.html
+www/external_widget.html
 www/table.html
 www/map.html
 www/test_member_widget.html
