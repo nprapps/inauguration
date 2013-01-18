@@ -16,39 +16,25 @@
 {% endblock %}
 
 {% block main_content %}
-	<div id="toggles">
-		<div class="container">
-			<div class="row">
-				<div class="span12">
-					<ul>
-						<li id="mr-president-toggle" class="selected"><span>
-							<h3>Send A Postcard To The President</h3>
-						</span></li>
-						<li id="chat-toggle"><span>
-							<h3><span class="live">LIVE NOW: </span>Inauguration Chat</h3>
-							<div id="live-chat-widget"></div>
-						</span></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-
     <div id="live-chat" style="display:none;"></div>
 
 	<div id="mr-president">
-		<div class="container">
-			<div class="row">
-				<div class="span4">
-					<h2>Dear Mr. President</h2>
-					<p class="prompt">President Obama will soon be sworn into office, and whether you voted for him or not, he's everybody's president. What do you want him to remember in his second term?</p>
-					<p><a href="#mr-president-modal" role="button" class="modal-btn" data-toggle="modal"><span></span>Send Us Your Postcard</a></p>
-				</div>
-				<div class="span8">
-					<iframe width="100%" height="420" src="http://www.npr.org/templates/event/embeddedVideo.php?storyId=169512970" frameborder="0" scrolling="no"></iframe>
-					<p><a href="http://www.npr.org/blogs/itsallpolitics/2013/01/16/169512970/dear-mr-president-tell-obama-your-priority-for-his-2nd-term">More: Listen To The Radio Story &rsaquo;</a></p>
+		<div class="mr-president-topper">
+			<div class="container">
+				<div class="row">
+					<div class="span4">
+						<h2>Dear Mr. President</h2>
+						<p class="prompt">President Obama will soon be sworn into office, and whether you voted for him or not, he's everybody's president. What do you want him to remember in his second term?</p>
+						<p><a href="#mr-president-modal" role="button" class="modal-btn" data-toggle="modal"><span></span>Send Us Your Postcard</a></p>
+					</div>
+					<div class="span8">
+						<iframe width="100%" height="420" src="http://www.npr.org/templates/event/embeddedVideo.php?storyId=169512970" frameborder="0" scrolling="no"></iframe>
+						<p><a href="http://www.npr.org/blogs/itsallpolitics/2013/01/16/169512970/dear-mr-president-tell-obama-your-priority-for-his-2nd-term">More: Listen To The Radio Story &rsaquo;</a></p>
+					</div>
 				</div>
 			</div>
+		</div>
+		<div class="container">
 			<div class="row">
 				<div class="span12">
 					{% include '_mr_president_photo_feed.html' %}
@@ -56,7 +42,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<div id="mr-president-modal" class="modal hide fade">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -65,6 +51,17 @@
 		<div class="modal-body">
 			{% include '_mr_president.html' %}
 			<p class="legalese">By submitting an image, you certify that you created, or have ownership of the work. You retain the copyright in the image, but grant to NPR a non-exclusive, perpetual right to use the image, without payment and without further notice, on NPR's website, and in any other current or future NPR services (including websites, mobile services, applications and publications, anywhere in the world that NPR may offer these services). This right includes the right to copy, transmit, display, distribute, create derivative works of, and/or adapt the image. NPR also has the right to distribute and/or sublicense the image to its Member Stations, end users and other third parties in connection with NPR's distribution and/or sublicensing of related content. You grant NPR the right to use your name in a credit for the image and you agree that you have provided NPR accurate credit information.</p>
+		</div>
+	</div>
+	
+	<div id="credits">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<p>Banner photo: Inauguration 2009 photo by Robert Nickelsberg/Getty Images</p>
+					<p>Credits: Jeremy Bowers, Brian Boyer, Rachel Brody, Christopher Groskopf, Alyson Hurt, Justine Kenin, Becky Lettenberger, Kate Myers, Erica Ryan, Katie Zhu / NPR</p>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}

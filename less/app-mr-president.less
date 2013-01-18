@@ -1,10 +1,13 @@
 #mr-president {
-	padding-top: 33px;
-
 	h2 {
 		font: normal 36px Arial, Helvetica, sans-serif;
 		color: #555;
 		margin: 0 0 22px 0;
+	}
+	.mr-president-topper {
+		background-color: #ebebeb;
+		padding-top: 33px;
+		padding-bottom: 11px;
 	}
 	.modal-btn {
 		display: block;
@@ -152,7 +155,6 @@
 }
 
 #photo-feed {
-
     h2 {
     	font: normal 22px Arial, Helvetica, sans-serif;
     	color: #666;
@@ -165,6 +167,7 @@
             border-top: 2px solid #ebebeb;
             padding: 20px 0;
 
+			&:first-child { border-top: none; }
             &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
     }
 
@@ -304,6 +307,10 @@
     	.modal-photo, .modal-caption { width: auto; float: none; }
     	.modal-photo { padding-bottom: 0; }
     }
+	#mr-president .mr-president-topper { 
+		margin-left: -20px; margin-right: -20px; 
+		padding-left: 20px; padding-right: 20px;
+	}
 }
 
 @media (max-width: 480px) {
@@ -314,7 +321,6 @@
         overflow-x: scroll;
         overflow-y: hidden;
       }
-
       .photo-list {
       	  .tumblrlink {
       	  	width: 120px;

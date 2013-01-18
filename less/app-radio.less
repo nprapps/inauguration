@@ -3,14 +3,16 @@
 
 
 #radio-topper {
-	background-color: #484e58;
+	background: #484e58 url('@{img-root}/background-image-test.jpg') no-repeat 50% 50%;
+	background-size: cover;
 	color: #ddd;
 	
 	h1 {
-		padding-top: 44px;
+		padding-top: 113px;
 		font: normal 54px Arial, Helvetica, sans-serif;
-		margin: 0 0 22px 0;
+		margin: 0 0 11px 0;
 		color: #fff;
+		text-shadow: 1px 2px 10px rgba(32,32,32,.4);
 	}
 }
 
@@ -19,12 +21,12 @@
 	color: #FFF;
 	background: #2c313a;
 	padding: 11px 9px;
-	margin: 0 0 11px 0;
+	margin: 0 0 22px 0;
 	font-family:Arial,sans-serif;
 	display:none;
 	-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
-	border-top: 1px solid #0a0b0d;
-	border-bottom: 1px solid #595d65;
+	border-top: 1px solid #22262d;
+	border-bottom: 1px solid #353a44;
 	
 	#jwplayer_wrapper { float:left; margin: 0 10px 4px 4px; }
 	#radio-htmlstream { display:none; height: 0; }
@@ -57,10 +59,26 @@
 
 
 #comingsoon { 
-	position:relative; background: url('@{img-root}/coming-soon-bg-wide.png') no-repeat right bottom; height:62px; margin:55px 0 15px -12px; float:left; display:none;
+	position:relative; 
+	background: url('@{img-root}/coming-soon-bg-wide.png') no-repeat right bottom; 
+	height:62px; 
+	margin:55px 0 15px -12px; 
+	float:left; 
+	display:none;
 	
-	b { position:absolute; top:0; left:0; display:block; width:12px; height:6px; overflow:hidden; background: url('@{img-root}/coming-soon-upper-tab.png') no-repeat right bottom; }
-	.message { font:bold 12px Arial; text-transform:uppercase; color:#FFF; padding:20px 35px 0 30px; }
+	b { 
+		position:absolute; top:0; left:0; 
+		display:block; 
+		width:12px; height:6px; 
+		overflow:hidden; 
+		background: url('@{img-root}/coming-soon-upper-tab.png') no-repeat right bottom;
+	}
+	.message { 
+		font:bold 12px Arial, Helvetica, sans-serif; 
+		text-transform:uppercase; 
+		color:#FFF; 
+		padding:20px 35px 0 30px;
+	}
 }
 
 
@@ -69,21 +87,48 @@ body.no-audio #radio { display:none; }
 body.comingsoon #comingsoon { display:block; }
 body.not-coming #comingsoon { display:none; }
 
-body.audio.comingsoon #comingsoon { margin: -12px 0 0 0; position: absolute; top: 0; left: 0; height: auto; }
-body.audio.comingsoon #comingsoon b { display: none; }
-body.audio.comingsoon #comingsoon .message { padding-left: 15px; padding-top: 12px; padding-bottom: 12px; }
-body.audio.comingsoon #radio #radio-feedback { clear: none; margin-top: 5px; }
+body.audio.comingsoon {
+	#comingsoon { 
+		margin: -12px 0 0 0; 
+		position: absolute; top: 0; left: 0; 
+		height: auto;
+
+		b { display: none; }
+		.message { padding-left: 15px; padding-top: 12px; padding-bottom: 12px; }
+	}
+	#radio #radio-feedback { clear: none; margin-top: 5px; }
+}
 
 body.audio.not-coming {}
 
-body.no-audio.comingsoon {}
-body.no-audio.comingsoon #comingsoon { margin-top: 0; }
-body.no-audio.comingsoon #comingsoon .message { padding-top: 27px; }
+body.no-audio.comingsoon {
+	#comingsoon { 
+		margin-top: 0;
+		.message { padding-top: 27px; }
+	}
+	&.pregame {
+		#comingsoon { 
+			margin-top: 0;
+			.message { padding-top: 21px; }
+		}
+	}
+}
 
 
 @media (max-width: 767px) {
-	#radio-topper { margin-left: -20px; margin-right: -20px; padding-right: 20px; padding-left: 20px; }
+	#radio-topper { 
+		margin-left: -20px; margin-right: -20px; padding-right: 20px; padding-left: 20px;
+		h1 { font-size: 44px; padding-top: 66px; }
+	}
+	#radio { margin-bottom: 0; }
+	#comingsoon {
+		margin-left: -20px;
+
+		b { display: none; }
+		.message { padding-left: 20px; }
+	}
 }
 @media (max-width: 480px) {
-	#radio-topper h1 { font-size: 40px; }
+	#radio-topper h1 { font-size: 40px; padding-top: 33px; }
+	#mr-president h2 { font-size: 30px; }
 }

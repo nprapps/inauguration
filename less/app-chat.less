@@ -27,6 +27,9 @@
 }
 
 .chat-body {
+    
+    margin-right: 22px;
+    
     .chat-post {
         padding: 15px 0;
         border-top: 1px solid #dee2e7;
@@ -43,6 +46,7 @@
         width: 50px;
         height: 50px;
         margin: 0;
+        background-color: #f7f7f7;
         
         img { 
         	width: 100%; height: auto; 
@@ -63,7 +67,7 @@
     	margin-bottom: 0;
 
 		.chat-post-author { font-weight: bold; color: #444; }
-		.chat-post-datetime { font-size: 95%; float:right; margin-right: 25px; }
+		.chat-post-datetime { font-size: 95%; float:right; }
 		.bullet { padding: 0 3px; font-size: 75%; color: #ccc; line-height: 1.4; }
     }
 	p.chat-post-content {
@@ -200,6 +204,11 @@
 	}
 }
 @media (max-width: 767px) {
+    
+    .chat-body {
+        margin-right: 0;
+    }
+    
 	.chat-user-entry {
 		padding-bottom: 11px;
 		margin: 0 -20px 11px -20px;
@@ -226,5 +235,4 @@
 	}
 }
 @media (max-width: 480px) {
-	#live-chat-widget { display: none; }
 }
