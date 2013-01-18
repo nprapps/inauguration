@@ -154,21 +154,18 @@
             var auth = $.totalStorage(SCRIBBLE_AUTH_KEY);
             var content_param = '&Content=' + encodeURIComponent(text);
             var auth_param = '&Auth=' + auth.Auth;
-
             $.ajax({
                 url: chat_url + content_param + auth_param,
                 dataType: 'jsonp',
                 cache: false,
                 success: function(response) {
                     plugin.$comment.val('');
+                    alerts.push({
+                      klass: 'alert-info',
+                      title: 'Awaiting moderation!',
+                      text: 'Your comment is awaiting moderation.'
+                    });
 
-                    if (response.Code === 202) {
-                        alerts.push({
-                            klass: 'alert-info',
-                            title: 'Awaiting moderation!',
-                            text: 'Your comment is awaiting moderation.<br/>You said, "'+ text +'"'
-                        });
-                    }
                 }
             });
         }
@@ -191,6 +188,7 @@
             /*
             * Adds and expires alerts.
             */
+
             // Expires old alerts with each pass.
             var now = parseInt(moment().valueOf(), 10);
             _.each($('div.alert'), function(alert_div, index, list) {
@@ -202,12 +200,13 @@
 
             // Adds any new alerts with each pass.
             _.each(alerts, function(alert, index, list) {
-                alerts.splice(alert);
+                alerts = [];
                 alert.expires = parseInt(moment().add('seconds', 3).valueOf(), 10);
                 alert_html = JST.alert({ alert: alert });
                 plugin.$alerts.append(alert_html);
             });
 
+            // Ignore if paused.
             if (!plugin.paused) {
                 plugin.alerts_timer = setTimeout(plugin.update_alerts, plugin.settings.alert_interval);
             }
