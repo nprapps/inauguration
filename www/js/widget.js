@@ -25,7 +25,7 @@ try {
 try {
 	if (nprInaugurationHeight) {}
 } catch (err) {
-	nprInaugurationHeight = '600';
+	nprInaugurationHeight = '500';
 }
 
 document.write(
