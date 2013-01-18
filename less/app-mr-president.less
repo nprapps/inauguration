@@ -172,8 +172,12 @@
             &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
     }
 
-    .slide {
-      width: 100%;
+	.slide {
+		width: 100%;
+
+		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+		.previous-photos { float: left; font-weight: bold; }
+		.next-photos { float: right; font-weight: bold; }
     }
 
     .photo-list {
@@ -201,7 +205,7 @@
                 }
             }
     }
-
+    
     button { display: none; }
     .tumblrlink {
     	display: none;
