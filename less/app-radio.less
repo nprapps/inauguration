@@ -59,10 +59,26 @@
 
 
 #comingsoon { 
-	position:relative; background: url('@{img-root}/coming-soon-bg-wide.png') no-repeat right bottom; height:62px; margin:55px 0 15px -12px; float:left; display:none;
+	position:relative; 
+	background: url('@{img-root}/coming-soon-bg-wide.png') no-repeat right bottom; 
+	height:62px; 
+	margin:55px 0 15px -12px; 
+	float:left; 
+	display:none;
 	
-	b { position:absolute; top:0; left:0; display:block; width:12px; height:6px; overflow:hidden; background: url('@{img-root}/coming-soon-upper-tab.png') no-repeat right bottom; }
-	.message { font:bold 12px Arial; text-transform:uppercase; color:#FFF; padding:20px 35px 0 30px; }
+	b { 
+		position:absolute; top:0; left:0; 
+		display:block; 
+		width:12px; height:6px; 
+		overflow:hidden; 
+		background: url('@{img-root}/coming-soon-upper-tab.png') no-repeat right bottom;
+	}
+	.message { 
+		font:bold 12px Arial, Helvetica, sans-serif; 
+		text-transform:uppercase; 
+		color:#FFF; 
+		padding:20px 35px 0 30px;
+	}
 }
 
 
@@ -73,7 +89,9 @@ body.not-coming #comingsoon { display:none; }
 
 body.audio.comingsoon {
 	#comingsoon { 
-		margin: -12px 0 0 0; position: absolute; top: 0; left: 0; height: auto;
+		margin: -12px 0 0 0; 
+		position: absolute; top: 0; left: 0; 
+		height: auto;
 
 		b { display: none; }
 		.message { padding-left: 15px; padding-top: 12px; padding-bottom: 12px; }
@@ -86,14 +104,31 @@ body.audio.not-coming {}
 body.no-audio.comingsoon {
 	#comingsoon { 
 		margin-top: 0;
-		.message { padding-top: 22px; }
+		.message { padding-top: 27px; }
+	}
+	&.pregame {
+		#comingsoon { 
+			margin-top: 0;
+			.message { padding-top: 21px; }
+		}
 	}
 }
 
 
 @media (max-width: 767px) {
-	#radio-topper { margin-left: -20px; margin-right: -20px; padding-right: 20px; padding-left: 20px; }
+	#radio-topper { 
+		margin-left: -20px; margin-right: -20px; padding-right: 20px; padding-left: 20px;
+		h1 { font-size: 44px; padding-top: 66px; }
+	}
+	#radio { margin-bottom: 0; }
+	#comingsoon {
+		margin-left: -20px;
+
+		b { display: none; }
+		.message { padding-left: 20px; }
+	}
 }
 @media (max-width: 480px) {
-	#radio-topper h1 { font-size: 40px; }
+	#radio-topper h1 { font-size: 40px; padding-top: 33px; }
+	#mr-president h2 { font-size: 30px; }
 }
