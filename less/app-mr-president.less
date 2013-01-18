@@ -164,6 +164,7 @@
     }
 
     .photo-section {
+            overflow: hidden;
             border-top: 2px solid #ebebeb;
             padding: 20px 0;
 
@@ -171,7 +172,7 @@
             &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
     }
 
-    .wrapper {
+    .slide {
       width: 100%;
     }
 
@@ -315,7 +316,7 @@
 
 @media (max-width: 480px) {
     #photo-feed {
-      .wrapper {
+      .slide {
         height: 100px;
         width: 100%;
         overflow-x: scroll;
