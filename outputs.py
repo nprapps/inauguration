@@ -109,9 +109,6 @@ def write_mr_president_test_posts():
     n = 0
     while n < TOTAL_NUMBER:
         tag = choice(tags)
-        if n % 5 == 0:
-            tag += ',nprpicks'
-
         caption = u"""<p class='intro'>Dear Mr. President,</p>
         <p class='voted' data-vote-type='%s'>%s.</p>
         <p class='message'>This is a test post.</p>
@@ -215,8 +212,6 @@ def write_mr_president_json():
         'ivotedforyou': [],
         'ididntvoteforyou': [],
         'ididntvote': [],
-        'nprpicks': [],
-        'latest': []
     }
 
     for post in posts:
@@ -230,12 +225,11 @@ def write_mr_president_json():
         }
 
         for tag in post['tags']:
-            if tag in output:
-                if len(output[tag]) <= MAX_PER_CATEGORY:
-                    output[tag].append(simple_post)
-
-        if len(output['latest']) <= MAX_PER_CATEGORY:
-            output['latest'].append(simple_post)
+            try:
+              if len(output[tag]) <= MAX_PER_CATEGORY:
+                  output[tag].append(simple_post)
+            except KeyError:
+                pass
 
     json_output = json.dumps(output)
 
