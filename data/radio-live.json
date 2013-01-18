@@ -1,4 +1,5 @@
 {
+	"id": "live",
     "audio": "true",
     "streaming": "true",
     "flashStreamer": "rtmp://cp150999.live.edgefcs.net/live/",

@@ -1,5 +1,5 @@
 {
+	"id": "pregame",
     "audio": "false",
-    "streaming": "false",
-    "message": "Tune in for NPR's live inauguration coverage,<br />starting at 5:30 a.m. ET on Monday, January 21."
+    "message": "Tune in for NPR's live inauguration coverage,<br />starting at 5:30 a.m. ET on Monday."
 }
