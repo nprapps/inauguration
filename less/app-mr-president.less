@@ -12,19 +12,19 @@
 	.modal-btn {
 		display: block;
 		background-color: #7598c9;
-		line-height: 44px;
+		line-height: 64px;
 		color: #fff;
 		font-weight: bold;
 		font-size: 16px;
 
 		&:hover { opacity: .7; }
 		span {
-			width: 44px;
-			height: 44px;
+			width: 64px;
+			height: 64px;
 			float: left;
 			display: block;
 			margin-right: 11px;
-			background: url('../img/btn-share-tiny.gif') no-repeat center center;
+			background: url('../img/btn-share-small.png') no-repeat center center;
 			border-right: 1px solid #fff;
 		}
 	}
@@ -307,6 +307,15 @@
             height: 130px;
         }
     }
+	#mr-president {
+		.modal-btn {
+			line-height: 22px;
+			font-size: 16px;
+			padding: 10px 0;
+			
+			span { margin-top: -10px; }
+		}
+	}
 }
 
 
@@ -320,9 +329,19 @@
     	.modal-photo, .modal-caption { width: auto; float: none; }
     	.modal-photo { padding-bottom: 0; }
     }
-	#mr-president .mr-president-topper { 
-		margin-left: -20px; margin-right: -20px; 
-		padding-left: 20px; padding-right: 20px;
+	#mr-president {
+		.mr-president-topper { 
+			margin-left: -20px; margin-right: -20px; 
+			padding-left: 20px; padding-right: 20px;
+		}
+		.modal-btn {
+			line-height: 64px;
+			font-size: 16px;
+			padding: 0;
+			margin-bottom: 22px;
+			
+			span { margin-top: 0; }
+		}
 	}
 }
 
@@ -349,7 +368,6 @@
           }
         }
     }
-
     #mr-president-modal {
             top: 5%; left: 5%; width: 90%; height: 90%;
             .modal-header h3 { font-size: 16px; }
