@@ -51,7 +51,16 @@
 		h3 {
 			font: normal 24px/1.2 Arial, Helvetica, sans-serif;
 			color: #666;
+            width:90%;
 		}
+        
+        button {
+           padding: 20px;
+           position: absolute;
+           right: 0px;
+           top: 0px;
+           font-size:24px;
+       }
 	}
 	.modal-body {
 		max-height: none;
@@ -247,10 +256,12 @@
 	-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0;
 
 	button.close {
-          margin: 6px 0 11px 0;
-          font-size: 40px;
-          line-height: 40px;
-        }
+        padding: 20px;
+        position: absolute;
+        right: -5px;
+        top: -10px;
+        font-size:24px;
+    }
 
 	.modal-wrap { height: 100%; overflow: hidden; }
 	.modal-body {
@@ -340,7 +351,7 @@
     }
     #photo-modal {
     	.modal-photo, .modal-caption { width: auto; float: none; }
-    	.modal-photo { padding-bottom: 0; }
+    	.modal-photo { padding-bottom: 0; padding-top:45px; }
     }
 	#mr-president {
 		.mr-president-topper { 
@@ -382,8 +393,11 @@
         }
     }
     #mr-president-modal {
-            top: 5%; left: 5%; width: 90%; height: 90%;
-            .modal-header h3 { font-size: 16px; }
+        top: 5%; left: 5%; width: 90%; height: 90%;
+        .modal-header button {
+            top:10px;
+            right:10px;
+        }
     }
     .mr-president-form input[type='file'] { font-size: 12px; }
 }
