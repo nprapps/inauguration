@@ -1,17 +1,19 @@
 <div class="modal-wrap">
+    <div class="modal-nav">
+        <a href="javascript:;" class="navigate nav-back" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
+        <a href="javascript:;" class="navigate nav-next" data-photo="<%= next %>"><span>Next &rsaquo;</span></a>
+    </div>
+    <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <div class="modal-photo"><img src="<%= photo_url %>" class="photo" /></div>
 
-	<div class="modal-body">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-		<div class="modal-photo"><img src="<%= photo_url %>" class="photo" /></div>
-
-		<div class="modal-caption">
-			<%= photo.text %>
-		</div>
-	</div>
-
-	<div class="modal-nav">
-		<a href="javascript:;" class="navigate nav-back" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
-		<a href="javascript:;" class="navigate nav-next" data-photo="<%= next %>"><span>Next &rsaquo;</span></a>
-	</div>
-
+        <div class="modal-caption">
+            <ul class="post_info social">
+                <li class="share">Share This Postcard</li>
+                <li class="facebook"><a rel="external" href="http://www.facebook.com/sharer/sharer.php?t=Dear+Mr.+President%2C+Please+don%27t+forget...&amp;u=<%= photo.url %>" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Facebook In Post', 'Dear Mr President']);" title="Like This Page On Facebook"><span></span>Facebook</a></li>
+                <li class="twitter"><a rel="external" href="http://twitter.com/share?text=Dear+Mr.+President%2C+Please+don%27t+forget...+%23inauguration&amp;url=<%= photo.url %>" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', 'Social', 'Click Twitter In Post', 'Dear Mr President']);" title="Share This Page On Twitter"><span></span>Twitter</a></li>
+            </ul>
+            <%= photo.text %>
+        </div>
+    </div>
 </div>
