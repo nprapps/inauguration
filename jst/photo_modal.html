@@ -2,13 +2,13 @@
 
 	<div class="modal-body">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-		<div class="modal-photo"><img src="<%= photo.photo_url_250 %>" class="photo" /></div>
-	
+		<div class="modal-photo"><img src="<%= photo_url %>" class="photo" /></div>
+
 		<div class="modal-caption">
 			<%= photo.text %>
 		</div>
 	</div>
-	
+
 	<div class="modal-nav">
 		<a href="javascript:;" class="navigate nav-back" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
 		<a href="javascript:;" class="navigate nav-next" data-photo="<%= next %>"><span>Next &rsaquo;</span></a>

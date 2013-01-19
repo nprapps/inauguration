@@ -158,13 +158,17 @@ $(document).ready(function() {
         /*
          * Render the photo modal.
          */
-        var photo_id = $(this).data('photo');
+        var photo = photos[$(this).data('photo')]
+        var photo_url = photo.photo_url_1280;
+        if ($(window).width() <= 480) {
+            photo_url = photo.photo_url_500;
+        }
         var data = {
-            'photo': photos[photo_id],
+            'photo': photo,
+            'photo_url': photo_url,
             'previous': $(this).prev('.photo-link').data('photo'),
             'next': $(this).next('.photo-link').data('photo')
         };
-
         var modal_html = JST.photo_modal(data);
         $photo_modal.html(modal_html);
 
@@ -186,7 +190,7 @@ $(document).ready(function() {
 
             _.each(PHOTO_CATEGORIES, function(category) {
                 update_category(category);
-        
+
                 var $slides = $("#photos-" + category);
                 var $slide = $slides.find('.slide');
 

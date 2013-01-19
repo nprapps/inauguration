@@ -221,6 +221,8 @@ def write_mr_president_json():
             'text': post['photo-caption'],
             'photo_url': post['photo-url-100'],
             'photo_url_250': post['photo-url-250'],
+            'photo_url_500': post['photo-url-500'],
+            'photo_url_1280': post['photo-url-1280'],
             'timestamp': post['unix-timestamp']
         }
 
