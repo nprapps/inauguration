@@ -2,4 +2,4 @@
 cd /home/ubuntu/apps/inauguration/repository
 source ../virtualenv/bin/activate
 fab write_mr_president_json
-echo "+" >> /tmp/mr_president_cron.log
+date >> /tmp/mr_president_cron.log
