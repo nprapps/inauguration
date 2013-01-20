@@ -201,8 +201,7 @@ def write_mr_president_json():
     TUMBLR_MAX_POSTS = 10000
     MAX_PER_CATEGORY = 100
 
-    #api = Api(app_config.TUMBLR_BLOG_ID)
-    api = Api('inauguration2013')
+    api = Api(app_config.TUMBLR_BLOG_ID)
 
     posts = list(api.read(max=TUMBLR_MAX_POSTS))
 
