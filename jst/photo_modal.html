@@ -13,7 +13,6 @@
         </div>
 
         <div class="modal-caption">
-
             <ul class="post_info social">
                 <div class="modal-controls-wrapper">
                     <li class="share">Share This Postcard</li>
@@ -22,6 +21,7 @@
                     <div class="clearfix"></div>
                 </div>
             </ul>
+            <a class="timestamp-link" href="<%= photo.url %>" target="_blank"><abbr class="timeago" data-time="<%= photo.timestamp %>000"></abbr></a>
             <%= photo.text %>
         </div>
     </div>

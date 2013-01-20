@@ -176,7 +176,8 @@ $(document).ready(function() {
         };
         var modal_html = JST.photo_modal(data);
         $photo_modal.html(modal_html);
-
+        $timestamp = $photo_modal.find("abbr.timeago");
+        $timestamp.text($.timeago(parseInt($timestamp.attr('data-time'))));
         $photo_modal.modal('show');
     }
 
