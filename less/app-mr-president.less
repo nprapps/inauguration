@@ -201,26 +201,34 @@
     .photo-list {
             &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 
+            margin-left:-2%;
+            margin-right:-6%;
+
             .load-more-spinner { border: none; }
 
-            .tile {
-                // margin-right: 10px;
+            .photo-link {
+
+                overflow:hidden;
+
+                img { width:100%; }
+
                 margin-bottom: 10px;
 
                 display: inline-block;
                 height: 180px;
                 width: 23%;
-                margin-left: 1%;
+                margin-left: 0%;
                 margin-right: 1%;
-                background-size: cover;
-                -moz-background-size: cover;
                 float: left;
 
                 &:hover {
-                    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-                    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-                    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
                     opacity: .7;
+                    background-color:#ebebeb;
+                }
+
+                .tile {
+                    height:100%;
+                    width:100%;
                 }
             }
     }
@@ -434,6 +442,17 @@
     	.modal-photo, .modal-caption { width: auto; float: none; }
     	.modal-photo { padding-bottom: 0; padding-top:45px; }
     }
+    #photo-modal .modal-nav {
+        width:auto;
+        right:96px;
+    }
+    #photo-modal .post_info {
+        width: 96px;
+        height:48px;
+         li.share {
+            display:none;
+        }
+    }
 	#mr-president {
 		.mr-president-topper {
 			margin-left: -20px; margin-right: -20px;
@@ -450,41 +469,35 @@
 	}
 }
 
-@media (max-width: 550px) {
-    #photo-modal .modal-nav {
-        width:auto;
-        right:96px;
-    }
-    #photo-modal .post_info {
-        width: 96px;
-        height:48px;
-        li.share {
-            display:none;
-        }
-    }
-}
-
 @media (max-width: 480px) {
     #photo-feed {
-      .slide {
-        height: 100px;
-        width: 100%;
-        overflow-x: scroll;
-        overflow-y: hidden;
-      }
-      .photo-list {
-      	  .tumblrlink {
-      	  	width: 120px;
-      	  	float: right;
-
-      	  	a { line-height: 100px; display: block; }
-      	  }
-          .tile {
+        .slide {
             height: 100px;
-            width: 120px;
-            margin-right: 2px;
-            margin-bottom: 0px;
-          }
+            width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+      // .photo-list {
+      //       .tumblrlink {
+      //           width: 120px;
+      //           float: right;
+
+      //           a { line-height: 100px; display: block; }
+      //       }
+      //       .tile {
+      //           height: 100px;
+      //           width: 120px;
+      //           margin-right: 2px;
+      //           margin-bottom: 0px;
+      //       }
+      //   }
+        .photo-list .photo-link {
+            width:100px;
+            margin-right:2px;
+            .tile {
+                height:100px;
+                width:100px;
+            }
         }
     }
     #mr-president-modal {

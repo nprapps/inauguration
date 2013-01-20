@@ -84,7 +84,12 @@ $(document).ready(function() {
             var post = posts[j];
 
             var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">';
-            html += '<div class="tile" style="background:url(' + post['photo_url_250'] + ') center center no-repeat" />';
+
+            if ($(window).width() > 1200) {
+                html += '<div class="tile" style="background:url(' + post['photo_url_500'] + ') center center no-repeat" />';
+            } else {
+                html += '<div class="tile" style="background:url(' + post['photo_url_250'] + ') center center no-repeat" />';
+            }
             html += '</a>';
             var $el = $(html);
 
@@ -103,7 +108,7 @@ $(document).ready(function() {
 
     function resize_photo_feed(category) {
         var $photo_feed = $('#photos-' + category).find('.photo-list');
-        var photos_width = $photo_feed.find('a').length * 122;
+        var photos_width = $photo_feed.find('a').length * 100;
         var spinner = '<img src="img/spinner.gif" class="load-more-spinner" data-category="' + category + '" />';
         var $tumblrlink = $photo_feed.find('.tumblrlink');
 
@@ -114,7 +119,7 @@ $(document).ready(function() {
 
             if (next_photo_index[category] < feed_data[category].length) {
                 $photo_feed.append(spinner);
-                photos_width += 122; // spinner size
+                photos_width += 100; // spinner size
             }
 
             $photo_feed.css('width', photos_width + 'px');
