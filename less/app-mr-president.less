@@ -263,6 +263,16 @@
         font-size:24px;
     }
 
+    .modal-controls-wrapper {
+        border: 2px solid #fff;
+    }
+    .modal-nav .modal-controls-wrapper {
+        border-right:1px solid #fff;
+    }
+    .post_info .modal-controls-wrapper {
+        border-left:1px solid #fff;
+    }
+
 	.modal-wrap { height: 100%; overflow: hidden; }
 	.modal-body {
 		max-height: none;
@@ -314,7 +324,7 @@
 
 			&:hover { background-color:#9EB7D9; }
 			&.nav-back span { display: block; border-right: 2px solid #fff; }
-            &.nav-next span { display: block; border-right: 2px solid #fff; }
+            // &.nav-next span { display: block; border-right: 2px solid #fff; }
 		}
     }
     .post_info {
@@ -343,6 +353,7 @@
         font-size: 18px;
         text-transform: lowercase;
         padding-bottom: 10px;
+        padding-top:10px;
         background-color: white;
     }
     .post_info.social .facebook,
@@ -353,13 +364,16 @@
         width: 50%;
         font-weight: bold;
         font-size: 12px;
+        height: 44px;
     }
     .post_info.social li a {
         margin: 0;
         padding: 0;
         display: block;
-        border-right: 2px solid #fff;
         color: #6d8ac4;
+    }
+    .post_info.social li.facebook a {
+        border-right: 2px solid #fff;
     }
     .post_info.social li a:after {
         visibility: hidden;
@@ -437,6 +451,27 @@
 	}
 }
 
+@media (max-width: 550px) {
+    #photo-modal .modal-nav {
+        width:auto;
+        right:96px;
+        // border-top: 2px solid #fff;
+    }
+    #photo-modal .post_info {
+        width: 96px;
+        height:48px;
+        li.share {
+            display:none;
+        }
+    }
+
+    // #photo-modal .post_info.social .facebook,
+    #photo-modal .post_info.social .twitter {
+        // width: 44px;
+        //border-left:2px solid #fff;
+    }
+}
+
 @media (max-width: 480px) {
     #photo-feed {
       .slide {
@@ -468,23 +503,4 @@
         }
     }
     .mr-president-form input[type='file'] { font-size: 12px; }
-
-    #photo-modal .modal-nav {
-        width:auto;
-        right:90px;
-        border-top: 2px solid #fff;
-    }
-    #photo-modal .post_info {
-        width: 92px;
-        height:44px;
-        li.share {
-            display:none;
-        }
-    }
-
-    #photo-modal .post_info.social .facebook,
-    #photo-modal .post_info.social .twitter {
-        width: 44px;
-        border-left:2px solid #fff;
-    }
 }
