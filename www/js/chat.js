@@ -350,7 +350,11 @@
                     // If no place in the order, put at the end
                     if (!comes_before && next_page_index >= posts_on_load.length) {
                         edit_timestamps[post.Id] = timestamp;
-                        $post.after(html);
+                        if ($post === null) {
+                            plugin.$chat_body.append(html);
+                        } else {
+                            $post.after(html);
+                        }
                     }
                 }
             });
