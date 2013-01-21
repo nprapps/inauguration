@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var PHOTO_CATEGORIES = ['ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
+    var PHOTO_CATEGORIES = ['mostpopular', 'ivotedforyou', 'ididntvoteforyou', 'idrathernotsayhowivoted', 'ididntvote']
 
     var MAX_PHOTOS_PER_CATEGORY = 100;
     var PHOTOS_PER_PAGE = 12;
@@ -125,7 +125,9 @@ $(document).ready(function() {
             $photo_feed.css('width', photos_width + 'px');
 
             if (next_photo_index[category] >= feed_data[category].length) {
-                $tumblrlink.show();
+                if (category != 'mostpopular') {
+                    $tumblrlink.show();
+                }
             }
         }
 
@@ -228,7 +230,9 @@ $(document).ready(function() {
         } else {
             $slide.find('.next-photos').hide();
             $slide.append($tumblrlink);
-            $tumblrlink.show();
+            if (category != 'mostpopular') {
+                $tumblrlink.show();
+            }
         }
     }
 
