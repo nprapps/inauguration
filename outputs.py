@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import datetime
+import gzip
 import json
 import os
 from sets import *
