@@ -86,9 +86,9 @@ $(document).ready(function() {
             var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">';
 
             if ($(window).width() > 1200) {
-                html += '<div class="tile" style="background:url(' + post['photo_url_500'] + ') center center no-repeat" />';
+                html += '<div class="tile" style="background-image:url(' + post['photo_url_500'] + ')" />';
             } else {
-                html += '<div class="tile" style="background:url(' + post['photo_url_250'] + ') center center no-repeat" />';
+                html += '<div class="tile" style="background-image:url(' + post['photo_url_250'] + ')" />';
             }
             html += '</a>';
             var $el = $(html);
