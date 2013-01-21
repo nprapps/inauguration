@@ -283,7 +283,13 @@ def write_mr_president_json():
         # Actually fetch the page URL.
         r = requests.get(page_url)
         posts = json.loads(r.content)
-        post_list = post_list + posts['response']['posts']
+
+        for post in posts['response']['posts']:
+            try:
+                note_count = post['note_count']
+                post_list.append(post)
+            except KeyError:
+                pass
 
     # Sort the results first.
     print "V2: Finished requesting pages."
