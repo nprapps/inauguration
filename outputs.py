@@ -6,6 +6,7 @@ import os
 from sets import *
 import urlparse
 
+import boto
 import oauth2 as oauth
 from random import choice
 import requests
