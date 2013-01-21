@@ -64,9 +64,9 @@
             $.ajax({
                 url: chat_url + '&Max=10&Order=desc',
                 dataType: 'jsonp',
-                cache: false,
+                cache: true,
                 success: function(data) {
-                    
+
                     if (parseInt(data.IsLive, 10) === 1) {
                         $('#chat-toggle .live').show();
                         $('#chat-toggle .pregame').hide();
@@ -76,7 +76,7 @@
                         $('#chat-toggle .live').hide();
                         $('#live-chat-widget-wrapper').hide();
                     }
-                    
+
                     var posts_length = data.Posts.length;
 
                     for (i = 0; i < posts_length; i++) {
