@@ -335,22 +335,22 @@ def write_mr_president_json():
         f.write(json_output)
     print "All: JSON file written."
 
-    # if app_config.DEPLOYMENT_TARGET:
-    #     with gzip.open(TUMBLR_FILENAME + '.gz', 'wb') as f:
-    #         f.write(json_output)
+    if app_config.DEPLOYMENT_TARGET:
+        with gzip.open(TUMBLR_FILENAME + '.gz', 'wb') as f:
+            f.write(json_output)
 
-    #     for bucket in app_config.S3_BUCKETS:
-    #         conn = boto.connect_s3()
-    #         bucket = conn.get_bucket(bucket)
-    #         key = boto.s3.key.Key(bucket)
-    #         key.key = '%s/live-data/misterpresident.json' % app_config.DEPLOYED_NAME
-    #         key.set_contents_from_filename(
-    #             TUMBLR_FILENAME + '.gz',
-    #             policy='public-read',
-    #             headers={
-    #                 'Cache-Control': 'max-age=5 no-cache no-store must-revalidate',
-    #                 'Content-Encoding': 'gzip'
-    #             }
-    #         )
+        for bucket in app_config.S3_BUCKETS:
+            conn = boto.connect_s3()
+            bucket = conn.get_bucket(bucket)
+            key = boto.s3.key.Key(bucket)
+            key.key = '%s/live-data/misterpresident.json' % app_config.DEPLOYED_NAME
+            key.set_contents_from_filename(
+                TUMBLR_FILENAME + '.gz',
+                policy='public-read',
+                headers={
+                    'Cache-Control': 'max-age=5 no-cache no-store must-revalidate',
+                    'Content-Encoding': 'gzip'
+                }
+            )
 
-    #     os.remove(TUMBLR_FILENAME + '.gz')
+        os.remove(TUMBLR_FILENAME + '.gz')
