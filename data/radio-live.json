@@ -5,7 +5,7 @@
     "flashStreamer": "rtmp://liveflash.npr.org/live/",
     "flashFile":"Live1@1094",
     "htmlUrl":"http://npr.ic.llnwd.net/stream/npr_live24",
-    "title":"All Things Considered",
+    "title":"NPR Special Coverage",
     "prompt":"Listen Now",
     "feedback":"Live"
 }
