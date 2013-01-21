@@ -177,21 +177,24 @@
     	font: normal 22px Arial, Helvetica, sans-serif;
     	color: #666;
     	text-transform: capitalize;
-    	margin: 0 0 11px 0;
     	clear: both;
+            
+        border-top: 2px solid #ebebeb;
+        padding: 20px 0;
+        margin: 0px;
+		
+        &:first-child { border-top: none; }
     }
 
     .photo-section {
-            overflow: hidden;
-            border-top: 2px solid #ebebeb;
-            padding: 20px 0;
+        overflow: hidden;
 
-			&:first-child { border-top: none; }
-            &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
+        &:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
     }
 
 	.slide {
 		width: 100%;
+        padding-bottom: 20px; 
 
 		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
 		.previous-photos { float: left; font-weight: bold; }
