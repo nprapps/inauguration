@@ -39,6 +39,8 @@ $(function(){
             livechatwidget = $widget.data('livechatwidget');
         }
 
+        //cheap hack to get the feed to show when you loaded the chat first, see #283
+        $(window).trigger('resize');
         window.location.hash = '';
     });
 
