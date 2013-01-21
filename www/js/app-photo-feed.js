@@ -55,7 +55,7 @@ $(document).ready(function() {
 
             $slides.css({
                 'z-index': '999',
-                'width': '10000px',
+                'width': '15000px',
                 'overflow': 'hidden'
             });
 
