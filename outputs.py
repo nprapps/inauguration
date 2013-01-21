@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-import gzip
+import datetime
 import json
 import os
 from sets import *
 import urlparse
 
-import boto
 import oauth2 as oauth
 from random import choice
+import requests
 from tumblr import Api
 from tumblpy import Tumblpy
 
@@ -197,21 +197,27 @@ def write_mr_president_json():
     """
     Writes the JSON for Dear Mr. President to www.
     """
+
+    #
+    # First, handle stuff from the V1 API. This is fetching the posts by tag.
+    #
+    print "V1: Starting."
     TUMBLR_FILENAME = 'www/live-data/misterpresident.json'
     TUMBLR_MAX_POSTS = 10000
     MAX_PER_CATEGORY = 100
-
     api = Api(app_config.TUMBLR_BLOG_ID)
-
+    print "V1: API call made."
     posts = list(api.read(max=TUMBLR_MAX_POSTS))
 
-    # posts.reverse()
+    print "V1: Fetched %s posts." % len(posts)
+    print "V1: Starting to render."
 
     output = {
         'idrathernotsayhowivoted': [],
         'ivotedforyou': [],
         'ididntvoteforyou': [],
         'ididntvote': [],
+        'mostpopular': []
     }
 
     for post in posts:
@@ -228,15 +234,99 @@ def write_mr_president_json():
 
         for tag in post['tags']:
             try:
-              if len(output[tag]) <= MAX_PER_CATEGORY:
-                  output[tag].append(simple_post)
+                if len(output[tag]) <= MAX_PER_CATEGORY:
+                    output[tag].append(simple_post)
             except KeyError:
                 pass
+    print "V1: Rendering finished."
 
+    #
+    # Now, fetch the most popular posts using the V2 API.
+    #
+    print "V2: Starting."
+    # Set constants
+    base_url = 'http://api.tumblr.com/v2/blog/inauguration2013.tumblr.com/posts/photo'
+    key_param = '?api_key=Cxp2JzyA03QxmQixf7Fee0oIYaFtBTTHKzRA0AveHlh094bwDH'
+    limit_param = '&limit=20'
+    limit = 20
+    new_limit = limit
+    post_list = []
+
+    # Figure out the total number of posts.
+    r = requests.get(base_url + key_param)
+    total_count = int(json.loads(r.content)['response']['total_posts'])
+    print "V2: %s total posts available." % total_count
+
+    # Do the pagination math.
+    pages_count = (total_count / limit)
+    pages_remainder = (total_count % limit)
+    if pages_remainder > 0:
+        pages_count += 1
+    pages = range(0, pages_count)
+    print "V2: %s pages required." % len(pages)
+
+    # Start requesting pages.
+    # Note: Maximum of 20 posts per page.
+    print "V2: Requesting pages."
+    for page in pages:
+
+        # Update all of the pagination shenanigans.
+        start_number = new_limit - limit
+        end_number = new_limit
+        if end_number > total_count:
+            end_number = total_count
+        new_limit = new_limit + limit
+        page_param = '&offset=%s' % start_number
+        page_url = base_url + key_param + limit_param + page_param
+
+        # Actually fetch the page URL.
+        r = requests.get(page_url)
+        posts = json.loads(r.content)
+        post_list = post_list + posts['response']['posts']
+
+    # Sort the results first.
+    print "V2: Finished requesting pages."
+    print "V2: Sorting list."
+    post_list = sorted(post_list, key=lambda post: post['note_count'], reverse=True)
+
+    # Render the sorted list, but slice to just 24 objects per bb.
+    print "V2: Rendering posts from sorted list."
+    for post in post_list[0:24]:
+        default_photo_url = post['photos'][0]['original_size']['url']
+        simple_post = {
+            'id': post['id'],
+            'url': post['post_url'],
+            'text': post['caption'],
+            'timestamp': post['timestamp'],
+            'note_count': post['note_count'],
+            'photo_url': default_photo_url,
+            'photo_url_250': default_photo_url,
+            'photo_url_500': default_photo_url,
+            'photo_url_1280': default_photo_url
+        }
+
+        # Handle the new photo assignment.
+        for photo in post['photos'][0]['alt_sizes']:
+            if int(photo['width']) == 100:
+                simple_post['photo-url-100'] = photo['url']
+            if int(photo['width']) == 250:
+                simple_post['photo_url_250'] = photo['url']
+            if int(photo['width']) == 500:
+                simple_post['photo_url_500'] = photo['url']
+            if int(photo['width']) == 1280:
+                simple_post['photo_url_1280'] = photo['url']
+        output['mostpopular'].append(simple_post)
+
+    # Ensure the proper sort on our output list.
+    print "V2: Ordering output."
+    output['mostpopular'] = sorted(output['mostpopular'], key=lambda post: post['note_count'], reverse=True)
+
+    # Write the JSON file.
+    print "All: Producing JSON file at %s." % TUMBLR_FILENAME
     json_output = json.dumps(output)
-
     with open(TUMBLR_FILENAME, 'w') as f:
         f.write(json_output)
+    print "All: JSON file written."
 
     if app_config.DEPLOYMENT_TARGET:
         with gzip.open(TUMBLR_FILENAME + '.gz', 'wb') as f:
