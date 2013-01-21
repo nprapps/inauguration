@@ -157,7 +157,7 @@
             $.ajax({
                 url: chat_url + content_param + auth_param,
                 dataType: 'jsonp',
-                cache: false,
+                cache: true,
                 success: function(response) {
                     plugin.$comment.val('');
                     alerts.push({
@@ -410,7 +410,7 @@
             $.ajax({
                 url: chat_url + '&Max=10000&Order=desc',
                 dataType: 'jsonp',
-                cache: false,
+                cache: true,
                 success: function(data, status, xhr) {
                     if (parseInt(data.IsLive, 10) === 1) {
                         plugin.$chat_form.show();
@@ -511,7 +511,7 @@
                 return $.ajax({
                     url: auth_url +'&format=json&Name='+ data.username +'&Avatar='+ data.avatar,
                     dataType: 'jsonp',
-                    cache: false,
+                    cache: true,
                     success: function(auth) {
                         auth.Expires = moment().add('minutes', SCRIBBLE_AUTH_EXPIRATION).valueOf();
                         $.totalStorage(SCRIBBLE_AUTH_KEY, auth);
