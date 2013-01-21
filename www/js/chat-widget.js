@@ -64,6 +64,7 @@
             $.ajax({
                 url: chat_url + '&Max=10&Order=desc',
                 dataType: 'jsonp',
+                cache: true,
                 success: function(data) {
 
                     if (parseInt(data.IsLive, 10) === 1) {
