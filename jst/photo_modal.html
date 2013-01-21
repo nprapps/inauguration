@@ -1,8 +1,8 @@
 <div class="modal-wrap">
     <div class="modal-nav">
         <div class="modal-controls-wrapper">
-            <a href="javascript:;" class="navigate nav-back" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
-            <a href="javascript:;" class="navigate nav-next" data-photo="<%= next %>"><span>Next &rsaquo;</span></a>
+            <a href="javascript:;" class="navigate nav-back <% if (previous === null) { %>disabled<% } else { %>active<% } %>" data-category="<%= category %>" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
+            <a href="javascript:;" class="navigate nav-next <% if (next === null) { %>disabled<% } else { %>active<% } %>" data-category="<%= category %>" data-photo="<%= next %>"><span>Next &rsaquo;</span></a>
             <div class="clearfix"></div>
         </div>
     </div>

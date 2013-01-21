@@ -4,7 +4,6 @@ $(document).ready(function() {
     var MAX_PHOTOS_PER_CATEGORY = 100;
     var PHOTOS_PER_PAGE = 12;
 
-    var photos = {};
     var feed_data = null;
     var next_photo_index = {};
 
@@ -23,18 +22,16 @@ $(document).ready(function() {
         return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + 'Z'
     }
 
-    function get_next_photos(category, data) {
+    function render_category_feed(category) {
         var start = next_photo_index[category];
         var end = start + PHOTOS_PER_PAGE;
-        var paginated_photos = data.slice(start, end);
+
+        if (end >= feed_data[category].length) {
+            end = feed_data[category].length;
+        }
 
         next_photo_index[category] += PHOTOS_PER_PAGE;
-        return paginated_photos;
-    }
 
-
-    function render_category_feed(category, posts) {
-        var posts_length = Math.min(posts.length, MAX_PHOTOS_PER_CATEGORY);
         var $slides = $("#photos-" + category);
 
         if ($(window).width() <= 480) {
@@ -43,7 +40,7 @@ $(document).ready(function() {
             if ($slide.length === 0) {
                 $slides.append(JST.photo_slide({
                     'category': category,
-                    'slide': posts[0].id
+                    'slide': start 
                 }));
 
                 var $slide = $slides.find('.slide');
@@ -64,7 +61,7 @@ $(document).ready(function() {
 
             $slides.append(JST.photo_slide({
                 'category': category,
-                'slide': posts[0].id
+                'slide': start
             }));
             var $slide = $slides.find('.slide').last();
 
@@ -80,10 +77,10 @@ $(document).ready(function() {
 
         var new_photos = [];
 
-        for (var j = 0; j < posts_length; j++) {
-            var post = posts[j];
+        for (var j = start; j < end; j++) {
+            var post = feed_data[category][j];
 
-            var html = '<a href="javascript:;" class="photo-link" data-photo="' + post.id + '">';
+            var html = '<a href="javascript:;" class="photo-link" data-category="' + category + '" data-photo="' + j + '">';
 
             if ($(window).width() > 1200) {
                 html += '<div class="tile" style="background-image:url(' + post['photo_url_500'] + ')" />';
@@ -95,8 +92,6 @@ $(document).ready(function() {
 
             new_photos.push($el);
             $el = null;
-
-            photos[post.id] = post;
         }
 
         $photos.find('.load-more-spinner').remove();
@@ -114,7 +109,6 @@ $(document).ready(function() {
 
         if ($(window).width() <= 480) {
             // Mobile photo view, keep tumblr link within $photos div
-
             $tumblrlink.hide();
 
             if (next_photo_index[category] < feed_data[category].length) {
@@ -131,14 +125,11 @@ $(document).ready(function() {
 
         else {
             // Desktop photo grid view, remove tumblr link from $photos div and append it
-
             $photo_feed.find('.load-more-spinner').remove();
-            //$photo_feed.css('width', "100%");
 
             var width = $('#photo-feed').width();
 
             $('.photo-section').width(width + 'px');
-            //$('.slides').width(width + 'px');
             $('.slide').width(width + 'px');
         }
     }
@@ -148,43 +139,54 @@ $(document).ready(function() {
         spinners.each(function (i, spinner) {
             if ($(spinner).offset().left < $(window).width()) {
                 var category = $(spinner).attr('data-category');
-                update_category(category);
+                render_category_feed(category);
             }
         });
-    }
-
-    function update_category(category) {
-        var posts = get_next_photos(category, feed_data[category]);
-
-        render_category_feed(category, posts);
     }
 
     function render_modal() {
         /*
          * Render the photo modal.
          */
-        var photo = photos[$(this).data('photo')]
+        var category = $(this).data('category');
+        var photo_index = $(this).data('photo');
+
+        if (photo_index == null) {
+            console.log(photo_index);
+            return;
+        }
+
+        var photo = feed_data[category][photo_index];
         var photo_url = photo.photo_url_1280;
         if ($(window).width() <= 480) {
             photo_url = photo.photo_url_500;
         }
+
+        var previous = photo_index - 1;
+
+        if (previous < 0) {
+            previous = null;
+        }
+
+        var next = photo_index + 1;
+
+        if (next >= feed_data[category].length) {
+            next = null;
+        }
+
         var data = {
+            'category': category,
             'photo': photo,
             'photo_url': photo_url,
-            'previous': $(this).prev('.photo-link').data('photo'),
-            'next': $(this).next('.photo-link').data('photo')
+            'previous': previous,
+            'next': next
         };
+
         var modal_html = JST.photo_modal(data);
         $photo_modal.html(modal_html);
         $timestamp = $photo_modal.find("abbr.timeago");
         $timestamp.text($.timeago(parseInt($timestamp.attr('data-time'))));
         $photo_modal.modal('show');
-    }
-
-    function modal_link_clicked() {
-        var photo_id = $(this).data('photo');
-
-        render_modal.call($('.photo-link[data-photo="' + photo_id + '"]'));
     }
 
     function init() {
@@ -195,7 +197,7 @@ $(document).ready(function() {
             feed_data = data;
 
             _.each(PHOTO_CATEGORIES, function(category) {
-                update_category(category);
+                render_category_feed(category);
 
                 var $slides = $("#photos-" + category);
                 var $slide = $slides.find('.slide');
@@ -211,7 +213,7 @@ $(document).ready(function() {
         });
 
         $photo_container.delegate('.photo-link', 'click', render_modal);
-        $photo_modal.delegate('.navigate', 'click', modal_link_clicked);
+        $photo_modal.delegate('.navigate.active', 'click', render_modal);
     }
 
     function update_page_links($slide) {
@@ -241,7 +243,7 @@ $(document).ready(function() {
         var $next_slide = $slide.next('.slide');
 
         if ($next_slide.length === 0) {
-            update_category(category);
+            render_category_feed(category);
 
             $next_slide = $slide.next('.slide');
         }

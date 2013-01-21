@@ -329,7 +329,7 @@
 		width: 70%;
 
 		&:after { visibility: hidden; display: block; content: ""; clear: both; height: 0; }
-		a.navigate {
+		.navigate {
 			color: #fff;
 			width: 50%;
 			float: left;
@@ -340,6 +340,14 @@
 
 			&:hover { background-color:#9EB7D9; }
 			&.nav-back span { display: block; border-right: 2px solid #fff; }
+
+            &.disabled {
+                background-color: desaturate(#7598c9, 40%);
+
+                cursor: default;
+
+                &:hover { background-color: desaturate(#7598c9, 40%); }
+            }
 		}
     }
     .post_info {
