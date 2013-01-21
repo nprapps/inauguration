@@ -1,4 +1,4 @@
-<div class="modal-wrap">
+<div class="modal-wrap <%= category %>">
     <div class="modal-nav">
         <div class="modal-controls-wrapper">
             <a href="javascript:;" class="navigate nav-back <% if (previous === null) { %>disabled<% } else { %>active<% } %>" data-category="<%= category %>" data-photo="<%= previous %>"><span>&lsaquo; Previous</span></a>
@@ -21,7 +21,7 @@
                     <div class="clearfix"></div>
                 </div>
             </ul>
-            <a class="timestamp-link" href="<%= photo.url %>" target="_blank"><abbr class="timeago" data-time="<%= photo.timestamp %>000"></abbr></a>
+            <a class="timestamp-link" href="<%= photo.url %>" target="_blank"><abbr class="timeago" data-time="<%= photo.timestamp %>000"></abbr><span class="note-count">, <%= photo.note_count %> notes</span></a>
             <%= photo.text %>
         </div>
     </div>
