@@ -92,6 +92,7 @@ p.more a {
 }
 #hpLeftColumn {
   padding-left: 15px;
+  padding-right: 15px;
 }
 #hpLeftColumn #on-air {
   margin: 0 -10px 18px -15px;
