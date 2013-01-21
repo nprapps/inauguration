@@ -8,6 +8,7 @@
     	<span class="chat-post-author"><%= Creator.Name %></span>
     	<span class="chat-post-datetime"><%= created_string %></span>
     </p>
+    <p class="chat-post-caption"><%= Content %></p>
     <p class="chat-post-content">
     <% _.each(Media, function(media) { %>
         <img src="<%= media.Url %>" />
