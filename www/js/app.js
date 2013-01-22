@@ -1,6 +1,6 @@
 $(function(){
     // Constants for the live chat/widget
-    var CHAT_ID = '78919';
+    var CHAT_ID = '74796';
     var CHAT_TOKEN = 'FtP7wRfX';
     var CHAT_UPDATE_INTERVAL = 5000;
 

@@ -144,7 +144,8 @@
         };
 
         function strip_tags(str) {
-            return str.replace(/(<([^>]+)>)/ig, '');
+            // return str.replace(/(<([^>]+)>)/ig, '');
+            return str;
         }
 
         function _send_comment(text) {
