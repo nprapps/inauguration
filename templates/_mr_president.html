@@ -1,13 +1,14 @@
 <div class="mr-president-form">
-    <form id="president-form" action="http://{{ SERVERS[0] }}/dear-mr-president/" method="post" enctype="multipart/form-data">
+    <form id="president-form" method="post" enctype="multipart/form-data">
         <ol>
             <li class="form-vote">
+                <h2>This project has now concluded. Thank you for your submissions.</h2>
             	<label for="voted">Dear Mr. President,</label>
                 <ul>
-                    <li><input type="radio" name="voted" value="i-voted-for-you">I voted for you.</li>
-                    <li><input type="radio" name="voted" value="i-didnt-vote-for-you">I didn't vote for you.</li>
-                    <li><input type="radio" name="voted" value="i-didnt-vote">I didn't vote.</li>
-                    <li><input type="radio" name="voted" value="id-rather-not-say-how-i-voted" checked="checked">I'd rather not say how I voted.</li>
+                    <li><input type="radio" name="voted" value="i-voted-for-you" disabled="disabled">I voted for you.</li>
+                    <li><input type="radio" name="voted" value="i-didnt-vote-for-you" disabled="disabled">I didn't vote for you.</li>
+                    <li><input type="radio" name="voted" value="i-didnt-vote" disabled="disabled">I didn't vote.</li>
+                    <li><input type="radio" name="voted" value="id-rather-not-say-how-i-voted" checked="checked" disabled="disabled">I'd rather not say how I voted.</li>
                 </ul>
             </li>
             <li class="form-photo">
@@ -16,22 +17,22 @@
                 <label for="image" class="instructions">
                 	<strong>Step 1:</strong> Take a photo of yourself holding a sign with a key word or phrase you want the president to remember.
                 </label>
-                <input type="file" name="image" width="90" accept="image/*" required>
+                <input type="file" name="image" width="90" disabled="disabled" accept="image/*" required>
             </li>
             <li class="form-message">
                 <label for="message" class="instructions">
                 	<strong>Step 2:</strong> Explain why this matters to you.
                 </label>
-                <textarea name="message" required></textarea>
+                <textarea name="message" disabled="disabled" required></textarea>
             </li>
             <li class="form-signature">
             <label for="signed_name">Signed,</label>
-                <input type="text" name="signed_name" placeholder="Your Name" required></input> from
-                <input type="text" name="location" placeholder="Your City And State" required></input>
+                <input type="text" name="signed_name" disabled="disabled" placeholder="Your Name" required></input> from
+                <input type="text" name="location" disabled="disabled" placeholder="Your City And State" required></input>
             </li>
             <li class="form-submit">
                 <span class="gentle-reminder" style="display:none;">Please add a photo, an explanation, your name and where you're from. Thanks!<br/></span>
-                <button type="submit" class="btn">Send Us Your Postcard</button>
+                <button type="submit" class="btn" disabled="disabled">Send Us Your Postcard</button>
             </li>
         </ol>
     </form>
