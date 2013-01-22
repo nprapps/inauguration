@@ -151,11 +151,12 @@
             /*
              * Handles comment ajax.
              */
+            var cachebuster = '&Rand=' + moment().valueOf();
             var auth = $.totalStorage(SCRIBBLE_AUTH_KEY);
             var content_param = '&Content=' + encodeURIComponent(text);
             var auth_param = '&Auth=' + auth.Auth;
             $.ajax({
-                url: chat_url + content_param + auth_param,
+                url: chat_url + content_param + auth_param + cachebuster,
                 dataType: 'jsonp',
                 cache: true,
                 success: function(response) {
@@ -407,9 +408,11 @@
             /*
              * Fetch latest posts and render them.
              */
+            var cachebuster = '&Rand=' + moment().valueOf();
             $.ajax({
-                url: chat_url + '&Max=10000&Order=desc',
+                url: chat_url + '&Max=10000&Order=desc' + cachebuster,
                 dataType: 'jsonp',
+
                 cache: true,
                 success: function(data, status, xhr) {
                     if (parseInt(data.IsLive, 10) === 1) {
@@ -506,10 +509,10 @@
              * Login to Scribble with username we got from [Facebook|Google|NPR|etc].
              */
             var auth_url = user_url +'/create?Token='+ plugin.settings.chat_token;
-
+            var cachebuster = '&Rand=' + moment().valueOf();
             if ((data.auth_route === 'anonymous' && data.username !== '') || (data.auth_route === 'oauth')) {
                 return $.ajax({
-                    url: auth_url +'&format=json&Name='+ data.username +'&Avatar='+ data.avatar,
+                    url: auth_url +'&format=json&Name='+ data.username +'&Avatar='+ data.avatar + cachebuster,
                     dataType: 'jsonp',
                     cache: true,
                     success: function(auth) {
