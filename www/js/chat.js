@@ -410,10 +410,7 @@
              */
             var cachebuster = '&Rand=' + moment().valueOf();
             $.ajax({
-                url: chat_url + '&Max=10000&Order=desc' + cachebuster,
-                dataType: 'jsonp',
-
-                cache: true,
+                url: 'live-data/chat-archive.json',
                 success: function(data, status, xhr) {
                     if (parseInt(data.IsLive, 10) === 1) {
                         plugin.$chat_form.show();
@@ -447,7 +444,7 @@
                 }
             }).then(function() {
                 if (!plugin.paused) {
-                    plugin.update_timer = setTimeout(plugin.update_live_chat, plugin.settings.update_interval);
+                    // plugin.update_timer = setTimeout(plugin.update_live_chat, plugin.settings.update_interval);
                 }
             });
         };
