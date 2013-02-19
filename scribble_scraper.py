@@ -5,8 +5,6 @@ import requests
 import os
 import urlparse
 
-import boto
-
 event_id = '78919'
 current_page = '0'
 url = 'http://apiv1.scribblelive.com/event/%s/page/%s/?Token=FtP7wRfX&format=json'
@@ -32,6 +30,9 @@ output['Posts'] = json_data['Posts']
 for page in pages:
   r = requests.get(url % (event_id, page))
   output['Posts'] += r.json['Posts']
+
+# Sort bc Scribble doesn't support order param with pages?!?!?!?!
+output['Posts'] = sorted(output['Posts'], key=lambda post: post['Created'])
 
 filename ='www/live-data/scribble-archive.json'
 print "Writing JSON file to %s." % filename
