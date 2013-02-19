@@ -33,7 +33,7 @@ for page in pages:
   r = requests.get(url % (event_id, page))
   output['Posts'] += r.json['Posts']
 
-filename ='www/live-data/chat-archive.json'
+filename ='www/live-data/scribble-archive.json'
 print "Writing JSON file to %s." % filename
 
 json_output = json.dumps(output)

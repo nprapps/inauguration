@@ -410,7 +410,7 @@
              */
             var cachebuster = '&Rand=' + moment().valueOf();
             $.ajax({
-                url: 'live-data/chat-archive.json',
+                url: 'live-data/scribble-archive.json',
                 success: function(data, status, xhr) {
                     if (parseInt(data.IsLive, 10) === 1) {
                         plugin.$chat_form.show();
