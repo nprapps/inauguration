@@ -8,7 +8,7 @@ from fabric.api import *
 import app
 import app_config
 from etc import github
-import outputs
+# import outputs
 
 """
 Base configuration
@@ -87,14 +87,14 @@ def less():
         name = os.path.splitext(filename)[0]
         out_path = 'www/css/%s.css' % name
 
-        local('node_modules/.bin/lessc %s %s' % (path, out_path))
+        local('node_modules/less/bin/lessc %s %s' % (path, out_path))
 
 
 def jst():
     """
     Render Underscore templates to a JST package.
     """
-    local('node_modules/.bin/jst --template underscore jst www/js/templates.js')
+    local('node_modules/universal-jst/bin/jst.js --template underscore jst www/js/templates.js')
 
 
 def render():
@@ -258,8 +258,8 @@ def deploy(remote='origin'):
     _gzip_www()
     _deploy_to_s3()
 
-    if env.get('deploy_to_servers', False):
-        checkout_latest(remote)
+    # if env.get('deploy_to_servers', False):
+    #     checkout_latest(remote)
 
 
 """

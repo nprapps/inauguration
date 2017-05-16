@@ -57,8 +57,8 @@
              */
             plugin.settings = $.extend({}, defaults, options || {});
 
-            chat_url = 'http://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
-            user_url = 'http://' + plugin.settings.scribble_host + '/user';
+            chat_url = 'https://' + plugin.settings.scribble_host + '/event/' + plugin.settings.chat_id +'/all/?Token='+ plugin.settings.chat_token +'&format=json';
+            user_url = 'https://' + plugin.settings.scribble_host + '/user';
 
             // Render
             plugin.$root.html(JST.chat());

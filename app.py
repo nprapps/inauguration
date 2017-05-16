@@ -83,7 +83,7 @@ def _less(filename):
     with open('less/%s' % filename) as f:
         less = f.read()
 
-    r = envoy.run('node_modules/.bin/lessc -', data=less)
+    r = envoy.run('node_modules/less/bin/lessc -', data=less)
 
     return r.std_out, 200, {'Content-Type': 'text/css'}
 
@@ -91,7 +91,7 @@ def _less(filename):
 # Render JST templates on-demand
 @app.route('/js/templates.js')
 def _templates_js():
-    r = envoy.run('node_modules/.bin/jst --template underscore jst')
+    r = envoy.run('node_modules/universal-jst/bin/jst.js --template underscore jst')
 
     return r.std_out, 200, {'Content-Type': 'application/javascript'}
 
