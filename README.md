@@ -19,7 +19,7 @@ Then install the project requirements:
 
 ```
 cd $NEW_PROJECT_NAME
-npm install less universal-jst
+npm install
 mkvirtualenv $NEW_PROJECT_NAME
 pip install -r requirements.txt
 ```
